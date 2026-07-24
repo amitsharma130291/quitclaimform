@@ -1,54 +1,988 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CitableAnswerBlock from '../components/CitableAnswerBlock.astro';
 import DeedForm from '../components/DeedForm.astro';
 import Disclaimer from '../components/Disclaimer.astro';
 import FAQ from '../components/FAQ.astro';
+import Callout from '../components/ui/Callout.astro';
+import ComparisonTable from '../components/ui/ComparisonTable.astro';
+import ProcessStep from '../components/ui/ProcessStep.astro';
+import TrustStrip from '../components/ui/TrustStrip.astro';
+
+// ── Schema: HowTo + Service + FAQPage + WebPage + BreadcrumbList ──────────────
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Free Quitclaim Deed Form Generator",
+  "description": "Generate a state-specific quitclaim deed form in minutes. Enter your property and party details, preview for free, and download a ready-to-sign PDF for $14.99. The generator applies the correct statutory language, signature blocks, and state-specific instructions for all 50 states.",
+  "serviceType": "Legal Document Generator",
+  "provider": {
+    "@type": "Organization",
+    "name": "QuitclaimForm",
+    "url": "https://quitclaimform.com"
+  },
+  "areaServed": { "@type": "Country", "name": "United States" },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Free preview — $14.99 for PDF download"
+  }
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Create a Quitclaim Deed Form Online",
+  "description": "Use this free generator to create a state-specific, legally formatted quitclaim deed form. Select your state, enter party and property information, preview, and download a ready-to-sign PDF for $14.99.",
+  "totalTime": "PT10M",
+  "tool": [
+    { "@type": "HowToTool", "name": "Quitclaim Deed Form Generator" },
+    { "@type": "HowToTool", "name": "Notary Public" }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep", "position": 1,
+      "name": "Select your state",
+      "text": "Choose the state where the property is located. Requirements vary by state — the generator applies the correct language automatically."
+    },
+    {
+      "@type": "HowToStep", "position": 2,
+      "name": "Enter grantor and grantee information",
+      "text": "Enter the full legal names and mailing addresses of the grantor (person transferring interest) and grantee (person receiving interest). Names must exactly match the current title."
+    },
+    {
+      "@type": "HowToStep", "position": 3,
+      "name": "Enter the property legal description",
+      "text": "Copy the legal description from the existing deed or county property records. Do not use the street address alone — the legal description is required."
+    },
+    {
+      "@type": "HowToStep", "position": 4,
+      "name": "Select vesting and consideration",
+      "text": "Specify how the grantee will hold title (joint tenancy, tenancy in common, etc.) and the consideration amount. For family transfers, '$1 and other valuable consideration' is standard."
+    },
+    {
+      "@type": "HowToStep", "position": 5,
+      "name": "Preview and download",
+      "text": "Review the generated deed for free. Download the completed PDF for $14.99, then sign before a notary and record with your county recorder's office."
+    }
+  ]
+};
+
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Quitclaim Deed Form: Free Generator + PDF Download",
+  "url": "https://quitclaimform.com/quitclaim-deed-form/",
+  "datePublished": "2024-01-01",
+  "dateModified": "2026-07-01",
+  "author": {
+    "@type": "Organization",
+    "name": "QuitclaimForm",
+    "url": "https://quitclaimform.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "QuitclaimForm",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://quitclaimform.com/logo.svg"
+    }
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://quitclaimform.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Quitclaim Deed Form",
+      "item": "https://quitclaimform.com/quitclaim-deed-form/"
+    }
+  ]
+};
+
+// ── Comparison table data ──────────────────────────────────────────────────────
+
+const comparisonHeaders = ["Generic PDF Download", "This Generator"];
+const comparisonRows = [
+  { label: "State-specific language", values: ["No — uses generic, state-neutral language", "Yes — correct statutory language for all 50 states"], highlight: false },
+  { label: "Witness signature lines", values: ["Typically 0 or 1 witness line", "Correct count for your state (0–2)"], highlight: true },
+  { label: "Notary acknowledgment block", values: ["Generic, may not meet state wording requirements", "State-correct acknowledgment language"], highlight: false },
+  { label: "Legal description guidance", values: ["None", "Step-by-step instructions for finding your legal description"], highlight: false },
+  { label: "Vesting options", values: ["Usually a blank line", "Prompted selection with plain-English explanations"], highlight: false },
+  { label: "Spousal signature prompts", values: ["Never", "Alerts you if your state requires a non-titled spouse to sign"], highlight: true },
+  { label: "Documentary transfer tax guidance", values: ["None", "State-specific transfer tax information"], highlight: false },
+  { label: "Post-execution instructions", values: ["None", "Notarisation, recording, and required accompanying forms"], highlight: false },
+  { label: "California Prop 19 guidance", values: ["Absent or outdated", "Current (reflects post-Feb 2021 rules)"], highlight: false },
+  { label: "Preview before purchase", values: ["No", "Free preview — pay $14.99 only when ready"], highlight: true },
+];
+
+// ── Witness requirement table data ─────────────────────────────────────────────
+
+const witnessRows = [
+  { state: "Florida", requirement: "2 witnesses", citation: "Fla. Stat. § 689.01" },
+  { state: "Georgia", requirement: "2 witnesses (one must be official witness or notary)", citation: "O.C.G.A. § 44-5-30" },
+  { state: "Tennessee", requirement: "2 witnesses", citation: "Tenn. Code Ann. § 66-5-103" },
+  { state: "South Carolina", requirement: "2 witnesses", citation: "S.C. Code § 27-7-10" },
+  { state: "Connecticut", requirement: "2 witnesses", citation: "C.G.S. § 47-5" },
+  { state: "Vermont", requirement: "2 witnesses", citation: "27 V.S.A. § 301" },
+  { state: "Louisiana", requirement: "2 witnesses", citation: "La. Civ. Code Art. 1833" },
+  { state: "North Carolina", requirement: "1 witness or notarisation (one suffices)", citation: "" },
+];
+
+// ── FAQ data (10 questions) ────────────────────────────────────────────────────
 
 const faqItems = [
   {
-    question: 'What information do I need to fill out a quitclaim deed?',
-    answer: 'You need the full legal names of the grantor (person transferring) and grantee (person receiving), the property address, the legal description from your current deed, and the consideration (sale price or "love and affection" for family transfers).',
+    question: "What is a quitclaim deed form used for?",
+    answer: "A quitclaim deed form transfers whatever property interest the grantor currently holds to the grantee — without any warranty of clear title. Common uses include transferring property between spouses in a divorce, from parent to child as a gift, from an individual into an LLC or trust, or to clear a cloud on title caused by a prior owner's claim. Because there's no title warranty, quitclaim deeds are used between parties who already know and trust each other's ownership situation — not in standard real estate sales.",
   },
   {
-    question: 'Where do I find the legal description of my property?',
-    answer: 'The legal description appears on your current deed, your property tax bill, or your county recorder\'s website. It is different from the street address — it describes the property in terms of lots, blocks, or metes and bounds.',
+    question: "How do I fill out a quitclaim deed form?",
+    answer: "You need six things: the grantor's full legal name (exactly as it appears on the current title), the grantee's full legal name and mailing address, the property's legal description (from the existing deed or county records — not the street address), the consideration amount (often \"$1 and other valuable consideration\" for family transfers), the vesting language specifying how the grantee will hold title, and the correct signature and notarisation block for your state. This generator prompts you for each field in plain English, applies the correct state-specific language, and produces a ready-to-sign PDF.",
   },
   {
-    question: 'What is the consideration for a quitclaim deed?',
-    answer: 'Consideration is what the grantee gives in exchange for the property. For family transfers (gifts), it is typically "$10.00 and other good and valuable consideration" or "love and affection." For sales, use the actual purchase price.',
+    question: "Does a quitclaim deed remove me from the mortgage?",
+    answer: "No. A quitclaim deed transfers property ownership — it has no effect on the mortgage. If you sign over your interest in a property with a mortgage, you may no longer own the property, but you remain personally liable on the mortgage until the lender refinances the loan in the other party's name or releases you separately. This is one of the most important points for divorcing spouses: a divorce decree ordering one spouse to \"take the house\" does not remove the other spouse from the mortgage. Only the lender can do that, through a refinance or a formal loan assumption.",
+  },
+  {
+    question: "What's the difference between a quitclaim deed and a warranty deed?",
+    answer: "A warranty deed guarantees that the grantor owns the property free and clear and will defend the grantee against any future title claims. A quitclaim deed makes no such promise — it transfers only whatever interest the grantor currently has, which could be full ownership, a partial interest, a disputed interest, or no interest at all. Warranty deeds are standard in arm's-length property sales. Quitclaim deeds are used when the parties already know the ownership situation and the grantor doesn't need to make any title guarantees.",
+  },
+  {
+    question: "Do I need a lawyer to fill out a quitclaim deed form?",
+    answer: "Not necessarily — but for some situations, legal advice is strongly recommended before you proceed. Consult a real estate attorney if: the property has a mortgage and you're concerned about the due-on-sale clause; the transfer involves California Prop 19 and property tax planning; the property is part of a divorce and the exact terms matter; you're transferring into or out of a trust or LLC; or there is any dispute or ambiguity about who owns the property or in what proportions. This generator produces a legally formatted deed template — it does not verify your ownership interest, provide tax advice, or advise on the legal consequences of the transfer.",
+  },
+  {
+    question: "What is the legal description on a quitclaim deed, and where do I find it?",
+    answer: "The legal description is the formal, recorded description of the property's boundaries — not the street address. Find it on the existing deed (the deed that transferred the property to the current owner), in county property records, or in a title report. It typically looks like a metes-and-bounds description, a lot and block number within a recorded plat, or a section/township/range description for rural properties. Using only a street address is not legally sufficient and will result in the deed being rejected or accepted but legally defective.",
+  },
+  {
+    question: "Does a quitclaim deed have to be notarised?",
+    answer: "Yes, in all 50 states. The grantor's signature must be acknowledged before a notary public, and the notary's stamp and signature must appear on the deed's acknowledgment block. Several states require one or two witnesses in addition to the notary: Florida and Tennessee require two witnesses; Georgia requires one witness. The generator includes the correct acknowledgment language and the correct number of witness signature lines for your state. Do not sign the deed before the notary is present — the notary must witness the signing.",
+  },
+  {
+    question: "How much does it cost to record a quitclaim deed?",
+    answer: "Recording fees vary by state and county. Typical ranges: $10 to $30 for the first page of the deed, plus $5 to $15 for each additional page. Most single quitclaim deeds are one to two pages. In addition to the recording fee, many states impose a documentary transfer tax based on the consideration amount or the property's value. Florida's documentary stamp tax is $0.70 per $100 of consideration. Texas has no state deed transfer tax. California's documentary transfer tax is typically $0.55 per $500 of consideration, collected at the county level.",
+  },
+  {
+    question: "Can I use the same quitclaim deed form in every state?",
+    answer: "No. Quitclaim deed requirements are set by each state's property code and differ significantly. Florida requires two witnesses; California requires a Preliminary Change of Ownership Report at recording; Texas requires both spouses to sign on community property even if only one spouse is on the title; New York uses a specific acknowledgment form. A form built for one state is not automatically valid in another. This generator applies the correct statutory language, execution requirements, and accompanying filing instructions for whichever state the property is located in.",
+  },
+  {
+    question: "What happens if I make a mistake on a quitclaim deed?",
+    answer: "It depends on the type of mistake. Minor clerical errors (a misspelled middle name, a transposed digit in a parcel number) may be correctable with a corrective quitclaim deed — a new deed that corrects the specific error and references the original. More significant errors — a wrong legal description, reversed grantor and grantee names, missing required signatures — may render the deed defective and require a new deed executed by the original grantor. If the original grantor is unavailable, correcting the title may require a quiet title action in court. Double-check every field before generating, and have a real estate attorney review the completed deed before recording.",
   },
 ];
-
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Quitclaim Deed Form — QuitclaimForm.com",
-  "url": "https://quitclaimform.com/quitclaim-deed-form",
-  "description": "Fill out our quitclaim deed form for all 50 states. Free preview, $14.99 PDF download. State-compliant with correct witness and notary requirements.",
-};
 ---
-<BaseLayout
-  title="Quitclaim Deed Form — All 50 States | QuitclaimForm.com"
-  description="Fill out our quitclaim deed form for all 50 states. Free preview, $14.99 state-compliant PDF download with correct witness and notary requirements."
-  canonical="/quitclaim-deed-form"
->
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 
-  <nav class="text-sm text-gray-500 mb-6">
-    <a href="/" class="hover:text-blue-600">Home</a>
-    <span class="mx-2">/</span>
-    <span>Quitclaim Deed Form</span>
+<BaseLayout
+  title="Quitclaim Deed Form: Free Generator + PDF Download"
+  description="Generate a state-specific quitclaim deed form in minutes. Enter your property details, download a ready-to-sign PDF for $14.99 — the right language for your state, every time."
+  canonical="/quitclaim-deed-form/"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- ── Breadcrumb ──────────────────────────────────────────────────────────── -->
+  <nav class="qdf-breadcrumb" aria-label="Breadcrumb">
+    <ol class="qdf-breadcrumb__list">
+      <li><a href="/">Home</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page">Quitclaim Deed Form</li>
+    </ol>
   </nav>
 
-  <h1 class="text-3xl font-bold mb-4">Quitclaim Deed Form</h1>
-  <p class="text-gray-600 mb-6">
-    Complete the form below to generate your state-compliant quitclaim deed. Preview is free.
-    Pay $14.99 to download your completed PDF, ready to sign, notarize, and record.
-  </p>
+  <!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+  <header class="qdf-hero">
+    <h1 class="qdf-hero__h1">Quitclaim Deed Form</h1>
+    <p class="qdf-hero__lede">
+      A state-specific, legally formatted quitclaim deed — generated from your information, ready to sign
+      and record. Free preview. Download the completed PDF for $14.99.
+    </p>
+  </header>
 
-  <DeedForm />
+  <!-- ── Citable Answer Block ───────────────────────────────────────────────── -->
+  <CitableAnswerBlock
+    question="What is a quitclaim deed form?"
+    answer="A quitclaim deed form is a legal document that transfers whatever ownership interest the grantor currently holds in real property to the grantee — with no warranty that the title is clear or that the grantor actually owns what they believe they own. Under the property codes adopted in all 50 states (see, e.g., Cal. Civ. Code § 1092; Fla. Stat. § 689.02; Tex. Prop. Code § 5.022), a quitclaim deed is a valid instrument for conveying real property interests when properly executed and recorded. Review any completed deed with a licensed real estate attorney before recording."
+    source="State property codes (Cal. Civ. Code § 1092; Fla. Stat. § 689.02; Tex. Prop. Code § 5.022). Last verified: June 2026."
+  />
 
+  <!-- ── Trust Strip ─────────────────────────────────────────────────────────── -->
+  <TrustStrip />
+
+  <!-- ── Form Disclaimer ────────────────────────────────────────────────────── -->
+  <Callout type="warning" title="Before you start">
+    <p>
+      This tool generates a quitclaim deed template based on the information you enter. It does not verify
+      your information, confirm your ownership interest, or provide legal advice. The generated document is
+      a starting point — not a finished legal instrument.
+    </p>
+    <p style="margin-top: 0.75rem;">
+      A quitclaim deed transfers only the interest you actually own. If there is a mortgage on the property,
+      consult your lender before transferring. By using this tool you confirm that you have read and agree
+      to our <a href="/terms/">Terms of Service</a> and <a href="/terms/">Disclaimer</a>.
+    </p>
+  </Callout>
+
+  <!-- ── Generator Form ─────────────────────────────────────────────────────── -->
+  <section class="qdf-form-section" aria-labelledby="form-heading" id="generator">
+    <h2 class="sr-only" id="form-heading">Generate Your Quitclaim Deed</h2>
+    <DeedForm />
+  </section>
+
+  <!-- ── Divider ────────────────────────────────────────────────────────────── -->
+  <hr class="qdf-divider" />
+
+  <!-- ── Fields Guide ───────────────────────────────────────────────────────── -->
+  <section class="qdf-content" aria-labelledby="fields-heading">
+    <h2 id="fields-heading">What Fields Are on a Quitclaim Deed Form?</h2>
+    <p>
+      A standard quitclaim deed form contains six categories of information. Every field matters — an
+      error in any of them can cause the county recorder to reject the deed outright, or worse, create
+      a defective title that isn't discovered until the property is sold or refinanced.
+    </p>
+
+    <h3 id="grantor-information">Grantor Information</h3>
+    <p>
+      The grantor is the person transferring their ownership interest. The name on the deed must exactly
+      match the name on the current title — not a nickname, not an abbreviation, not a married name that
+      wasn't on the original title. If the current title reads "Robert James Wilson," the deed must read
+      "Robert James Wilson," not "Bob Wilson" or "Robert Wilson."
+    </p>
+    <p>
+      If the property is owned by multiple people, all of them must appear as grantors. If it's owned by
+      an LLC or trust, the entity — not the individual members or trustees — is the grantor, and whoever
+      signs must have authority to sign on the entity's behalf.
+    </p>
+
+    <h3 id="grantee-information">Grantee Information</h3>
+    <p>
+      The grantee is the person receiving the interest. Their name as it appears on the deed will become
+      their name on the new title. Spell it correctly. Include the full legal name, not a nickname. Include
+      the grantee's mailing address — most states require it, and county recorders need it to send the
+      recorded deed back.
+    </p>
+    <p>
+      If multiple people are receiving the property, the form must name all of them and specify how they
+      will hold title (more on this below under Vesting).
+    </p>
+
+    <h3 id="legal-description">Property Legal Description</h3>
+
+    <Callout type="warning" title="The #1 source of deed rejection">
+      <p>
+        The legal description is <strong>not the street address</strong>. It's the formal description
+        of the property boundaries as recorded in the county's official records. Find it on the existing
+        deed, county property records, or a title report. Never copy it from a tax bill or a real estate
+        listing site.
+      </p>
+    </Callout>
+
+    <p>
+      The legal description is either a metes-and-bounds description (using compass directions and
+      distances), a lot and block number within a recorded subdivision plat, or a section/township/range
+      description used for rural properties.
+    </p>
+    <p>
+      If the legal description is wrong, the deed may not transfer the property the grantor intended,
+      may not be accepted for recording, or may cloud the title for future transactions.
+    </p>
+
+    <h3 id="consideration">Consideration</h3>
+    <p>
+      Consideration is the value exchanged for the transfer. In a standard real estate sale, it's the
+      purchase price. In a family transfer — parent to child, spouse to spouse, sibling to sibling —
+      the stated consideration is typically nominal: "$1.00 and other valuable consideration" or "love
+      and affection" are both legally sufficient in most states when no money actually changes hands.
+    </p>
+    <p>
+      Why it matters: some states base documentary transfer taxes on the stated consideration. In
+      Florida, the documentary stamp tax is $0.70 per $100 of consideration. In New York, the state
+      transfer tax is $0.50 per $500. If real money is changing hands, the stated consideration should
+      reflect the actual amount paid. If it's a family gift, "$1 and other valuable consideration"
+      typically minimises or eliminates the transfer tax.
+    </p>
+
+    <h3 id="vesting">Vesting — How the Grantee Will Hold Title</h3>
+    <p>
+      If the grantee is one person, vesting is simple: "[Name], a single person" or "[Name], a married
+      person as their sole and separate property." If the grantee is more than one person, the vesting
+      language determines what happens when one of them dies:
+    </p>
+    <ul>
+      <li>
+        <strong>Joint tenancy with right of survivorship:</strong> When one joint tenant dies, their
+        share passes automatically to the surviving joint tenant(s). No probate.
+      </li>
+      <li>
+        <strong>Tenancy in common:</strong> Each owner holds a divisible share that passes through
+        their estate at death. Used when co-owners want to leave their share to someone other than
+        the other owner.
+      </li>
+      <li>
+        <strong>Tenancy by the entireties:</strong> Available only to married couples in states that
+        recognise it (about 25 states). Provides creditor protection that joint tenancy does not.
+      </li>
+    </ul>
+    <p>
+      Getting vesting wrong doesn't invalidate the deed, but it creates an unintended result that may
+      take a second deed — and possibly a court proceeding — to fix. The generator prompts you to
+      select the correct vesting type and writes the language accordingly.
+    </p>
+
+    <h3 id="signature-notarisation">Signature and Notarisation Block</h3>
+    <p>
+      The grantor must sign the deed. In every U.S. state, that signature must be acknowledged before
+      a notary public. The notary's stamp, seal, and signature on the acknowledgment block are what
+      tell the county recorder that the person who signed is who they say they are.
+    </p>
+    <p>
+      Several states require one or two witnesses in addition to the notary. A generic deed form that
+      doesn't include witness signature lines is defective in Florida, Tennessee, Georgia, and several
+      other states.
+    </p>
+
+    <div class="qdf-witness-table">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Witnesses required</th>
+            <th>Statute</th>
+          </tr>
+        </thead>
+        <tbody>
+          {witnessRows.map(row => (
+            <tr>
+              <td>{row.state}</td>
+              <td>{row.requirement}</td>
+              <td><span class="qdf-statute">{row.citation}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      The generator adds the correct signature block — with the right number of witness lines and the
+      correct notary acknowledgment language — for whichever state you select.
+    </p>
+  </section>
+
+  <!-- ── Comparison ─────────────────────────────────────────────────────────── -->
+  <section class="qdf-content" aria-labelledby="comparison-heading">
+    <h2 id="comparison-heading">Generic PDF vs. This Generator — What's the Difference?</h2>
+    <p>
+      Most free quitclaim deed PDFs you find online are state-neutral forms that happen to use the word
+      "quitclaim." They may technically transfer property in some states. They will fail in others.
+    </p>
+
+    <ComparisonTable headers={comparisonHeaders} rows={comparisonRows} />
+
+    <Callout type="tip" title="The gap that matters">
+      <p>
+        Florida's two-witness requirement (Fla. Stat. § 689.01) is one of the most commonly missed rules
+        in online deed templates. A deed executed with only a notary and no witnesses is defective under
+        Florida law and potentially voidable. Most free PDF templates include no witness lines at all.
+        This generator includes the correct two-witness blocks, automatically, whenever you select Florida.
+      </p>
+    </Callout>
+  </section>
+
+  <!-- ── Common Mistakes ────────────────────────────────────────────────────── -->
+  <section class="qdf-content" aria-labelledby="mistakes-heading">
+    <h2 id="mistakes-heading">The #1 Mistake People Make With Quitclaim Deed Forms</h2>
+    <p>
+      Using a form built for some other state — or for no state in particular.
+    </p>
+    <p>
+      Quitclaim deed requirements are set by state law, not federal law. There is no national standard.
+      What's valid in Ohio is defective in Florida. What's optional in California is mandatory in Georgia.
+      The "blank quitclaim deed form" that ranks at the top of many Google searches is, in practice, a
+      document designed to work in the most permissive possible state and used everywhere regardless of
+      whether it works.
+    </p>
+    <p>
+      The consequences are not always immediate. The recorder may accept the deed. The property may appear
+      to transfer. The defect may only surface when:
+    </p>
+    <ul>
+      <li>The property is sold and a title company orders a title search</li>
+      <li>The grantee tries to refinance and the lender's title review flags the defective execution</li>
+      <li>One of the parties dies and the estate is administered, revealing the transfer didn't accomplish what was intended</li>
+      <li>A family dispute arises and the defective deed becomes a litigation target</li>
+    </ul>
+    <p>
+      By then, the grantor may be dead, unavailable, or estranged. Fixing a defective deed after the
+      fact can require a quiet title action — a court proceeding that can cost thousands of dollars and
+      months of time.
+    </p>
+
+    <h3 id="common-mistakes">Common Mistakes on Quitclaim Deed Forms</h3>
+
+    <div class="qdf-mistake-list">
+      <div class="qdf-mistake">
+        <h4>Grantor/grantee confusion</h4>
+        <p>
+          This happens more often than you'd think. The grantor gives away interest. The grantee receives
+          it. In a divorce, if Spouse A is keeping the house, Spouse B is the grantor (the one giving up
+          their claim) and Spouse A is the grantee. Reversing these names results in a deed that transfers
+          the house to the wrong person.
+        </p>
+      </div>
+
+      <div class="qdf-mistake">
+        <h4>Using the street address instead of the legal description</h4>
+        <p>
+          "123 Oak Street, Austin, TX 78701" is not a legal description. It doesn't appear on a deed.
+          The legal description is what identifies the specific parcel of land — its boundaries, its
+          relationship to a recorded plat or survey. A deed that uses only a street address may be
+          rejected for recording or may be ambiguous about which parcel was transferred.
+        </p>
+      </div>
+
+      <div class="qdf-mistake">
+        <h4>Missing witness lines in witness-requirement states</h4>
+        <p>
+          Florida, Tennessee, Georgia, South Carolina, and Louisiana require one or two witnesses in
+          addition to notarisation. A deed executed without those witnesses is defective even if the
+          notary signed. Many online templates include no witness lines at all.
+        </p>
+      </div>
+
+      <div class="qdf-mistake">
+        <h4>Not getting both spouses to sign on community property</h4>
+        <p>
+          In community property states — California, Texas, Arizona, Nevada, Idaho, Louisiana, New Mexico,
+          Washington, and Wisconsin — property acquired during marriage is typically owned equally by both
+          spouses. A quitclaim deed from only one spouse may convey only that spouse's half-interest.
+          Texas law (Tex. Fam. Code § 3.102) requires both spouses to sign to convey community property.
+          In California, the same rule applies under Cal. Fam. Code § 1102.
+        </p>
+      </div>
+
+      <div class="qdf-mistake">
+        <h4>Choosing the wrong vesting for multiple grantees</h4>
+        <p>
+          Two siblings receiving property from a parent need to specify whether they're taking as joint
+          tenants (survivor gets everything) or tenants in common (each can leave their share to their
+          own heirs). The default in most states is tenancy in common — but if one sibling wants the
+          survivor to inherit, joint tenancy language must be explicit on the face of the deed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── State Requirements ─────────────────────────────────────────────────── -->
+  <section class="qdf-content" aria-labelledby="state-requirements-heading">
+    <h2 id="state-requirements-heading">State Requirements Change Everything</h2>
+    <p>
+      There is no such thing as a <a href="/what-is-a-quitclaim-deed/">quitclaim deed</a> form that works
+      equally well in every state. Every state has its own statutory requirements for deed execution,
+      recording, transfer taxes, and accompanying filings. Here are the most commonly misunderstood
+      state-specific rules:
+    </p>
+
+    <div class="qdf-state-card">
+      <h3>California</h3>
+      <p>
+        California requires a Preliminary Change of Ownership Report (PCOR, form BOE-502-A) to be filed
+        with the county recorder at the time of recording (Cal. Rev. &amp; Tax. Code § 480.3). For
+        <a href="/quitclaim-deed/california/parents-to-children/">parent-to-child transfers</a> after
+        February 16, 2021, California Prop 19 (Cal. Rev. &amp; Tax. Code § 63.2) narrowed the property
+        tax reassessment exclusion significantly — the child must occupy the property as their primary
+        residence within one year, and the exclusion is capped at $1 million of assessed value difference.
+        Forms and guidance that predate 2021 reflect the prior, superseded rules.
+      </p>
+    </div>
+
+    <div class="qdf-state-card">
+      <h3>Florida</h3>
+      <p>
+        <a href="/quitclaim-deed/florida/">Florida</a> requires two witnesses plus a notary on every deed
+        (Fla. Stat. § 689.01). If the property is the grantor's homestead and the grantor is married,
+        both spouses must sign even if only one holds title — this is a constitutional requirement
+        (Fla. Const. art. X, § 4). Florida's documentary stamp tax ($0.70 per $100 of consideration)
+        applies even on family transfers if there is a mortgage on the property (the mortgage balance
+        counts as consideration).
+      </p>
+    </div>
+
+    <div class="qdf-state-card">
+      <h3>Texas</h3>
+      <p>
+        Texas requires both spouses to sign any deed conveying community property (Tex. Fam. Code § 3.102).
+        Texas has no state deed transfer tax — unlike most states — so recording costs are lower. Texas
+        also has a Transfer-on-Death Deed framework (Tex. Prop. Code Ch. 114) that may be a better
+        instrument than a quitclaim deed for estate-planning transfers.
+      </p>
+    </div>
+
+    <div class="qdf-state-card">
+      <h3>New York</h3>
+      <p>
+        New York has county-level transfer taxes, and New York City adds additional transfer taxes and a
+        mansion tax on transfers of $1 million or more. The notary acknowledgment language required in
+        New York is specific and differs from the general-purpose acknowledgment used in many states.
+      </p>
+    </div>
+
+    <div class="qdf-state-card">
+      <h3>Georgia</h3>
+      <p>
+        Georgia adopted a Transfer-on-Death Deed framework in 2024 (O.C.G.A. § 44-17-1 et seq.) — a new
+        option that many users don't know exists. Georgia also requires one witness on quitclaim deeds
+        (O.C.G.A. § 44-5-30) in addition to notarisation.
+      </p>
+    </div>
+
+    <p>
+      The generator handles all of this automatically. When you select your state, the correct language,
+      execution requirements, and state-specific instructions are applied to your document.
+    </p>
+  </section>
+
+  <!-- ── After the Form ─────────────────────────────────────────────────────── -->
+  <section class="qdf-content" aria-labelledby="after-form-heading">
+    <h2 id="after-form-heading">After the Form: Notarisation and Recording</h2>
+    <p>Generating the form is step one. Here's what happens next:</p>
+
+    <div class="qdf-steps">
+      <ProcessStep
+        number={1}
+        title="Sign before a notary — do not sign early"
+        description="The grantor must sign the deed in the physical presence of a notary public. Do not sign the deed before you get to the notary. The notary's acknowledgment certifies that the person signing is who they say they are and that they signed voluntarily — if they weren't present when you signed, the acknowledgment is false and the deed is defective."
+      />
+      <ProcessStep
+        number={2}
+        title="Gather witnesses if your state requires them"
+        description="If you selected Florida, Tennessee, Georgia, South Carolina, or Louisiana, the deed includes witness signature lines. Witnesses must be adults who are not parties to the deed. They sign in the presence of both the grantor and each other, typically at the same notary appointment."
+      />
+      <ProcessStep
+        number={3}
+        title="Record the deed with the county recorder"
+        description="Take the original signed, notarised deed to the county recorder's office (also called the county clerk or register of deeds) in the county where the property is located. Pay the recording fee — typically $10 to $30 for the first page, plus $5 to $15 per additional page. Recording is what makes the transfer legally effective against third parties."
+      />
+      <ProcessStep
+        number={4}
+        title="File any required accompanying documents"
+        description="California requires the PCOR (BOE-502-A) at recording. Some counties require a Transfer Tax Affidavit or a Preliminary Change of Ownership Statement. The generator's instruction sheet lists any required accompanying filings for your state."
+      />
+      <ProcessStep
+        number={5}
+        title="Notify relevant parties"
+        description="Inform your homeowner's insurance company of the change in ownership. Notify your mortgage lender — a quitclaim deed does not remove the grantor from the mortgage, and most mortgages contain a due-on-sale clause that may technically be triggered by a transfer."
+        isLast={true}
+      />
+    </div>
+
+    <div class="qdf-cost-summary">
+      <div class="qdf-cost-item">
+        <span class="qdf-cost-label">Estimated time to generate</span>
+        <span class="qdf-cost-value">30 minutes</span>
+      </div>
+      <div class="qdf-cost-item">
+        <span class="qdf-cost-label">Time at notary</span>
+        <span class="qdf-cost-value">15–30 minutes</span>
+      </div>
+      <div class="qdf-cost-item">
+        <span class="qdf-cost-label">Estimated recording cost</span>
+        <span class="qdf-cost-value">$15–$50 + any transfer taxes</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Legal Disclaimer ───────────────────────────────────────────────────── -->
   <Disclaimer />
 
+  <!-- ── FAQ ────────────────────────────────────────────────────────────────── -->
   <FAQ items={faqItems} />
+
+  <!-- ── Bottom CTA ─────────────────────────────────────────────────────────── -->
+  <section class="qdf-bottom-cta" aria-labelledby="bottom-cta-heading">
+    <h2 id="bottom-cta-heading">Ready to Generate Your Quitclaim Deed?</h2>
+    <p>
+      Free preview. Download the state-specific, ready-to-sign PDF for $14.99.
+      The correct language, signature blocks, and filing instructions for your state — automatically.
+    </p>
+    <a href="#generator" class="btn-primary qdf-cta-btn">Start My Deed</a>
+  </section>
 </BaseLayout>
+
+<style>
+  /* ── Breadcrumb ─────────────────────────────────────────────────────────── */
+  .qdf-breadcrumb {
+    margin-bottom: var(--space-6);
+  }
+
+  .qdf-breadcrumb__list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  .qdf-breadcrumb__list a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .qdf-breadcrumb__list a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  /* ── Hero ───────────────────────────────────────────────────────────────── */
+  .qdf-hero {
+    margin-bottom: var(--space-6);
+  }
+
+  .qdf-hero__h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+    letter-spacing: -0.02em;
+  }
+
+  .qdf-hero__lede {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 58ch;
+  }
+
+  /* ── Form section ───────────────────────────────────────────────────────── */
+  .qdf-form-section {
+    margin: var(--space-6) 0 var(--space-8);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .qdf-divider {
+    border: none;
+    border-top: 1px solid var(--color-divider);
+    margin: var(--space-10) 0;
+  }
+
+  /* ── Content sections ───────────────────────────────────────────────────── */
+  .qdf-content {
+    margin-bottom: var(--space-10);
+  }
+
+  .qdf-content h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+    margin-top: var(--space-10);
+    line-height: 1.2;
+  }
+
+  .qdf-content h2:first-child {
+    margin-top: 0;
+  }
+
+  .qdf-content h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+  }
+
+  .qdf-content h4 {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+    line-height: 1.4;
+  }
+
+  .qdf-content p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  .qdf-content ul,
+  .qdf-content ol {
+    margin: var(--space-4) 0;
+    padding-left: var(--space-6);
+  }
+
+  .qdf-content li {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-2);
+  }
+
+  .qdf-content a {
+    color: var(--color-teal);
+    text-decoration: underline;
+    text-decoration-color: var(--color-teal-border);
+    text-underline-offset: 2px;
+  }
+
+  .qdf-content a:hover {
+    color: var(--color-teal-hover);
+    text-decoration-color: var(--color-teal);
+  }
+
+  /* ── Witness table ──────────────────────────────────────────────────────── */
+  .qdf-witness-table {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    margin: var(--space-5) 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .qdf-witness-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    min-width: 480px;
+  }
+
+  .qdf-witness-table thead th {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-secondary);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .qdf-witness-table tbody td {
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-divider);
+    vertical-align: middle;
+    font-family: var(--font-body);
+  }
+
+  .qdf-witness-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .qdf-witness-table tbody tr:nth-child(odd) td {
+    background: var(--color-surface-subtle);
+  }
+
+  .qdf-statute {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  /* ── Mistake list ───────────────────────────────────────────────────────── */
+  .qdf-mistake-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin: var(--space-6) 0;
+  }
+
+  .qdf-mistake {
+    border-left: 3px solid var(--color-teal);
+    padding-left: var(--space-5);
+  }
+
+  .qdf-mistake h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .qdf-mistake p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── State cards ────────────────────────────────────────────────────────── */
+  .qdf-state-card {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-6);
+    margin: var(--space-4) 0;
+  }
+
+  .qdf-state-card h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-h4);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .qdf-state-card p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .qdf-state-card a {
+    color: var(--color-teal);
+    text-decoration: underline;
+    text-decoration-color: var(--color-teal-border);
+    text-underline-offset: 2px;
+  }
+
+  .qdf-state-card a:hover {
+    color: var(--color-teal-hover);
+    text-decoration-color: var(--color-teal);
+  }
+
+  /* ── Process steps ──────────────────────────────────────────────────────── */
+  .qdf-steps {
+    margin: var(--space-6) 0;
+  }
+
+  /* ── Cost summary ───────────────────────────────────────────────────────── */
+  .qdf-cost-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: var(--space-5) var(--space-6);
+    background: var(--color-teal-light);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-teal-border);
+  }
+
+  .qdf-cost-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .qdf-cost-label {
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-teal-active);
+  }
+
+  .qdf-cost-value {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-teal-hover);
+  }
+
+  /* ── Bottom CTA ─────────────────────────────────────────────────────────── */
+  .qdf-bottom-cta {
+    text-align: center;
+    padding: var(--space-10) var(--space-6);
+    background: var(--color-surface-subtle);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
+    margin-top: var(--space-10);
+  }
+
+  .qdf-bottom-cta h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .qdf-bottom-cta p {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 52ch;
+    margin: 0 auto var(--space-6);
+  }
+
+  .qdf-cta-btn {
+    display: inline-block;
+    padding: var(--space-4) var(--space-8);
+    font-size: var(--text-base);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────────────────── */
+  @media (max-width: 640px) {
+    .qdf-hero__h1 {
+      font-size: var(--text-h2);
+    }
+
+    .qdf-hero__lede {
+      font-size: var(--text-base);
+    }
+
+    .qdf-cost-summary {
+      flex-direction: column;
+    }
+
+    .qdf-bottom-cta {
+      padding: var(--space-8) var(--space-5);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
