@@ -54,7 +54,7 @@ const states = [
 ---
 <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 my-8">
   <div class="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-t-lg -mx-6 -mt-6 mb-6">
-    Free Preview — Pay $14.99 to Download Your State-Compliant PDF
+    Free Quitclaim Deed Generator — Instant PDF Download
   </div>
   <form id="deed-form" class="space-y-5">
     <div>
@@ -89,9 +89,11 @@ const states = [
     </div>
     <div class="pt-2">
       <p class="text-xs text-gray-500 mb-3">This document is for informational purposes only. Consult an attorney before using.</p>
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-        Generate My Quitclaim Deed — $14.99
+      <button type="submit" id="deed-submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+        Generate My Quitclaim Deed — Free Download
       </button>
+      <p id="deed-status" class="text-sm text-gray-500 mt-2 text-center hidden">Generating your deed...</p>
+      <p id="deed-error" class="text-sm text-red-600 mt-2 text-center hidden"></p>
     </div>
   </form>
 </div>
@@ -100,14 +102,46 @@ const states = [
   document.getElementById('deed-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
+    const submitBtn = document.getElementById('deed-submit') as HTMLButtonElement;
+    const statusEl = document.getElementById('deed-status') as HTMLElement;
+    const errorEl = document.getElementById('deed-error') as HTMLElement;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Generating…';
+    statusEl.classList.remove('hidden');
+    errorEl.classList.add('hidden');
+
     const data = Object.fromEntries(new FormData(form));
 
-    const res = await fetch('/api/create-checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    const { url } = await res.json();
-    if (url) window.location.href = url;
+    try {
+      const res = await fetch('/api/generate-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({ error: 'Request failed' }));
+        throw new Error(body.error || `Error ${res.status}`);
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `quitclaim-deed-${String(data.state).toLowerCase()}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      statusEl.textContent = 'Your deed is downloading.';
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+      statusEl.classList.add('hidden');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Generate My Quitclaim Deed — Free Download';
+    }
   });
 </script>

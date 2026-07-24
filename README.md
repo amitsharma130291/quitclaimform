@@ -1,20 +1,19 @@
 # QuitclaimForm.com
 
-State-compliant quitclaim deed generator. Free preview → $14.99 PDF download.
+State-compliant quitclaim deed generator. Free PDF download.
 
 ## Tech Stack
 
 - **Framework:** Astro 4 (SSR, Vercel adapter)
 - **Styling:** Tailwind CSS
 - **PDF Generation:** PDFKit
-- **Payments:** Stripe Checkout (one-time, $14.99)
 - **Hosting:** Vercel
 
 ## Local Development
 
 ```bash
 npm install
-cp .env.example .env   # add your Stripe keys
+cp .env.example .env
 npm run dev            # http://localhost:4321
 ```
 
@@ -22,8 +21,6 @@ npm run dev            # http://localhost:4321
 
 | Variable | Description |
 |---|---|
-| `STRIPE_SECRET_KEY` | Stripe secret key (sk_test_... or sk_live_...) |
-| `STRIPE_PUBLISHABLE_KEY` | Stripe publishable key |
 | `PUBLIC_SITE_URL` | Production URL (https://quitclaimform.com) |
 
 ## Deployment
