@@ -1,0 +1,130 @@
+---
+interface Heading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+---
+
+<nav class="sticky-toc" aria-label="Table of contents">
+  <p class="sticky-toc__label">On this page</p>
+  <ul class="sticky-toc__list" role="list">
+    {headings.map(h => (
+      <li class:list={['sticky-toc__item', `sticky-toc__item--level${h.level}`]}>
+        <a href={`#${h.id}`} class="sticky-toc__link" data-toc-id={h.id}>
+          {h.text}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  function initTOC() {
+    const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc-id]');
+    if (!links.length) return;
+
+    const ids = Array.from(links).map(l => l.dataset.tocId as string);
+    const headingEls = ids.map(id => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          const id = entry.target.id;
+          const link = document.querySelector(`[data-toc-id="${id}"]`);
+          if (link) {
+            if (entry.isIntersecting) {
+              document.querySelectorAll('[data-toc-id]').forEach(l => l.classList.remove('is-active'));
+              link.classList.add('is-active');
+            }
+          }
+        });
+      },
+      { rootMargin: '0px 0px -60% 0px', threshold: 0 }
+    );
+
+    headingEls.forEach(el => observer.observe(el));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTOC);
+  } else {
+    initTOC();
+  }
+</script>
+
+<style>
+  /* Desktop: sticky sidebar */
+  .sticky-toc {
+    position: sticky;
+    top: calc(var(--header-height, 72px) + var(--space-5));
+    max-height: calc(100vh - var(--header-height, 72px) - var(--space-8));
+    overflow-y: auto;
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-sm);
+  }
+
+  .sticky-toc__label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  .sticky-toc__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .sticky-toc__item--level3 .sticky-toc__link,
+  .sticky-toc__item--level4 .sticky-toc__link {
+    padding-left: var(--space-4);
+    font-size: var(--text-xs);
+  }
+
+  .sticky-toc__link {
+    display: block;
+    padding: 0.35rem 0.5rem;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    line-height: 1.4;
+    transition:
+      color var(--duration-micro) var(--ease-standard),
+      background var(--duration-micro) var(--ease-standard);
+    border-left: 2px solid transparent;
+  }
+
+  .sticky-toc__link:hover {
+    color: var(--color-teal);
+    background: var(--color-teal-light);
+  }
+
+  .sticky-toc__link.is-active {
+    color: var(--color-teal);
+    background: var(--color-teal-light);
+    border-left-color: var(--color-teal);
+    font-weight: 600;
+  }
+
+  /* Mobile: hide sticky sidebar; parent layout shows inline version */
+  @media (max-width: 1023px) {
+    .sticky-toc {
+      display: none;
+    }
+  }
+</style>

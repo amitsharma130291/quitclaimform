@@ -1,0 +1,117 @@
+---
+interface Row {
+  label: string;
+  values: string[];
+  highlight?: boolean;
+}
+
+interface Props {
+  headers: string[];
+  rows: Row[];
+}
+
+const { headers, rows } = Astro.props;
+
+// Positive value indicators for teal check rendering
+const positiveValues = new Set(['yes', 'true', '✓', 'included', 'free', 'unlimited']);
+const isPositive = (val: string) => positiveValues.has(val.toLowerCase().trim());
+---
+
+<div class="comparison-table-wrap">
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th class="comparison-table__label-col" scope="col">Feature</th>
+        {headers.map(h => (
+          <th scope="col">{h}</th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr class:list={[{ 'comparison-table__row--highlight': row.highlight, 'comparison-table__row--alt': i % 2 !== 0 }]}>
+          <td class="comparison-table__label">{row.label}</td>
+          {row.values.map(val => (
+            <td>
+              {isPositive(val) ? (
+                <span class="comparison-table__check" aria-label="Yes">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+              ) : val}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .comparison-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    margin: var(--space-5) 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    min-width: 480px;
+  }
+
+  .comparison-table thead th {
+    background: var(--color-surface-subtle);
+    color: var(--color-text-secondary);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+  }
+
+  .comparison-table__label-col {
+    min-width: 160px;
+  }
+
+  .comparison-table tbody td {
+    padding: var(--space-3) var(--space-4);
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-divider);
+    vertical-align: middle;
+  }
+
+  .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .comparison-table__label {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+
+  .comparison-table__row--alt td {
+    background: var(--color-surface-subtle);
+  }
+
+  .comparison-table__row--highlight td {
+    background: var(--color-teal-light);
+    font-weight: 600;
+    color: var(--color-teal-active);
+  }
+
+  .comparison-table__check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-teal);
+  }
+</style>

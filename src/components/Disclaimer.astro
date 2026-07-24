@@ -1,5 +1,49 @@
-<div class="bg-amber-50 border border-amber-200 rounded p-4 my-6 text-sm text-amber-900">
-  <strong>Legal Disclaimer:</strong> This document is for informational purposes only and does not constitute legal advice.
-  QuitclaimForm.com is not a law firm. Consult a licensed attorney before executing any deed.
-  Requirements vary by state and individual circumstances.
+---
+---
+<div class="disclaimer" role="note" aria-label="Legal disclaimer">
+  <span class="disclaimer__icon" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  </span>
+  <p class="disclaimer__text">
+    <strong>Legal Disclaimer:</strong> This document is for informational purposes only and does not constitute legal advice.
+    QuitclaimForm.com is not a law firm. Consult a licensed attorney before executing any deed.
+    Requirements vary by state and individual circumstances.
+  </p>
 </div>
+
+<style>
+  .disclaimer {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    background: var(--color-warning-bg);
+    border-left: 3px solid var(--color-warning);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    margin: var(--space-5) 0;
+  }
+
+  .disclaimer__icon {
+    flex-shrink: 0;
+    color: var(--color-warning);
+    display: flex;
+    align-items: center;
+    margin-top: 0.1rem;
+  }
+
+  .disclaimer__text {
+    font-size: var(--text-sm);
+    color: #92400e;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .disclaimer__text strong {
+    color: var(--color-warning);
+    font-weight: 600;
+  }
+</style>

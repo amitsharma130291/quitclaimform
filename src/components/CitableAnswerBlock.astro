@@ -6,8 +6,39 @@ interface Props {
 }
 const { question, answer, source } = Astro.props;
 ---
-<div class="bg-blue-50 border-l-4 border-blue-600 p-5 my-6 rounded-r">
-  <p class="font-semibold text-blue-900 mb-2">{question}</p>
-  <p class="text-gray-800 mb-2">{answer}</p>
-  <p class="text-xs text-gray-500">Source: {source}</p>
+<div class="citable-answer" role="note">
+  <p class="citable-answer__question">{question}</p>
+  <p class="citable-answer__answer">{answer}</p>
+  <p class="citable-answer__source">Source: {source}</p>
 </div>
+
+<style>
+  .citable-answer {
+    border-left: 3px solid var(--color-teal);
+    background: var(--color-teal-light);
+    padding: var(--space-5);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: var(--space-5) 0;
+  }
+
+  .citable-answer__question {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    line-height: 1.4;
+  }
+
+  .citable-answer__answer {
+    font-family: var(--font-body);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-3);
+  }
+
+  .citable-answer__source {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+</style>

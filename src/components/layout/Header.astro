@@ -1,0 +1,308 @@
+---
+---
+<header class="site-header" id="site-header">
+  <div class="container">
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/" class="logo" aria-label="QuitclaimForm home">
+        QuitclaimForm<span class="logo-dot">.</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="/what-is-a-quitclaim-deed/">Learn</a></li>
+        <li><a href="/quitclaim-deed/">State Guides</a></li>
+        <li><a href="/quitclaim-deed-form/">Deed Forms</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+      </ul>
+
+      <a href="/quitclaim-deed-form/" class="btn-primary header-cta">
+        Start My Deed
+      </a>
+
+      <button
+        class="hamburger"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        type="button"
+      >
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+        <span class="hamburger__line"></span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav aria-label="Mobile navigation">
+      <ul role="list">
+        <li><a href="/what-is-a-quitclaim-deed/">Learn</a></li>
+        <li><a href="/quitclaim-deed/">State Guides</a></li>
+        <li><a href="/quitclaim-deed-form/">Deed Forms</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+      </ul>
+      <a href="/quitclaim-deed-form/" class="mobile-menu__cta">Start My Deed</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const hamburger = document.querySelector('.hamburger') as HTMLButtonElement | null;
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // Scroll class
+  function onScroll() {
+    if (!header) return;
+    if (window.scrollY > 10) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hamburger toggle
+  hamburger?.addEventListener('click', () => {
+    if (!mobileMenu || !hamburger) return;
+    const isOpen = !mobileMenu.hidden;
+    mobileMenu.hidden = isOpen;
+    hamburger.setAttribute('aria-expanded', String(!isOpen));
+    hamburger.classList.toggle('is-open', !isOpen);
+    document.body.style.overflow = isOpen ? '' : 'hidden';
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu || mobileMenu.hidden) return;
+    const target = e.target as Node;
+    if (!header?.contains(target)) {
+      mobileMenu.hidden = true;
+      hamburger?.setAttribute('aria-expanded', 'false');
+      hamburger?.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu && !mobileMenu.hidden) {
+      mobileMenu.hidden = true;
+      hamburger?.setAttribute('aria-expanded', 'false');
+      hamburger?.classList.remove('is-open');
+      document.body.style.overflow = '';
+      hamburger?.focus();
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 250, 248, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition:
+      border-bottom var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+  }
+
+  .site-header.scrolled {
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .site-header .container {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    height: 72px;
+  }
+
+  /* Logo */
+  .logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+    transition: color var(--duration-micro) var(--ease-standard);
+  }
+
+  .logo:hover {
+    color: var(--color-teal);
+  }
+
+  .logo-dot {
+    color: var(--color-teal);
+  }
+
+  /* Nav links */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    list-style: none;
+    margin-left: auto;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.4rem var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition:
+      color var(--duration-micro) var(--ease-standard),
+      background var(--duration-micro) var(--ease-standard);
+  }
+
+  .nav-links a:hover {
+    color: var(--color-text-primary);
+    background: var(--color-surface-subtle);
+  }
+
+  /* CTA button */
+  .btn-primary.header-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1.125rem;
+    background: var(--color-teal);
+    color: #ffffff !important;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .btn-primary.header-cta:hover {
+    background: var(--color-teal-hover);
+    transform: translateY(-1px);
+  }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: var(--space-2);
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    margin-left: auto;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hamburger__line {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--color-text-primary);
+    border-radius: 2px;
+    transition:
+      transform var(--duration-fast) var(--ease-enter),
+      opacity var(--duration-fast) var(--ease-standard);
+  }
+
+  .hamburger.is-open .hamburger__line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .hamburger.is-open .hamburger__line:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.is-open .hamburger__line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile menu */
+  .mobile-menu {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding: var(--space-4) clamp(1.125rem, 4vw, 3rem);
+  }
+
+  .mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu ul a {
+    display: block;
+    padding: var(--space-3) 0;
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-divider);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    transition: color var(--duration-micro) var(--ease-standard);
+  }
+
+  .mobile-menu ul a:hover {
+    color: var(--color-teal);
+  }
+
+  .mobile-menu__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-teal);
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: var(--text-base);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    min-height: 44px;
+    transition: background var(--duration-fast) var(--ease-standard);
+  }
+
+  .mobile-menu__cta:hover {
+    background: var(--color-teal-hover);
+  }
+
+  @media (max-width: 767px) {
+    .nav-links {
+      display: none;
+    }
+
+    .btn-primary.header-cta {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .nav-links {
+      gap: 0;
+    }
+  }
+</style>

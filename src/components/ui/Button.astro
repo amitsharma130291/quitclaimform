@@ -1,0 +1,138 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  disabled?: boolean;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  class: className = '',
+  disabled = false,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+{Tag === 'a' ? (
+  <a
+    href={href}
+    class:list={['btn', `btn--${variant}`, className]}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    disabled={disabled}
+    class:list={['btn', `btn--${variant}`, className]}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 3px;
+    border-radius: var(--radius-md);
+  }
+
+  .btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    transform: translateY(0);
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Primary */
+  .btn--primary {
+    background: var(--color-teal);
+    color: #ffffff;
+    border-color: var(--color-teal);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-teal-hover);
+    border-color: var(--color-teal-hover);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn--primary:active {
+    background: var(--color-teal-active);
+    border-color: var(--color-teal-active);
+  }
+
+  /* Secondary */
+  .btn--secondary {
+    background: var(--color-surface);
+    color: var(--color-teal);
+    border-color: var(--color-teal-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn--secondary:hover {
+    background: var(--color-teal-light);
+    border-color: var(--color-teal);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn--secondary:active {
+    background: var(--color-teal-light);
+    border-color: var(--color-teal-hover);
+  }
+
+  /* Ghost */
+  .btn--ghost {
+    background: transparent;
+    color: var(--color-text-primary);
+    border-color: transparent;
+  }
+
+  .btn--ghost:hover {
+    background: var(--color-surface-subtle);
+    border-color: var(--color-border);
+    box-shadow: none;
+  }
+
+  .btn--ghost:active {
+    background: var(--color-divider);
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+interface Props {
+  requirement: string;
+  statute: string;
+  lastVerified: string;
+  type?: 'required' | 'conditional' | 'info';
+}
+
+const { requirement, statute, lastVerified, type = 'required' } = Astro.props;
+
+const typeLabels = {
+  required: 'Required',
+  conditional: 'Conditional',
+  info: 'Info',
+};
+---
+
+<div class:list={['stat-req-card', `stat-req-card--${type}`]}>
+  <div class="stat-req-card__header">
+    <span class:list={['stat-req-card__badge', `stat-req-card__badge--${type}`]}>
+      {typeLabels[type]}
+    </span>
+  </div>
+  <p class="stat-req-card__requirement">{requirement}</p>
+  <p class="stat-req-card__statute">{statute}</p>
+  <p class="stat-req-card__verified">Last Verified: {lastVerified}</p>
+</div>
+
+<style>
+  .stat-req-card {
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-teal-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    position: relative;
+  }
+
+  .stat-req-card--conditional {
+    border-color: #fed7aa;
+  }
+
+  .stat-req-card--info {
+    border-color: #bfdbfe;
+  }
+
+  .stat-req-card__header {
+    margin-bottom: var(--space-3);
+  }
+
+  .stat-req-card__badge {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+  }
+
+  .stat-req-card__badge--required {
+    background: var(--color-teal-light);
+    color: var(--color-teal-active);
+  }
+
+  .stat-req-card__badge--conditional {
+    background: var(--color-warning-bg);
+    color: var(--color-warning);
+  }
+
+  .stat-req-card__badge--info {
+    background: var(--color-info-bg);
+    color: var(--color-info);
+  }
+
+  .stat-req-card__requirement {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    line-height: 1.4;
+  }
+
+  .stat-req-card__statute {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-teal);
+    margin-bottom: var(--space-2);
+    background: var(--color-teal-light);
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .stat-req-card__verified {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-3);
+  }
+</style>

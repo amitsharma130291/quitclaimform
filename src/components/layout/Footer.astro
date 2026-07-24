@@ -1,0 +1,215 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+
+      <!-- Brand column -->
+      <div class="site-footer__brand">
+        <a href="/" class="footer-logo" aria-label="QuitclaimForm home">
+          QuitclaimForm<span class="footer-logo-dot">.</span>
+        </a>
+        <p class="site-footer__tagline">
+          The fastest way to create a legally compliant quitclaim deed for any state.
+        </p>
+        <p class="site-footer__mini-disclaimer">
+          Not a law firm. Not legal advice. Documents for informational purposes only.
+        </p>
+      </div>
+
+      <!-- Learn column -->
+      <div class="site-footer__col">
+        <h3 class="site-footer__col-heading">Learn</h3>
+        <ul role="list">
+          <li><a href="/what-is-a-quitclaim-deed/">What is a Quitclaim Deed?</a></li>
+          <li><a href="/how-to-fill-out-a-quitclaim-deed/">How to Fill Out a Quitclaim Deed</a></li>
+          <li><a href="/quitclaim-deed-vs-warranty-deed/">Quitclaim vs Warranty Deed</a></li>
+          <li><a href="/when-to-use-a-quitclaim-deed/">When to Use a Quitclaim Deed</a></li>
+          <li><a href="/quitclaim-deed-requirements/">Requirements by State</a></li>
+        </ul>
+      </div>
+
+      <!-- Deed Forms column -->
+      <div class="site-footer__col">
+        <h3 class="site-footer__col-heading">Deed Forms</h3>
+        <ul role="list">
+          <li><a href="/quitclaim-deed-form/">Get a Deed Form</a></li>
+          <li><a href="/quitclaim-deed/california/">California Quitclaim Deed</a></li>
+          <li><a href="/quitclaim-deed/florida/">Florida Quitclaim Deed</a></li>
+          <li><a href="/quitclaim-deed/texas/">Texas Quitclaim Deed</a></li>
+          <li><a href="/quitclaim-deed/">All State Guides</a></li>
+        </ul>
+      </div>
+
+      <!-- Company column -->
+      <div class="site-footer__col">
+        <h3 class="site-footer__col-heading">Company</h3>
+        <ul role="list">
+          <li><a href="/about/">About Us</a></li>
+          <li><a href="/contact/">Contact</a></li>
+          <li><a href="/privacy/">Privacy Policy</a></li>
+          <li><a href="/terms/">Terms of Service</a></li>
+          <li><a href="/sitemap/">Sitemap</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <div class="container">
+      <p class="site-footer__copyright">
+        &copy; {year} QuitclaimForm.com. All rights reserved.
+      </p>
+      <p class="site-footer__legal-note">
+        Not a law firm. Not legal advice. Consult a licensed attorney for your specific situation.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-surface-subtle);
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-10);
+  }
+
+  .site-footer .container {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-7);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-7);
+  }
+
+  /* Brand */
+  .footer-logo {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-4);
+  }
+
+  .footer-logo:hover {
+    color: var(--color-teal);
+  }
+
+  .footer-logo-dot {
+    color: var(--color-teal);
+  }
+
+  .site-footer__tagline {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-3);
+    max-width: 280px;
+  }
+
+  .site-footer__mini-disclaimer {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
+  /* Nav columns */
+  .site-footer__col-heading {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .site-footer__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .site-footer__col ul a {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--duration-micro) var(--ease-standard);
+    line-height: 1.5;
+  }
+
+  .site-footer__col ul a:hover {
+    color: var(--color-teal);
+  }
+
+  /* Bottom bar */
+  .site-footer__bottom {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .site-footer__bottom .container {
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .site-footer__copyright {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .site-footer__legal-note {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-align: right;
+  }
+
+  /* Tablet: 2-column */
+  @media (max-width: 1023px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+
+    .site-footer__brand {
+      grid-column: 1 / -1;
+    }
+
+    .site-footer__tagline,
+    .site-footer__mini-disclaimer {
+      max-width: 100%;
+    }
+  }
+
+  /* Mobile: 1-column */
+  @media (max-width: 639px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .site-footer__bottom .container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .site-footer__legal-note {
+      text-align: left;
+    }
+  }
+</style>

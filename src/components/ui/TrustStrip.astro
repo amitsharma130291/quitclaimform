@@ -1,0 +1,79 @@
+---
+interface TrustItem {
+  icon: 'check-circle' | 'shield' | 'map' | 'calendar';
+  label: string;
+}
+
+interface Props {
+  items?: TrustItem[];
+}
+
+const defaultItems: TrustItem[] = [
+  { icon: 'check-circle', label: 'Attorney Reviewed [ADD VERIFIED NAME]' },
+  { icon: 'shield', label: 'Secure Checkout' },
+  { icon: 'map', label: 'All 50 States' },
+  { icon: 'calendar', label: 'Last Updated July 2026' },
+];
+
+const { items = defaultItems } = Astro.props;
+
+const icons: Record<string, string> = {
+  'check-circle': `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+  'shield': `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  'map': `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>`,
+  'calendar': `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+};
+---
+
+<div class="trust-strip" role="list" aria-label="Trust indicators">
+  {items.map(item => (
+    <div class="trust-strip__item" role="listitem">
+      <span class="trust-strip__icon" set:html={icons[item.icon] ?? icons['check-circle']} />
+      <span class="trust-strip__label">{item.label}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-5) var(--space-7);
+    background: var(--color-surface-subtle);
+    border-top: 1px solid var(--color-divider);
+    border-bottom: 1px solid var(--color-divider);
+    padding: var(--space-4) var(--space-6);
+  }
+
+  .trust-strip__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .trust-strip__icon {
+    color: var(--color-teal);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .trust-strip__label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .trust-strip {
+      gap: var(--space-4);
+      padding: var(--space-4);
+    }
+    .trust-strip__label {
+      font-size: var(--text-xs);
+    }
+  }
+</style>

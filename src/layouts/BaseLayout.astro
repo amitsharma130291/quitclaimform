@@ -1,36 +1,89 @@
 ---
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import '../styles/global.css';
+
 interface Props {
   title: string;
   description: string;
   canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
 }
-const { title, description, canonical } = Astro.props;
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = '/og-default.jpg',
+  noindex = false,
+} = Astro.props;
+
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://quitclaimform.com';
+const canonicalUrl = canonical ? `${siteUrl}${canonical}` : Astro.url.href;
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "QuitclaimForm.com",
+  "url": siteUrl,
+  "logo": `${siteUrl}/logo.svg`,
+  "description": "Self-help legal document preparation service for quitclaim deeds in all 50 states.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "url": `${siteUrl}/contact/`
+  }
+};
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <title>{title}</title>
   <meta name="description" content={description} />
-  {canonical && <link rel="canonical" href={`${siteUrl}${canonical}`} />}
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Canonical -->
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+  <meta property="og:site_name" content="QuitclaimForm.com" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Organization JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
 </head>
-<body class="font-sans text-gray-900 bg-white">
-  <header class="border-b border-gray-200 py-4 px-6">
-    <a href="/" class="text-xl font-bold text-blue-700">QuitclaimForm.com</a>
-  </header>
-  <main class="max-w-4xl mx-auto px-6 py-8">
+<body>
+  <!-- Skip link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <Header />
+
+  <main id="main-content">
     <slot />
   </main>
-  <footer class="border-t border-gray-200 mt-16 py-8 px-6 text-sm text-gray-500">
-    <p class="mb-2">
-      <strong>Legal Disclaimer:</strong> QuitclaimForm.com provides self-help legal document preparation services.
-      We are not a law firm and do not provide legal advice. The information on this site is for general
-      informational purposes only. Consult a licensed attorney before using any deed document.
-    </p>
-    <p class="mt-4">&copy; {new Date().getFullYear()} QuitclaimForm.com. All rights reserved.</p>
-  </footer>
+
+  <Footer />
 </body>
 </html>

@@ -21,15 +21,110 @@ const faqSchema = {
   }))
 };
 ---
-<section class="mt-12">
-  <h2 class="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
-  <div class="space-y-6">
-    {items.map(item => (
-      <div class="border-b border-gray-200 pb-6">
-        <h3 class="font-semibold text-lg mb-2">{item.question}</h3>
-        <p class="text-gray-700">{item.answer}</p>
-      </div>
+
+<section class="faq" aria-labelledby="faq-heading">
+  <h2 class="faq__heading" id="faq-heading">Frequently Asked Questions</h2>
+  <div class="faq__list">
+    {items.map((item, i) => (
+      <details class="faq__item">
+        <summary class="faq__summary" id={`faq-q-${i}`}>
+          <span class="faq__question">{item.question}</span>
+          <span class="faq__chevron" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="faq__answer">
+          <p>{item.answer}</p>
+        </div>
+      </details>
     ))}
   </div>
 </section>
+
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<style>
+  .faq {
+    margin: var(--space-8) 0;
+  }
+
+  .faq__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-6);
+    line-height: 1.2;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .faq__item:first-child {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  /* Remove default marker */
+  .faq__summary::-webkit-details-marker { display: none; }
+  .faq__summary::marker { display: none; }
+
+  .faq__summary:hover .faq__question {
+    color: var(--color-teal);
+  }
+
+  .faq__question {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    line-height: 1.4;
+    transition: color var(--duration-micro) var(--ease-standard);
+  }
+
+  .faq__chevron {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    transition: transform var(--duration-fast) var(--ease-enter);
+  }
+
+  details[open] .faq__chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq__answer {
+    padding-top: 0;
+    padding-bottom: var(--space-5);
+  }
+
+  .faq__answer p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__chevron { transition: none; }
+  }
+</style>
