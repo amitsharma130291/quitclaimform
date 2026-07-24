@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+const { title, description, canonical } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://quitclaimform.com';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {canonical && <link rel="canonical" href={`${siteUrl}${canonical}`} />}
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="font-sans text-gray-900 bg-white">
+  <header class="border-b border-gray-200 py-4 px-6">
+    <a href="/" class="text-xl font-bold text-blue-700">QuitclaimForm.com</a>
+  </header>
+  <main class="max-w-4xl mx-auto px-6 py-8">
+    <slot />
+  </main>
+  <footer class="border-t border-gray-200 mt-16 py-8 px-6 text-sm text-gray-500">
+    <p class="mb-2">
+      <strong>Legal Disclaimer:</strong> QuitclaimForm.com provides self-help legal document preparation services.
+      We are not a law firm and do not provide legal advice. The information on this site is for general
+      informational purposes only. Consult a licensed attorney before using any deed document.
+    </p>
+    <p class="mt-4">&copy; {new Date().getFullYear()} QuitclaimForm.com. All rights reserved.</p>
+  </footer>
+</body>
+</html>

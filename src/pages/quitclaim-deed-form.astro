@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DeedForm from '../components/DeedForm.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import FAQ from '../components/FAQ.astro';
+
+const faqItems = [
+  {
+    question: 'What information do I need to fill out a quitclaim deed?',
+    answer: 'You need the full legal names of the grantor (person transferring) and grantee (person receiving), the property address, the legal description from your current deed, and the consideration (sale price or "love and affection" for family transfers).',
+  },
+  {
+    question: 'Where do I find the legal description of my property?',
+    answer: 'The legal description appears on your current deed, your property tax bill, or your county recorder\'s website. It is different from the street address — it describes the property in terms of lots, blocks, or metes and bounds.',
+  },
+  {
+    question: 'What is the consideration for a quitclaim deed?',
+    answer: 'Consideration is what the grantee gives in exchange for the property. For family transfers (gifts), it is typically "$10.00 and other good and valuable consideration" or "love and affection." For sales, use the actual purchase price.',
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Quitclaim Deed Form — QuitclaimForm.com",
+  "url": "https://quitclaimform.com/quitclaim-deed-form",
+  "description": "Fill out our quitclaim deed form for all 50 states. Free preview, $14.99 PDF download. State-compliant with correct witness and notary requirements.",
+};
+---
+<BaseLayout
+  title="Quitclaim Deed Form — All 50 States | QuitclaimForm.com"
+  description="Fill out our quitclaim deed form for all 50 states. Free preview, $14.99 state-compliant PDF download with correct witness and notary requirements."
+  canonical="/quitclaim-deed-form"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-blue-600">Home</a>
+    <span class="mx-2">/</span>
+    <span>Quitclaim Deed Form</span>
+  </nav>
+
+  <h1 class="text-3xl font-bold mb-4">Quitclaim Deed Form</h1>
+  <p class="text-gray-600 mb-6">
+    Complete the form below to generate your state-compliant quitclaim deed. Preview is free.
+    Pay $14.99 to download your completed PDF, ready to sign, notarize, and record.
+  </p>
+
+  <DeedForm />
+
+  <Disclaimer />
+
+  <FAQ items={faqItems} />
+</BaseLayout>

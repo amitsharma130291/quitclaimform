@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CitableAnswerBlock from '../components/CitableAnswerBlock.astro';
+import FAQ from '../components/FAQ.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+
+const faqItems = [
+  {
+    question: 'What is the difference between a quitclaim deed and a warranty deed?',
+    answer: 'A warranty deed guarantees that the grantor has clear title to the property and will defend the grantee against any future title claims. A quitclaim deed transfers only whatever interest the grantor currently holds, with no guarantees. Quitclaim deeds are faster and simpler but offer less protection to the grantee.',
+  },
+  {
+    question: 'When should I use a quitclaim deed?',
+    answer: 'Quitclaim deeds are best used when you know and trust the grantor — such as transfers between family members, adding or removing a spouse from a title, transferring property into a trust, or clearing a title defect. They are not appropriate for arm\'s-length real estate sales.',
+  },
+  {
+    question: 'Does a quitclaim deed remove me from the mortgage?',
+    answer: 'No. A quitclaim deed only transfers ownership interest — it does not affect the mortgage. If your name is on the mortgage, you remain responsible for the loan even after a quitclaim deed transfers your ownership interest. Contact your lender to discuss options like refinancing or loan assumption.',
+  },
+  {
+    question: 'Do I need to record a quitclaim deed?',
+    answer: 'Recording is not legally required in most states for the deed to be valid between the parties, but it is strongly recommended. Recording with your county recorder protects the grantee against future claims and provides public notice of the transfer. Most counties charge $10–$50 for recording.',
+  },
+  {
+    question: 'How long does a quitclaim deed take?',
+    answer: 'Generating the deed takes minutes. After signing and notarizing, you can record it at your county recorder\'s office same-day or by mail. The county typically processes recording within a few days to a few weeks depending on the office.',
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Is a Quitclaim Deed?",
+  "description": "A quitclaim deed transfers whatever property interest the grantor holds to the grantee, with no title guarantees. Learn when to use one, how it differs from a warranty deed, and state-specific requirements.",
+  "author": {
+    "@type": "Organization",
+    "name": "QuitclaimForm.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "QuitclaimForm.com",
+    "url": "https://quitclaimform.com"
+  },
+};
+---
+<BaseLayout
+  title="What Is a Quitclaim Deed? Definition, Uses, and How It Works"
+  description="A quitclaim deed transfers whatever property interest the grantor holds to the grantee, with no title guarantees. Learn when to use one, how it differs from a warranty deed, and state requirements."
+  canonical="/what-is-a-quitclaim-deed"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-blue-600">Home</a>
+    <span class="mx-2">/</span>
+    <span>What Is a Quitclaim Deed?</span>
+  </nav>
+
+  <h1 class="text-3xl font-bold mb-6">What Is a Quitclaim Deed?</h1>
+
+  <CitableAnswerBlock
+    question="What is a quitclaim deed?"
+    answer="A quitclaim deed is a legal document that transfers whatever property interest the grantor currently holds to the grantee, without making any warranties or guarantees about the title. The grantor 'quits' their claim to the property — hence the name."
+    source="Black's Law Dictionary; Restatement (Third) of Property: Servitudes"
+  />
+
+  <p class="text-gray-700 mb-4 leading-relaxed">
+    Quitclaim deeds are one of the simplest forms of property transfer. Unlike a warranty deed, the grantor
+    makes no promise that they actually own the property or that the title is free of defects. The grantee
+    receives exactly what the grantor has — no more, no less.
+  </p>
+
+  <h2 class="text-2xl font-bold mt-10 mb-4">How a Quitclaim Deed Works</h2>
+  <p class="text-gray-700 mb-4 leading-relaxed">
+    When a grantor signs a quitclaim deed, they are transferring their "interest" in the property. If the
+    grantor owns the property outright, the grantee receives full ownership. If the grantor owns only a
+    partial interest (say, 50% as a co-owner), the grantee receives only that 50%.
+  </p>
+  <p class="text-gray-700 mb-4 leading-relaxed">
+    If the grantor has no interest in the property at all, the grantee receives nothing — the deed is
+    still valid, it just transfers nothing. This makes quitclaim deeds risky in arm's-length transactions
+    but ideal for transfers where both parties know exactly what interest is being transferred.
+  </p>
+
+  <h2 class="text-2xl font-bold mt-10 mb-4">Common Uses for Quitclaim Deeds</h2>
+  <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
+    <li><strong>Divorce or separation:</strong> One spouse transfers their interest to the other as part of a divorce settlement.</li>
+    <li><strong>Family gifts:</strong> Parents transfer property to children, or between siblings.</li>
+    <li><strong>Adding a spouse:</strong> After marriage, one spouse adds the other to the property title.</li>
+    <li><strong>Transfer into a trust:</strong> Property owner transfers real estate into a living trust for estate planning.</li>
+    <li><strong>Clearing a title defect:</strong> Someone with a potential claim to the property signs a quitclaim deed to remove that cloud on title.</li>
+    <li><strong>Business transfers:</strong> Moving property from personal ownership into an LLC or corporation.</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold mt-10 mb-4">Quitclaim Deed vs. Warranty Deed</h2>
+  <div class="overflow-x-auto mb-6">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="text-left p-3 border border-gray-200">Feature</th>
+          <th class="text-left p-3 border border-gray-200">Quitclaim Deed</th>
+          <th class="text-left p-3 border border-gray-200">Warranty Deed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="p-3 border border-gray-200">Title guarantee</td>
+          <td class="p-3 border border-gray-200">None</td>
+          <td class="p-3 border border-gray-200">Full guarantee</td>
+        </tr>
+        <tr class="bg-gray-50">
+          <td class="p-3 border border-gray-200">Best for</td>
+          <td class="p-3 border border-gray-200">Family transfers, trusts, divorce</td>
+          <td class="p-3 border border-gray-200">Arm's-length real estate sales</td>
+        </tr>
+        <tr>
+          <td class="p-3 border border-gray-200">Protects grantee?</td>
+          <td class="p-3 border border-gray-200">No</td>
+          <td class="p-3 border border-gray-200">Yes — against prior title defects</td>
+        </tr>
+        <tr class="bg-gray-50">
+          <td class="p-3 border border-gray-200">Complexity</td>
+          <td class="p-3 border border-gray-200">Simple</td>
+          <td class="p-3 border border-gray-200">More complex</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <Disclaimer />
+
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 my-8 text-center">
+    <h2 class="text-xl font-bold text-blue-900 mb-2">Ready to generate your quitclaim deed?</h2>
+    <p class="text-blue-800 mb-4">Free preview. $14.99 PDF download. All 50 states.</p>
+    <a href="/quitclaim-deed-form" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors">
+      Generate My Deed
+    </a>
+  </div>
+
+  <FAQ items={faqItems} />
+</BaseLayout>

@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DeedForm from '../components/DeedForm.astro';
+import FAQ from '../components/FAQ.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+
+const faqItems = [
+  {
+    question: 'What is a quitclaim deed?',
+    answer: 'A quitclaim deed transfers whatever interest the grantor has in a property to the grantee, without making any guarantees about the title. It is commonly used between family members, divorcing spouses, or to clear a cloud on title.',
+  },
+  {
+    question: 'How much does it cost to use QuitclaimForm.com?',
+    answer: 'Generating a preview is free. You pay $14.99 to download your completed, state-compliant PDF deed.',
+  },
+  {
+    question: 'Is a quitclaim deed legally binding?',
+    answer: 'Yes, when properly executed (signed, witnessed, and notarized per your state\'s requirements) and recorded with your county recorder, a quitclaim deed is legally binding. Requirements vary by state.',
+  },
+  {
+    question: 'Do I need a lawyer to complete a quitclaim deed?',
+    answer: 'QuitclaimForm.com is a self-help service. We strongly recommend consulting a licensed real estate attorney, especially if the transfer involves significant assets, a divorce, or complex ownership arrangements.',
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "QuitclaimForm.com",
+  "url": "https://quitclaimform.com",
+  "description": "Free quitclaim deed generator — state-compliant PDF for all 50 states. $14.99 download.",
+};
+---
+<BaseLayout
+  title="Free Quitclaim Deed Generator — All 50 States | QuitclaimForm.com"
+  description="Generate a state-compliant quitclaim deed in minutes. Free preview, $14.99 PDF download. Covers all 50 states with the correct witness and notary requirements."
+  canonical="/"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <div class="text-center mb-10">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Free Quitclaim Deed Generator</h1>
+    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+      Create a state-compliant quitclaim deed in minutes. Preview free, download your PDF for $14.99.
+      Covers all 50 states with the correct witness and notary requirements.
+    </p>
+    <div class="mt-4 flex justify-center gap-4 flex-wrap text-sm text-gray-500">
+      <span>✓ All 50 states</span>
+      <span>✓ Correct margins for recording</span>
+      <span>✓ State-specific witness requirements</span>
+      <span>✓ Instant download</span>
+    </div>
+  </div>
+
+  <DeedForm />
+
+  <Disclaimer />
+
+  <section class="mt-12">
+    <h2 class="text-2xl font-bold mb-6">Common Uses for Quitclaim Deeds</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <a href="/quitclaim-deed/for-divorce" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
+        <h3 class="font-semibold text-blue-700 mb-2">Quitclaim Deed for Divorce</h3>
+        <p class="text-sm text-gray-600">Transfer property between spouses during or after divorce proceedings.</p>
+      </a>
+      <a href="/quitclaim-deed/florida" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
+        <h3 class="font-semibold text-blue-700 mb-2">Florida Quitclaim Deed</h3>
+        <p class="text-sm text-gray-600">Florida requires 2 witnesses plus notarization. Get the correct form.</p>
+      </a>
+      <a href="/quitclaim-deed/california/parents-to-children" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
+        <h3 class="font-semibold text-blue-700 mb-2">California: Parents to Children</h3>
+        <p class="text-sm text-gray-600">Parent-to-child transfers in California have special tax implications.</p>
+      </a>
+      <a href="/quitclaim-deed-form" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
+        <h3 class="font-semibold text-blue-700 mb-2">Full Deed Form</h3>
+        <p class="text-sm text-gray-600">Complete the full deed generation form with all details.</p>
+      </a>
+    </div>
+  </section>
+
+  <FAQ items={faqItems} />
+</BaseLayout>

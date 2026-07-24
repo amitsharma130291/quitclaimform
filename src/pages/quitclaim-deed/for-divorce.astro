@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CitableAnswerBlock from '../../components/CitableAnswerBlock.astro';
+import DeedForm from '../../components/DeedForm.astro';
+import FAQ from '../../components/FAQ.astro';
+import Disclaimer from '../../components/Disclaimer.astro';
+
+const faqItems = [
+  {
+    question: 'Does a quitclaim deed transfer my mortgage to my ex-spouse?',
+    answer: 'No. A quitclaim deed only transfers ownership interest, not mortgage liability. You remain responsible for the mortgage until it is refinanced in your ex-spouse\'s name alone, or the lender agrees to a loan assumption. Always address the mortgage separately from the deed.',
+  },
+  {
+    question: 'Do I need a court order to use a quitclaim deed in a divorce?',
+    answer: 'If you and your spouse agree on the property division, you can sign a quitclaim deed voluntarily — no court order is required. If the divorce is contested and a judge orders the transfer, the order itself may be sufficient in some states, but a quitclaim deed provides cleaner title documentation.',
+  },
+  {
+    question: 'Should the quitclaim deed be filed before or after the divorce is final?',
+    answer: 'It can be done either way, but most attorneys recommend filing the deed as close to the divorce finalization as possible — and certainly before either party incurs new debts or liens that could affect the property.',
+  },
+  {
+    question: 'Is a quitclaim deed for divorce taxable?',
+    answer: 'Under IRS rules, property transfers between spouses incident to divorce are generally not taxable events. However, documentary stamp taxes and transfer taxes vary by state. Florida, for example, may have a transfer tax exemption for divorce transfers. Consult a tax professional for your specific situation.',
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Quitclaim Deed for Divorce",
+  "description": "How to use a quitclaim deed to transfer property during or after divorce. Covers what you need, how it works, and state-specific requirements.",
+};
+---
+<BaseLayout
+  title="Quitclaim Deed for Divorce — How It Works | QuitclaimForm.com"
+  description="Use a quitclaim deed to transfer property between spouses during or after divorce. Learn what you need, how it works, and how to avoid common mistakes."
+  canonical="/quitclaim-deed/for-divorce"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <nav class="text-sm text-gray-500 mb-6">
+    <a href="/" class="hover:text-blue-600">Home</a>
+    <span class="mx-2">/</span>
+    <a href="/quitclaim-deed-form" class="hover:text-blue-600">Quitclaim Deed Form</a>
+    <span class="mx-2">/</span>
+    <span>For Divorce</span>
+  </nav>
+
+  <h1 class="text-3xl font-bold mb-6">Quitclaim Deed for Divorce</h1>
+
+  <CitableAnswerBlock
+    question="Can a quitclaim deed be used in divorce?"
+    answer="Yes. A quitclaim deed is the standard instrument for transferring real property between spouses in a divorce. One spouse (the grantor) signs away their interest in the marital home to the other spouse (the grantee). The deed must still be signed, notarized, and recorded per state law."
+    source="Family Law Practice Guide; state real property statutes"
+  />
+
+  <p class="text-gray-700 mb-4 leading-relaxed">
+    When a couple divorces and agrees that one spouse will keep the family home, the other spouse typically
+    signs a quitclaim deed to transfer their ownership interest. This is one of the most common uses of
+    a quitclaim deed.
+  </p>
+
+  <h2 class="text-2xl font-bold mt-10 mb-4">What You Need for a Divorce Quitclaim Deed</h2>
+  <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
+    <li>Full legal name of the spouse giving up the property (grantor)</li>
+    <li>Full legal name of the spouse keeping the property (grantee)</li>
+    <li>Property address</li>
+    <li>Legal description (from your current deed or county records)</li>
+    <li>State where the property is located</li>
+    <li>Witnesses (if required by your state — Florida requires 2)</li>
+    <li>Notary public</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold mt-10 mb-4">Generate Your Divorce Quitclaim Deed</h2>
+  <DeedForm />
+
+  <Disclaimer />
+
+  <FAQ items={faqItems} />
+</BaseLayout>
