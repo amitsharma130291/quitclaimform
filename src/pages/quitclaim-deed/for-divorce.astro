@@ -10,7 +10,7 @@ import ProcessStep from '../../components/ui/ProcessStep.astro';
 
 const title = 'Quitclaim Deed for Divorce: How to Transfer Property When You Split';
 const description =
-  'Transferring property in a divorce? A quitclaim deed moves the title — but not the mortgage. Step-by-step guide, checklist, and $14.99 state-specific deed form.';
+  'Transferring property in a divorce? A quitclaim deed moves the title — but not the mortgage. Step-by-step guide, checklist, and free state-specific deed form.';
 
 const faqItems = [
   {
@@ -85,7 +85,7 @@ const schema = [
     estimatedCost: {
       '@type': 'MonetaryAmount',
       currency: 'USD',
-      value: '14.99',
+      value: '0',
       description: 'Quitclaim deed form — plus county recording fees ($10–$30 typical)',
     },
     step: [
@@ -216,7 +216,7 @@ const schema = [
 
   <!-- Generator CTA -->
   <div class="cta-block" id="generator">
-    <h2 class="cta-block__heading">Generate Your Divorce Quitclaim Deed — $14.99</h2>
+    <h2 class="cta-block__heading">Generate Your Divorce Quitclaim Deed — Free Download</h2>
     <p class="cta-block__body">State-specific form with the correct witness blocks, notary acknowledgment, and consideration language for divorce transfers. Instant PDF download.</p>
     <DeedForm />
   </div>
@@ -491,3 +491,4 @@ const schema = [
     padding-left: var(--space-6);
   }
 </style>
+
