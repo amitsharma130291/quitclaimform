@@ -4,100 +4,526 @@ import CitableAnswerBlock from '../../components/CitableAnswerBlock.astro';
 import DeedForm from '../../components/DeedForm.astro';
 import FAQ from '../../components/FAQ.astro';
 import Disclaimer from '../../components/Disclaimer.astro';
+import Callout from '../../components/ui/Callout.astro';
+import ComparisonTable from '../../components/ui/ComparisonTable.astro';
+import ProcessStep from '../../components/ui/ProcessStep.astro';
+
+const title = 'Florida Quitclaim Deed: Requirements, Witnesses, and How to File';
+const description =
+  'Florida quitclaim deeds require 2 witnesses plus a notary under Fla. Stat. § 689.01. Download a compliant PDF for $14.99 — includes the correct witness signature blocks most templates miss.';
 
 const faqItems = [
   {
-    question: 'How many witnesses are required for a Florida quitclaim deed?',
-    answer: 'Florida requires two witnesses on a quitclaim deed, in addition to notarization. Both witnesses must be present when the grantor signs. The notary public may serve as one of the two required witnesses, signing in both capacities.',
+    question: 'How many witnesses does a Florida quitclaim deed require?',
+    answer:
+      'A Florida quitclaim deed requires two witnesses in addition to a notary public, under Fla. Stat. § 689.01. The grantor must sign the deed in the presence of two subscribing witnesses. Both witnesses must sign the deed itself. A deed signed before only one witness is defective under Florida law, even if a notary is present. This is the most common error in generic, nationally-distributed deed templates used for Florida property.',
   },
   {
-    question: 'How much does it cost to record a quitclaim deed in Florida?',
-    answer: 'Florida recording fees are $10.00 for the first page and $8.50 for each additional page. Fees may vary slightly by county. Most quitclaim deeds are 2–3 pages, so expect $18.50–$27.00 in recording fees.',
+    question: 'Can the notary be one of the two witnesses in Florida?',
+    answer:
+      'Yes. Florida allows the notary public to serve as one of the two required witnesses. However, when the notary acts as a witness, they must sign twice: once in the witness signature block and once in the notary acknowledgment block. A standard form with only a notary acknowledgment — and no witness signature block for the notary — cannot accommodate this correctly. Our Florida form includes a dedicated witness signature block alongside the notary acknowledgment.',
   },
   {
-    question: 'Is Florida documentary stamp tax due on a quitclaim deed?',
-    answer: 'Florida charges documentary stamp tax on deeds: $0.70 per $100 of consideration (or $0.35/$100 in Miami-Dade County). If the deed is a gift or family transfer with no monetary consideration, the minimum tax is $0.70. Consult a title company or attorney for your specific situation.',
+    question: 'Does the non-titled spouse have to sign a Florida quitclaim deed?',
+    answer:
+      "Yes, if the property is the grantor's homestead. Under the Florida Constitution (art. X, § 4), homestead property cannot be conveyed without the joinder of the owner's spouse, even if the spouse's name does not appear on the title. This applies to the grantor's primary residence. If the property is not homestead — for example, an investment property or rental the grantor does not occupy as their primary home — spousal joinder is not required by the homestead provision.",
   },
   {
-    question: 'Does my spouse need to sign a Florida quitclaim deed?',
-    answer: 'If the property is Florida homestead and the grantor\'s spouse is not on the title, the spouse must join in signing the deed. This is Florida\'s homestead joinder requirement, unique among most states.',
+    question: 'Where do I record a quitclaim deed in Florida?',
+    answer:
+      'Record the deed at the Clerk of Court (also called the Clerk of the Circuit Court) in the county where the property is located. Florida uses the Clerk of Court as its property records office — not a county recorder or register of deeds. Major offices include the Miami-Dade Clerk of Courts, Broward County Records Division, Hillsborough County Clerk of Circuit Court (Tampa), Orange County Comptroller (Orlando), and Palm Beach County Clerk and Comptroller. Recording fees are typically $10.00 for the first page and $8.50 for each additional page.',
   },
   {
-    question: 'Where do I record a Florida quitclaim deed?',
-    answer: 'Record your Florida quitclaim deed with the Clerk of Court in the county where the property is located. Each county has its own clerk\'s office. Major county offices include Miami-Dade Clerk of Courts, Broward County Records Division, and Hillsborough County Clerk of Court.',
+    question: 'How much is the documentary stamp tax on a Florida quitclaim deed?',
+    answer:
+      'Florida documentary stamp tax on deeds is $0.70 per $100 of consideration under Fla. Stat. § 201.02, with a minimum of $0.70. For family transfers with no monetary consideration, the minimum $0.70 applies. If the property has an outstanding mortgage, the mortgage balance is treated as consideration and taxed accordingly. The tax is paid to the Clerk of Court at recording.',
+  },
+  {
+    question: 'Does a quitclaim deed remove me from the mortgage in Florida?',
+    answer:
+      'No. A quitclaim deed transfers property title only — not mortgage liability. If your name is on the mortgage, you remain liable for the debt even after your name is removed from the deed. Removal from the mortgage requires a lender refinance or formal release, not a deed. This is especially important in Florida divorce situations: a decree ordering one spouse to take the property does not automatically remove the other spouse from the mortgage.',
+  },
+  {
+    question: 'What happens if a Florida quitclaim deed only has one witness?',
+    answer:
+      'A deed with only one witness does not meet the requirements of Fla. Stat. § 689.01 and is defective. Some county clerks may record a defective deed without catching the error, but the defect remains — the deed could be challenged in a title dispute, sale, or estate proceeding. A court could find that no valid conveyance occurred. Use a Florida-specific form with two witness signature blocks before signing.',
+  },
+  {
+    question: 'What law governs quitclaim deeds in Florida?',
+    answer:
+      'Florida quitclaim deeds are primarily governed by Fla. Stat. § 689.01 (deed execution requirements, including the two-witness rule). Recording requirements are under Fla. Stat. § 695.01. Documentary stamp tax is imposed under Fla. Stat. § 201.02. The homestead spousal joinder rule comes from the Florida Constitution, art. X, § 4. These statutes were last verified June 2026.',
   },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Florida Quitclaim Deed",
-  "description": "Florida quitclaim deed requirements: 2 witnesses, notarization, documentary stamp tax. Generate a state-compliant Florida quitclaim deed PDF.",
-};
----
-<BaseLayout
-  title="Florida Quitclaim Deed — Requirements, Fees, and Free Generator"
-  description="Florida quitclaim deed requirements: 2 witnesses plus notarization, $10 first-page recording fee, documentary stamp tax. Generate a compliant Florida deed PDF for $14.99."
-  canonical="/quitclaim-deed/florida"
->
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+const requirementsRows = [
+  { label: 'Witnesses required', values: ['2 witnesses (notary may serve as one)'] },
+  { label: 'Notarization', values: ['Required'] },
+  { label: 'Recording office', values: ['Clerk of Court (county where property is located)'] },
+  { label: 'Recording fee', values: ['$10.00 first page + $8.50 each additional page'] },
+  { label: 'Documentary stamp tax', values: ['$0.70 per $100 of consideration (min. $0.70)'] },
+  { label: 'Homestead joinder', values: ['Non-titled spouse must sign if homestead property'] },
+  { label: 'Statutory authority', values: ['Fla. Stat. § 689.01'] },
+  { label: 'Last verified', values: ['June 2026'] },
+];
 
-  <nav class="text-sm text-gray-500 mb-6">
-    <a href="/" class="hover:text-blue-600">Home</a>
-    <span class="mx-2">/</span>
-    <a href="/quitclaim-deed-form" class="hover:text-blue-600">Quitclaim Deed Form</a>
-    <span class="mx-2">/</span>
-    <span>Florida</span>
+const comparisonHeaders = ['Florida', 'Georgia', 'Alabama'];
+const comparisonRows = [
+  { label: 'Witnesses required', values: ['2 (Fla. Stat. § 689.01)', '1 (O.C.G.A. § 44-5-30)', '1 (Ala. Code § 35-4-20)'] },
+  { label: 'Notary required', values: ['Yes', 'Yes', 'Yes'] },
+  { label: 'Documentary stamp tax', values: ['$0.70 per $100', '$0.10 per $100', 'None (state level)'] },
+  { label: 'Recording office', values: ['Clerk of Court', 'Superior Court Clerk', 'Probate Court Judge'] },
+  { label: 'Homestead spousal joinder', values: ['Yes (constitutional)', 'Yes (constitutional)', 'Yes (statutory)'] },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://quitclaimform.com/quitclaim-deed/florida/',
+    datePublished: '2026-07-01',
+    dateModified: '2026-07-01',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://quitclaimform.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://quitclaimform.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LegalService',
+    name: 'Quitclaim Deed Generator — Florida',
+    description:
+      'Generate a Florida quitclaim deed that meets the requirements of Fla. Stat. § 689.01, including the two-witness signature blocks most national templates omit. Download a ready-to-sign PDF for $14.99.',
+    areaServed: { '@type': 'State', name: 'Florida', sameAs: 'https://www.wikidata.org/wiki/Q812' },
+    url: 'https://quitclaimform.com/quitclaim-deed/florida/',
+    serviceType: 'Legal Document Preparation',
+    provider: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://quitclaimform.com' },
+    citation: [
+      {
+        '@type': 'Legislation',
+        name: 'Florida Statute § 689.01',
+        url: 'http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0689/Sections/0689.01.html',
+      },
+      {
+        '@type': 'Legislation',
+        name: 'Florida Statute § 201.02',
+        url: 'http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0100-0199/0201/Sections/0201.02.html',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/quitclaim-deed/florida/"
+>
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/what-is-a-quitclaim-deed/">Quitclaim Deed</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Florida</span>
   </nav>
 
-  <h1 class="text-3xl font-bold mb-6">Florida Quitclaim Deed</h1>
+  <!-- H1 -->
+  <h1 class="page-h1">Florida Quitclaim Deed: Requirements, Witnesses, and How to File</h1>
 
+  <!-- Citable Answer Block -->
   <CitableAnswerBlock
-    question="What are Florida's quitclaim deed requirements?"
-    answer="Florida requires a quitclaim deed to be signed by the grantor in the presence of two witnesses and a notary public. The deed must be recorded with the Clerk of Court in the county where the property is located. Documentary stamp tax of $0.70 per $100 of consideration applies (Fla. Stat. § 689.01, § 695.26)."
-    source="Fla. Stat. § 689.01 (2026); Fla. Stat. § 695.26; Florida Department of Revenue"
+    question="What is a Florida quitclaim deed?"
+    answer="A Florida quitclaim deed transfers whatever property interest the grantor currently holds to a grantee, with no warranty of title. Under Fla. Stat. § 689.01, a valid Florida quitclaim deed must be signed by the grantor in the presence of two witnesses and a notary public — making Florida one of only a handful of states that require two witnesses on a deed. The deed must then be recorded with the Clerk of Court in the county where the property is located."
+    source="Fla. Stat. § 689.01 (Last Verified: June 2026); Fla. Stat. § 695.01; Fla. Stat. § 201.02"
   />
 
-  <h2 class="text-2xl font-bold mt-8 mb-4">Florida Quitclaim Deed Requirements at a Glance</h2>
-  <div class="overflow-x-auto mb-6">
-    <table class="w-full text-sm border-collapse">
-      <tbody>
-        <tr class="bg-gray-50">
-          <td class="p-3 border border-gray-200 font-medium w-1/3">Witnesses Required</td>
-          <td class="p-3 border border-gray-200">2 witnesses (notary may serve as one)</td>
-        </tr>
-        <tr>
-          <td class="p-3 border border-gray-200 font-medium">Notarization</td>
-          <td class="p-3 border border-gray-200">Required</td>
-        </tr>
-        <tr class="bg-gray-50">
-          <td class="p-3 border border-gray-200 font-medium">Recording Office</td>
-          <td class="p-3 border border-gray-200">Clerk of Court (county where property is located)</td>
-        </tr>
-        <tr>
-          <td class="p-3 border border-gray-200 font-medium">Recording Fee</td>
-          <td class="p-3 border border-gray-200">$10.00 first page + $8.50 each additional page</td>
-        </tr>
-        <tr class="bg-gray-50">
-          <td class="p-3 border border-gray-200 font-medium">Documentary Stamp Tax</td>
-          <td class="p-3 border border-gray-200">$0.70 per $100 of consideration (min. $0.70)</td>
-        </tr>
-        <tr>
-          <td class="p-3 border border-gray-200 font-medium">Homestead Joinder</td>
-          <td class="p-3 border border-gray-200">Non-titled spouse must sign if homestead property</td>
-        </tr>
-        <tr class="bg-gray-50">
-          <td class="p-3 border border-gray-200 font-medium">Statutory Authority</td>
-          <td class="p-3 border border-gray-200">Fla. Stat. § 689.01</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Two-Witness Warning -->
+  <Callout type="warning" title="Florida requires two witnesses — most templates include only one">
+    <p>
+      Generic quitclaim deed templates from national sites are typically built for single-witness states.
+      A Florida deed signed before only one witness (even with a notary) is defective under Fla. Stat.
+      § 689.01 and may be rejected for recording — or recorded but later challenged. Our Florida form
+      includes the correct two-witness signature blocks. If you downloaded a template from another site,
+      check that it has two separate witness lines before signing.
+    </p>
+  </Callout>
+
+  <!-- Requirements at a Glance -->
+  <h2>Florida Quitclaim Deed Requirements at a Glance</h2>
+  <ComparisonTable headers={['Requirement']} rows={requirementsRows} />
+
+  <!-- Statutory Citation Block -->
+  <div class="statute-block">
+    <p class="statute-block__label">Based on Florida Statutes</p>
+    <ul class="statute-block__list">
+      <li><strong>Fla. Stat. § 689.01</strong> — Conveyances of real property (deed execution requirements)</li>
+      <li><strong>Fla. Stat. § 695.01</strong> — Recording requirements for constructive notice</li>
+      <li><strong>Fla. Stat. § 201.02</strong> — Documentary stamp tax on deeds</li>
+      <li><strong>Fla. Const. art. X, § 4</strong> — Homestead protection (spousal joinder requirement)</li>
+    </ul>
+    <p class="statute-block__note">Last Verified: June 2026. Laws change. Verify current requirements with a Florida real estate attorney before recording.</p>
   </div>
 
-  <h2 class="text-2xl font-bold mt-10 mb-4">Generate Your Florida Quitclaim Deed</h2>
-  <DeedForm />
+  <!-- Generator CTA -->
+  <div class="cta-block" id="generator">
+    <h2 class="cta-block__heading">Generate Your Florida Quitclaim Deed</h2>
+    <p class="cta-block__body">
+      $14.99 — includes the correct two-witness signature blocks, notary acknowledgment, and homestead
+      spousal joinder language. Ready to sign and record.
+    </p>
+    <DeedForm />
+  </div>
 
   <Disclaimer />
 
+  <!-- Two-Witness Requirement -->
+  <h2>Florida's Two-Witness Requirement — What Most Templates Get Wrong</h2>
+  <p>
+    Florida is one of only a few states in the country that requires <strong>two witnesses</strong> on
+    a deed conveyance in addition to notarization. Fla. Stat. § 689.01 states plainly that conveyances
+    of real property in Florida must be "signed in the presence of two subscribing witnesses." There is
+    no exception for family transfers, gifts, or low-value properties.
+  </p>
+  <p>
+    Most national deed templates serve a generic, one-witness form with a single notary acknowledgment
+    block. A template designed for California will have one signature block for the grantor and one
+    notary acknowledgment. In Florida, that template produces a defective deed.
+  </p>
+  <p>
+    A property owner who uses a generic template, signs before a notary with only one witness present,
+    and records the deed may appear to have completed the transfer. The Clerk of Court in many Florida
+    counties will accept a deed without verifying that two witnesses signed — recording offices are
+    ministerial, not legal reviewers. But a deed executed with fewer than two witnesses is voidable.
+    If the transfer is ever challenged — in a title dispute, a divorce proceeding, an estate, or a sale
+    — the missing witness becomes an opening to argue the deed never created a valid conveyance.
+  </p>
+  <p><strong>What the two-witness requirement means practically:</strong></p>
+  <ul>
+    <li>You need two separate adult witnesses who are present when the grantor signs</li>
+    <li>The witnesses do not need to know each other or be related to either party</li>
+    <li>The witnesses sign on the deed itself, not just on an attachment</li>
+    <li>The witnesses' printed names and addresses should be included on the form</li>
+    <li>The notary acknowledgment is separate from — and in addition to — the two witness signatures</li>
+  </ul>
+
+  <!-- Notary-as-Witness -->
+  <h2>The Notary-as-Witness Rule</h2>
+  <p>
+    Florida allows one of the two required witnesses to be the notary public. However, this arrangement
+    comes with a specific requirement that most templates fail to accommodate: <strong>when the notary
+    serves as one of the witnesses, the notary must sign twice</strong> — once as a witness in the
+    witness signature block, and once as a notary in the notary acknowledgment block.
+  </p>
+  <p>
+    Out-of-state templates almost never include this dual-function signature arrangement. A form with a
+    single notary acknowledgment block does not give the notary a place to sign as a witness, which
+    means the form cannot be correctly executed using the notary-as-witness approach.
+  </p>
+  <p>If you plan to use the notary as one of the two witnesses:</p>
+  <ol>
+    <li>Tell the notary before signing begins that they will serve as both witness and notary</li>
+    <li>Have the notary sign the first witness line as "Witness 1" with their printed name</li>
+    <li>Have a second, independent witness sign the "Witness 2" line</li>
+    <li>Have the notary complete the standard notary acknowledgment block separately</li>
+  </ol>
+
+  <!-- Spousal Joinder -->
+  <h2>Spousal Joinder and Homestead Property</h2>
+  <p>
+    Florida's homestead laws create one of the most frequently misunderstood requirements in deed
+    practice: <strong>if the property being transferred is the grantor's homestead, the non-titled
+    spouse must sign the deed — even if they are not on the title.</strong>
+  </p>
+  <p>
+    This requirement flows from the Florida Constitution (art. X, § 4). Florida's homestead protection
+    is among the strongest in the country: homestead property cannot be conveyed, mortgaged, or alienated
+    without the joinder of both spouses when the owner is married. It does not matter that only one
+    spouse's name appears on the deed or in the county property records.
+  </p>
+  <p><strong>This matters most for:</strong></p>
+  <ul>
+    <li>
+      <strong>Divorcing couples:</strong> The spouse being removed must sign the deed as a consenting
+      party, not just the spouse who is conveying their interest.
+    </li>
+    <li>
+      <strong>Parents adding a child to the title:</strong> If a parent wants to add an adult child to
+      the deed on a homestead property, the parent's spouse (if any) should also sign.
+    </li>
+    <li>
+      <strong>Transfers into LLCs or trusts:</strong> Florida's homestead protection may extend to
+      transfers into revocable living trusts, but transfers to LLCs may destroy homestead status.
+      Consult a Florida real estate attorney before transferring homestead property into an entity.
+    </li>
+  </ul>
+
+  <!-- Documentary Stamp Tax -->
+  <h2>Documentary Stamp Tax on Florida Quitclaim Deeds</h2>
+  <p>
+    Florida imposes a <strong>documentary stamp tax</strong> on deeds conveying real property. Under
+    Fla. Stat. § 201.02, the rate is <strong>$0.70 per $100 of consideration</strong> (or fraction thereof).
+  </p>
+  <ul>
+    <li>
+      <strong>A sale:</strong> the purchase price is the consideration. A $300,000 sale generates a
+      documentary stamp tax of $2,100.
+    </li>
+    <li>
+      <strong>A family transfer with no monetary consideration:</strong> Florida still requires the
+      minimum documentary stamp tax of $0.70.
+    </li>
+    <li>
+      <strong>A transfer where the property is subject to a mortgage:</strong> the outstanding mortgage
+      balance is treated as consideration, even in a family transfer. If a parent quitclaims a property
+      with a $200,000 mortgage to their child, the documentary stamp tax is calculated on $200,000,
+      resulting in a $1,400 tax.
+    </li>
+  </ul>
+  <p>
+    The documentary stamp tax must be paid to the county clerk at the time of recording. The Florida
+    Department of Revenue (floridarevenue.com) provides a documentary stamp tax calculator.
+  </p>
+
+  <!-- Where to Record -->
+  <h2>Where to Record a Florida Quitclaim Deed</h2>
+  <p>
+    Florida uses the <strong>Clerk of Court</strong> as its recording office — not a county recorder
+    or register of deeds. Record the deed in the county where the property is located.
+  </p>
+  <p><strong>Major Florida county clerk offices:</strong></p>
+  <ul>
+    <li><strong>Miami-Dade County:</strong> Miami-Dade Clerk of Courts — 22 NW 1st Street, Miami, FL 33128 (<a href="https://www.miami-dadeclerk.com" target="_blank" rel="noopener noreferrer">miami-dadeclerk.com</a>)</li>
+    <li><strong>Broward County:</strong> Broward County Records, Taxes and Treasury Division — 115 S. Andrews Ave, Room 114, Fort Lauderdale, FL 33301</li>
+    <li><strong>Palm Beach County:</strong> Palm Beach County Clerk and Comptroller — 205 N. Dixie Hwy, West Palm Beach, FL 33401</li>
+    <li><strong>Hillsborough County:</strong> Hillsborough County Clerk of Circuit Court — 800 E. Twiggs Street, Tampa, FL 33602</li>
+    <li><strong>Orange County:</strong> Orange County Comptroller — 109 E. Church Street, Suite 300, Orlando, FL 32801</li>
+  </ul>
+
+  <!-- Step by Step -->
+  <h2>How to File a Florida Quitclaim Deed — Step by Step</h2>
+  <div class="process-steps">
+    <ProcessStep
+      number={1}
+      title="Identify grantor and grantee"
+      description="The grantor is the person transferring their interest. The grantee is the person receiving it. Use full legal names as they appear on the existing deed and government-issued ID."
+    />
+    <ProcessStep
+      number={2}
+      title="Obtain the legal description"
+      description="Do not use the street address. Florida deeds require the legal description from the existing deed of record — typically found in county property appraiser records. Copy it verbatim."
+    />
+    <ProcessStep
+      number={3}
+      title="State the consideration"
+      description='For family transfers with no money changing hands, the consideration is commonly "Ten Dollars ($10.00) and other good and valuable consideration." The exact wording affects the documentary stamp tax calculation.'
+    />
+    <ProcessStep
+      number={4}
+      title="Include spousal joinder if homestead"
+      description="If the property is homestead and the grantor is married, the non-titled spouse must sign as a consenting party. Include a clear signature block with language acknowledging their joinder."
+    />
+    <ProcessStep
+      number={5}
+      title="Sign before two witnesses and a notary"
+      description="The grantor (and consenting spouse, if applicable) must sign in front of both witnesses and the notary at the same time. Do not sign before all parties are present."
+    />
+    <ProcessStep
+      number={6}
+      title="Complete the notary acknowledgment"
+      description="The notary fills in the state, county, date, and names of the signatories, then affixes their seal and signature with their commission expiration date."
+    />
+    <ProcessStep
+      number={7}
+      title="Calculate documentary stamp tax"
+      description="Determine the consideration amount (or outstanding mortgage balance, if any), calculate the tax at $0.70 per $100, and bring payment to the recording window."
+    />
+    <ProcessStep
+      number={8}
+      title="Record at the county Clerk of Court"
+      description="Bring the original (not a photocopy) to the Clerk of Court in the county where the property is located. Pay recording fees ($10 first page, $8.50 each additional page) and documentary stamp tax."
+      isLast={true}
+    />
+  </div>
+
+  <!-- Florida vs Neighbors -->
+  <h2>Florida vs. Neighboring States</h2>
+  <ComparisonTable headers={comparisonHeaders} rows={comparisonRows} />
+  <p>
+    Florida and Georgia are unusual in the Southeast in requiring at least one witness beyond the notary.
+    Florida's two-witness requirement is the strictest in the region — one reason why a template that
+    passes in Georgia would still be defective in Florida.
+  </p>
+
+  <!-- UPL Notice -->
+  <div class="upl-notice">
+    <p>
+      <strong>Florida Notice Regarding Document Preparation Services:</strong> Florida prohibits the
+      unauthorized practice of law (Fla. Stat. § 454.23). QuitclaimForm is a document preparation
+      service, not a law firm. Use of this service does not constitute the practice of law and does
+      not create an attorney-client relationship. If you have questions about your legal rights,
+      the validity of your deed, or the tax consequences of a property transfer, consult a licensed
+      Florida real estate attorney.
+    </p>
+  </div>
+
   <FAQ items={faqItems} />
+
+  <!-- Related Guides -->
+  <div class="related-guides">
+    <h2>Related Guides</h2>
+    <ul>
+      <li><a href="/what-is-a-quitclaim-deed/">What is a quitclaim deed?</a></li>
+      <li><a href="/quitclaim-deed/for-divorce/">Quitclaim deed for divorce</a></li>
+      <li><a href="/quitclaim-deed/california/parents-to-children/">California parent-to-child quitclaim deed</a></li>
+    </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-6);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li {
+    margin-bottom: var(--space-2);
+  }
+
+  a {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+  a:hover {
+    color: var(--color-teal-hover);
+  }
+
+  .statute-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    margin: var(--space-6) 0;
+    font-size: var(--text-sm);
+  }
+  .statute-block__label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+  .statute-block__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+  }
+  .statute-block__list li {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+  }
+  .statute-block__note {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    margin: 0;
+  }
+
+  .cta-block {
+    background: var(--color-teal-light);
+    border: 1px solid var(--color-teal-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin: var(--space-8) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+
+  .process-steps {
+    margin: var(--space-6) 0;
+  }
+
+  .upl-notice {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    margin: var(--space-8) 0;
+    font-size: var(--text-sm);
+  }
+  .upl-notice p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .related-guides {
+    margin-top: var(--space-10);
+  }
+  .related-guides ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+  }
+</style>

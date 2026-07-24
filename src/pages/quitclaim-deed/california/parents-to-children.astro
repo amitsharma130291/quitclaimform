@@ -4,104 +4,608 @@ import CitableAnswerBlock from '../../../components/CitableAnswerBlock.astro';
 import DeedForm from '../../../components/DeedForm.astro';
 import FAQ from '../../../components/FAQ.astro';
 import Disclaimer from '../../../components/Disclaimer.astro';
+import Callout from '../../../components/ui/Callout.astro';
+import ComparisonTable from '../../../components/ui/ComparisonTable.astro';
+import ProcessStep from '../../../components/ui/ProcessStep.astro';
+
+const title = 'California Parent-to-Child Property Transfer: Prop 19 Rules + Free Deed (2026)';
+const description =
+  "California's Prop 19 (Feb. 2021) changed parent-to-child transfers forever. Learn current rules under Cal. Rev. & Tax. Code § 63.2 and download a compliant quitclaim deed.";
 
 const faqItems = [
   {
-    question: 'Does California use quitclaim deeds for parent-to-child transfers?',
-    answer: 'Yes, but California property law is nuanced. California does not have a statutory "quitclaim deed" form in the same sense as other states. A grant deed is more common for sales, but a quitclaim deed (or interspousal/intrafamily deed) is valid for parent-to-child transfers. Consult a California real estate attorney for your specific situation.',
+    question: 'Does my child have to live in the house to avoid reassessment under Prop 19?',
+    answer:
+      'Yes. Under Cal. Rev. & Tax. Code § 63.2, the child must establish the transferred property as their primary residence within one year of the transfer date. If they do not move in within that window, the exclusion is lost and the property is reassessed at current market value. There is no extension once the one-year window closes.',
   },
   {
-    question: 'What is Proposition 19 and how does it affect parent-to-child transfers in California?',
-    answer: 'California Proposition 19 (effective February 16, 2021) significantly changed parent-to-child property tax reassessment exclusions. The exclusion now applies only if the child makes the inherited property their primary residence within one year. The exclusion is also capped. This is a major tax consideration for California parent-to-child transfers.',
+    question: 'What is the BOE-19-P form and do I have to file it?',
+    answer:
+      'BOE-19-P is the Claim for Reassessment Exclusion for Transfer Between Parent and Child under Proposition 19. You must file it with your county assessor\'s office to claim the Prop 19 property tax exclusion — recording the deed alone does not claim the exclusion. The deadline is within three years of the transfer date or before the property is sold, whichever comes first. The form is free and available at boe.ca.gov.',
   },
   {
-    question: 'Do I need to file a PCOR when transferring property from parents to children in California?',
-    answer: 'Yes. California requires a Preliminary Change of Ownership Report (PCOR) to be filed with the county assessor when a deed is recorded. This determines whether a property tax reassessment exclusion applies.',
+    question: 'We used a pre-2021 template — are we in trouble?',
+    answer:
+      'If the deed was recorded before February 16, 2021, the old § 63.1 (Prop 58) rules govern — your template was correct for that era. If the deed was recorded on or after February 16, 2021, the deed itself is still valid as a title transfer, but you may have missed critical steps: whether you filed the BOE-19-P, whether the child met the one-year residency requirement, and whether you correctly understood the $1 million cap. Contact your county assessor to confirm which exclusion form was processed, and consult a California real estate attorney about your situation.',
   },
   {
-    question: 'Are parent-to-child transfers in California exempt from transfer tax?',
-    answer: 'California documentary transfer tax ($1.10 per $1,000 of value) generally applies to transfers, but many family transfers (gifts with no consideration) are exempt. The PCOR and any exemption claim must be filed at the time of recording.',
+    question: 'Is a vacation home excluded from reassessment under Prop 19?',
+    answer:
+      'No. Under Cal. Rev. & Tax. Code § 63.2, vacation homes, second homes, rental properties, and investment properties do not qualify for any reassessment exclusion. They are fully reassessed at current market value when transferred from parent to child. This is a major change from the prior Prop 58 rules, which allowed up to $1 million in assessed value of any property to be transferred without reassessment.',
+  },
+  {
+    question: 'How long does my child have to move in after the transfer?',
+    answer:
+      'One year from the date the deed is recorded. The child must establish the property as their primary residence — their main home for tax, voter registration, and government correspondence purposes. Moving personal belongings in while maintaining another primary residence elsewhere is not sufficient. There is no extension once the one-year window closes.',
+  },
+  {
+    question: 'What if the assessed value is less than fair market value by more than $1 million?',
+    answer:
+      'Under Cal. Rev. & Tax. Code § 63.2, only the first $1 million of the difference between fair market value and the parent\'s assessed value is excluded. Amounts above $1 million are added to the assessed value. Example: FMV $2,000,000, assessed value $400,000. Difference = $1,600,000. First $1,000,000 excluded. Remaining $600,000 reassessed. Child\'s new assessed value = $400,000 + $600,000 = $1,000,000. The $1 million threshold is inflation-adjusted annually from 2023.',
+  },
+  {
+    question: 'Does Prop 19 affect the deed itself or only the property taxes?',
+    answer:
+      'Prop 19 affects property taxes only — not the legal mechanics of the deed. You still use a California quitclaim deed under Cal. Civ. Code § 1092 to transfer title. The deed is recorded with the county recorder. The Prop 19 exclusion is a separate claim filed with the county assessor using form BOE-19-P. Both steps are required.',
+  },
+  {
+    question: 'When did California Prop 19 take effect?',
+    answer:
+      'California Proposition 19 took effect on February 16, 2021 for parent-to-child and grandparent-to-grandchild transfers. It supersedes the prior Proposition 58 rules (Cal. Rev. & Tax. Code § 63.1) for all transfers completed on or after that date. Transfers completed before February 16, 2021 remain governed by the old rules.',
+  },
+  {
+    question: 'Do both spouses need to sign the quitclaim deed if the property is only in one parent\'s name?',
+    answer:
+      "If the property is titled only in one parent's name and is not their community property, only that parent needs to sign. However, if the property is community property of a married couple — even if titled only in one spouse's name — both spouses should sign to convey the full community interest. California is a community property state (Cal. Fam. Code § 750), meaning property acquired during a marriage is generally presumed to be community property. If there is any uncertainty, both spouses should sign and consult an attorney.",
+  },
+  {
+    question: 'Should I use a quitclaim deed or a grant deed for a parent-to-child transfer in California?',
+    answer:
+      "Both are legally effective for transferring title. A quitclaim deed transfers whatever interest the grantor holds — no more, no less. A grant deed (the more common choice in California arm's-length sales) includes two implied warranties: that the grantor has not already conveyed the property to someone else, and that the property is free of encumbrances made by the grantor. For a parent-to-child transfer where the parties trust each other and the title history is known, a quitclaim deed is commonly used and is legally sufficient.",
   },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "California Quitclaim Deed: Parents to Children",
-  "description": "Transfer property from parents to children in California. Covers Proposition 19 tax implications, PCOR requirements, and how to complete the deed.",
-};
----
-<BaseLayout
-  title="California Quitclaim Deed: Parents to Children — Prop 19, PCOR, and How-To"
-  description="Transfer property from parents to children in California. Understand Proposition 19 tax implications, PCOR filing requirements, and generate a compliant deed PDF."
-  canonical="/quitclaim-deed/california/parents-to-children"
->
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+const requirementsRows = [
+  { label: 'Witnesses required', values: ['None (notary only)'] },
+  { label: 'Notarization', values: ['Required — Cal. Civ. Code § 1189'] },
+  { label: 'Recording office', values: ['County Recorder (county where property is located)'] },
+  { label: 'PCOR required', values: ['Yes — file with county recorder at time of recording'] },
+  { label: 'BOE-19-P required', values: ['Yes — file with county assessor to claim Prop 19 exclusion'] },
+  { label: 'Prop 19 exclusion', values: ['Child must make property primary residence within 1 year'] },
+  { label: 'Exclusion cap', values: ['$1M of assessed-value to market-value differential (inflation-adjusted)'] },
+  { label: 'Rental/vacation home exclusion', values: ['None — fully reassessed at market value'] },
+  { label: 'Statutory authority', values: ['Cal. Civ. Code § 1092; Cal. Rev. & Tax. Code § 63.2'] },
+  { label: 'Last verified', values: ['June 2026'] },
+];
 
-  <nav class="text-sm text-gray-500 mb-6">
-    <a href="/" class="hover:text-blue-600">Home</a>
-    <span class="mx-2">/</span>
-    <a href="/quitclaim-deed-form" class="hover:text-blue-600">Quitclaim Deed Form</a>
-    <span class="mx-2">/</span>
-    <span>California: Parents to Children</span>
+const prop19ComparisonHeaders = ['Before Prop 19 (§ 63.1)', 'After Prop 19 (§ 63.2, Feb. 16, 2021+)'];
+const prop19ComparisonRows = [
+  { label: 'Governing law', values: ['Cal. Rev. & Tax. Code § 63.1 (Proposition 58, 1986)', 'Cal. Rev. & Tax. Code § 63.2 (Proposition 19, 2020)'] },
+  { label: 'Primary residence exclusion', values: ['Full exclusion, unlimited amount', 'Exclusion available, capped at $1M differential'] },
+  { label: 'Child must move in?', values: ['No', 'Yes — within 1 year'] },
+  { label: 'Rental property exclusion', values: ['Up to $1M assessed value', 'No exclusion — full reassessment'] },
+  { label: 'Vacation home exclusion', values: ['Up to $1M assessed value', 'No exclusion — full reassessment'] },
+  { label: 'Form required to claim', values: ['BOE-58-AH', 'BOE-19-P'] },
+  { label: 'Deadline to claim', values: ['Within 3 years of transfer', 'Within 3 years of transfer, or before resale'] },
+  { label: 'What stale templates cite', values: ['§ 63.1', '§ 63.2 ✓'], },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://quitclaimform.com/quitclaim-deed/california/parents-to-children/',
+    datePublished: '2021-05-01',
+    dateModified: '2026-07-01',
+    about: {
+      '@type': 'LegislativeAct',
+      name: 'California Proposition 19',
+      alternateName: 'Prop 19',
+      identifier: 'Cal. Rev. & Tax. Code § 63.2',
+      dateEnacted: '2021-02-16',
+      jurisdiction: { '@type': 'State', name: 'California' },
+    },
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://quitclaimform.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://quitclaimform.com/logo.svg' },
+    },
+    citation: [
+      {
+        '@type': 'Legislation',
+        name: 'California Revenue and Taxation Code § 63.2',
+        url: 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=63.2.&lawCode=RTC',
+      },
+      {
+        '@type': 'Legislation',
+        name: 'California Civil Code § 1092',
+        url: 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1092.&lawCode=CIV',
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Transfer Property from Parent to Child in California After Prop 19',
+    description:
+      'Under California Prop 19 (effective Feb. 16, 2021), transferring a primary residence from parent to child requires the child to move in within one year to maintain the property tax exclusion. A quitclaim or grant deed handles the title transfer; a separate BOE-19-P form handles the tax exclusion claim.',
+    totalTime: 'PT4H',
+    tool: [
+      { '@type': 'HowToTool', name: 'California Quitclaim Deed Form' },
+      { '@type': 'HowToTool', name: 'Notary Public' },
+      { '@type': 'HowToTool', name: 'Preliminary Change of Ownership Report (PCOR / BOE-502-A)' },
+      { '@type': 'HowToTool', name: 'BOE-19-P Reassessment Exclusion Claim Form' },
+    ],
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: 'Confirm Prop 19 eligibility',
+        text: 'Determine whether the property is the parent\'s primary residence and whether the child intends to make it their primary residence within one year. Only primary residences qualify for the Prop 19 exclusion under Cal. Rev. & Tax. Code § 63.2. Investment properties, vacation homes, and rental properties are fully reassessed at market value — no exclusion applies.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: 'Prepare the California quitclaim deed',
+        text: 'Generate a California-specific quitclaim deed that includes the grantor\'s and grantee\'s full legal names, the property\'s complete legal description (from the current deed or county records), the APN (Assessor\'s Parcel Number), and the consideration amount. Use a post-Prop 19 compliant template that meets Cal. Civ. Code § 1092.',
+        url: 'https://quitclaimform.com/quitclaim-deed/california/parents-to-children/#generator',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: 'Sign and notarize the deed',
+        text: 'The grantor (parent) signs the deed before a California notary public. Cal. Civ. Code § 1189 requires notarization; witnesses are not required in California. Do not sign the deed before the notary is present.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: 'Record the deed and PCOR at the county recorder',
+        text: 'File the signed, notarized deed together with a completed Preliminary Change of Ownership Report (PCOR / form BOE-502-A) at the county recorder\'s office in the county where the property is located. Pay the recording fee.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 5,
+        name: 'File the BOE-19-P with the county assessor',
+        text: 'As soon as possible after recording the deed, file form BOE-19-P (Claim for Reassessment Exclusion for Transfer Between Parent and Child) with the county assessor\'s office. The deadline is within three years of the transfer date, or before the property is sold, whichever comes first. This step is required to activate the Prop 19 exclusion — recording the deed alone does not claim it.',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/quitclaim-deed/california/parents-to-children/"
+>
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/what-is-a-quitclaim-deed/">Quitclaim Deed</a>
+    <span aria-hidden="true">/</span>
+    <a href="/quitclaim-deed/california/">California</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Parents to Children</span>
   </nav>
 
-  <h1 class="text-3xl font-bold mb-6">California Quitclaim Deed: Parents to Children</h1>
+  <!-- H1 -->
+  <h1 class="page-h1">California Quitclaim Deed: Parent-to-Child Transfer After Prop 19 <span class="h1-date">(Effective Feb. 16, 2021)</span></h1>
 
+  <!-- Answer Block -->
   <CitableAnswerBlock
-    question="What are the key considerations for California parent-to-child property transfers?"
-    answer="California parent-to-child transfers involve both deed execution requirements and significant property tax implications under Proposition 19. The deed must be notarized and recorded with the county recorder. A Preliminary Change of Ownership Report (PCOR) is required. Prop 19 limits the property tax reassessment exclusion to cases where the child uses the property as their primary residence within one year."
-    source="California Civil Code § 1091; Proposition 19 (Cal. Const. Art. XIII A, § 2.1); Cal. Rev. & Tax. Code § 63.1"
+    question="How does a California quitclaim deed work for a parent-to-child transfer after Prop 19?"
+    answer="Under California Revenue and Taxation Code § 63.2 (effective February 16, 2021), a parent can transfer their primary residence to a child without full property tax reassessment — but only if the child makes the property their primary residence within one year of the transfer, and only the first $1 million of the difference between assessed value and market value is shielded. Transfers of vacation homes, rental properties, and investment properties to children no longer qualify for any exclusion and are fully reassessed at market value. The title transfer uses a quitclaim deed executed per Cal. Civ. Code § 1092; claiming the tax exclusion requires a separate BOE-19-P form filed with the county assessor."
+    source="Cal. Rev. & Tax. Code § 63.2; Cal. Civ. Code § 1092; Cal. State Board of Equalization, Prop. 19 FAQs (2023)"
   />
 
-  <h2 class="text-2xl font-bold mt-8 mb-4">California Parent-to-Child Transfer Requirements</h2>
-  <div class="overflow-x-auto mb-6">
-    <table class="w-full text-sm border-collapse">
-      <tbody>
-        <tr class="bg-gray-50">
-          <td class="p-3 border border-gray-200 font-medium w-1/3">Witnesses Required</td>
-          <td class="p-3 border border-gray-200">None (notary only)</td>
-        </tr>
-        <tr>
-          <td class="p-3 border border-gray-200 font-medium">Notarization</td>
-          <td class="p-3 border border-gray-200">Required</td>
-        </tr>
-        <tr class="bg-gray-50">
-          <td class="p-3 border border-gray-200 font-medium">Recording Office</td>
-          <td class="p-3 border border-gray-200">County Recorder (county where property is located)</td>
-        </tr>
-        <tr>
-          <td class="p-3 border border-gray-200 font-medium">PCOR Required</td>
-          <td class="p-3 border border-gray-200">Yes — file with county assessor at time of recording</td>
-        </tr>
-        <tr class="bg-gray-50">
-          <td class="p-3 border border-gray-200 font-medium">Prop 19 Exclusion</td>
-          <td class="p-3 border border-gray-200">Child must make property primary residence within 1 year</td>
-        </tr>
-        <tr>
-          <td class="p-3 border border-gray-200 font-medium">Transfer Tax</td>
-          <td class="p-3 border border-gray-200">$1.10 per $1,000 of value (gifts may be exempt)</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <!-- Prop 19 Warning -->
+  <Callout type="warning" title="California Prop 19 Notice — Effective February 16, 2021">
+    <p>
+      California's Proposition 19, effective February 16, 2021, changed the property tax reassessment
+      rules for parent-to-child real property transfers. The child must occupy the transferred property
+      as their primary residence within one year of transfer to qualify for any property tax exclusion.
+      This exclusion is also limited in amount. Transfers of rental properties, vacation homes, or
+      investment properties to children are now fully reassessed at current market value. Consult a
+      California real estate attorney and a California property tax specialist before recording this deed.
+    </p>
+  </Callout>
 
-  <div class="bg-amber-50 border border-amber-300 rounded-lg p-5 my-6">
-    <h3 class="font-bold text-amber-900 mb-2">Important: Proposition 19 Changes</h3>
-    <p class="text-amber-800 text-sm">
-      California Proposition 19 (effective February 16, 2021) significantly limited the parent-to-child
-      property tax reassessment exclusion. Under Prop 19, the child must occupy the transferred property
-      as their primary residence within one year for the exclusion to apply. The tax savings from the
-      exclusion are also capped. If your child will not occupy the property as their primary residence,
-      a property tax reassessment (often a significant increase) will occur. Consult a California tax
-      professional or estate planning attorney before proceeding.
+  <!-- CTA -->
+  <div class="cta-block" id="generator">
+    <h2 class="cta-block__heading">Get the Post-Prop 19 Compliant California Quitclaim Deed — $14.99</h2>
+    <p class="cta-block__body">
+      Built for transfers occurring after February 16, 2021. Includes the deed, signing instructions,
+      notarization checklist, PCOR filing guide, and BOE-19-P reminder sheet. Instant PDF download.
+    </p>
+    <DeedForm />
+    <p class="cta-block__disclaimer">
+      Before you start: This tool generates a quitclaim deed template based on the information you enter.
+      It does not verify your information, confirm your ownership interest, or provide legal advice.
+      If you are in California and making a parent-to-child transfer, Prop 19 changed the rules in 2021.
+      Read this guide before proceeding.
     </p>
   </div>
 
-  <h2 class="text-2xl font-bold mt-10 mb-4">Generate Your California Deed</h2>
-  <DeedForm />
-
   <Disclaimer />
 
+  <!-- Why Templates Are Wrong -->
+  <h2>Why Most Online Templates Are Now Legally Wrong</h2>
+  <p>
+    Most California parent-to-child quitclaim deed templates available online were written before
+    February 2021. They cite Proposition 58 and Revenue and Taxation Code § 63.1 — a law that no
+    longer applies to new transfers. Using one of those templates will not void the deed itself. But
+    it will leave you without the documentation, guidance, and filing reminders needed to claim the
+    property tax exclusion under Prop 19.
+  </p>
+  <p>
+    The financial consequence is not abstract. On a Bay Area home assessed at $400,000 with a market
+    value of $2 million, the difference between the old rule and the new rule is potentially $12,000–$20,000
+    in additional annual property taxes — every year, indefinitely.
+  </p>
+  <p>
+    <strong>How to spot a stale template:</strong> look at the citations. If the template or its
+    accompanying guide mentions "Proposition 58," references "Revenue and Taxation Code § 63.1" as
+    the operative rule, or says something like "you can transfer any property to your child without
+    reassessment" — that document reflects pre-2021 law. The operative law is now § 63.2.
+  </p>
+
+  <!-- What Prop 19 Changed -->
+  <h2>What California's Prop 19 Actually Changed</h2>
+
+  <h3>The Old Rule — Proposition 58 (§ 63.1, Superseded for Transfers After Feb. 16, 2021)</h3>
+  <p>
+    From 1986 until February 15, 2021, California's parent-to-child transfer exclusion was governed
+    by Proposition 58, codified at Revenue and Taxation Code § 63.1. Under that rule:
+  </p>
+  <ul>
+    <li>A parent could transfer their primary residence with no reassessment, regardless of value</li>
+    <li>A parent could also transfer up to $1 million in assessed value of any other real property without reassessment</li>
+    <li>The child was not required to live in the transferred property</li>
+    <li>There was no cap on the amount excluded for the primary residence</li>
+  </ul>
+  <p>
+    <strong>That rule no longer applies to transfers occurring on or after February 16, 2021.</strong>
+    For any transfer completed after that date, § 63.1 is superseded. The operative statute is § 63.2.
+  </p>
+
+  <h3>The New Rule — Proposition 19 (§ 63.2, Effective February 16, 2021)</h3>
+  <p>
+    Under § 63.2, the property tax exclusion for parent-to-child transfers applies <strong>only if all
+    three of the following are true:</strong>
+  </p>
+  <ol>
+    <li>The transferred property is the parent's primary residence at the time of transfer</li>
+    <li>The child uses the property as their primary residence within one year of the transfer</li>
+    <li>The child files form BOE-19-P with the county assessor within three years of the transfer, or before the property is sold — whichever comes first</li>
+  </ol>
+  <p>If any one of these three conditions is not met, there is no exclusion. The property is reassessed at current market value.</p>
+
+  <!-- Comparison Table -->
+  <h2>Before Prop 19 vs. After Prop 19 — Side-by-Side Comparison</h2>
+  <ComparisonTable headers={prop19ComparisonHeaders} rows={prop19ComparisonRows} />
+
+  <!-- $1M Cap -->
+  <h2>The $1 Million Cap — A Real Dollar Example</h2>
+  <p>Even when a transfer meets all three Prop 19 requirements, the exclusion has a dollar limit.</p>
+  <div class="dollar-example">
+    <p class="dollar-example__heading">Example: Bay Area home (FMV $2,000,000, assessed value $400,000)</p>
+    <ul>
+      <li><strong>Step 1:</strong> Difference = $2,000,000 &minus; $400,000 = $1,600,000</li>
+      <li><strong>Step 2:</strong> First $1,000,000 of that difference is excluded</li>
+      <li><strong>Step 3:</strong> Remaining $600,000 is reassessed at market rate</li>
+      <li><strong>Child's new assessed value:</strong> $400,000 + $600,000 = <strong>$1,000,000</strong></li>
+    </ul>
+    <p class="dollar-example__note">
+      The child does NOT inherit the parent's $400,000 assessed value — but also does NOT get fully
+      reassessed to $2,000,000. They land at $1,000,000 because the cap partially protects them.
+    </p>
+  </div>
+  <p>
+    For a home where the difference is less than $1 million: full exclusion applies and the child
+    inherits the parent's assessed value entirely.
+  </p>
+  <p>
+    The cap amount is adjusted annually for inflation beginning in 2023. Verify the current year's
+    threshold with the California State Board of Equalization (BOE) before completing a transfer.
+  </p>
+
+  <!-- Vacation Homes -->
+  <h2>Vacation Homes, Rental Properties, and Investment Properties</h2>
+  <Callout type="warning" title="No exclusion available for non-primary-residence transfers">
+    <p>
+      Under Prop 19, there is zero exclusion for transfers of vacation homes, rental properties,
+      commercial properties, or investment land. Every one of these properties is fully reassessed
+      at current market value the moment the transfer is recorded. There is no cap, no phase-in,
+      and no BOE-19-P form that will help. Families considering these transfers should consult a
+      California estate planning attorney before proceeding — a transfer-on-death deed or trust
+      structure may produce a better outcome.
+    </p>
+  </Callout>
+
+  <!-- Requirements at a Glance -->
+  <h2>California Parent-to-Child Transfer Requirements</h2>
+  <ComparisonTable headers={['Requirement']} rows={requirementsRows} />
+
+  <!-- BOE-19-P -->
+  <h2>What Is the BOE-19-P Form?</h2>
+  <p>
+    The BOE-19-P (officially: Claim for Reassessment Exclusion for Transfer Between Parent and Child
+    — Proposition 19) is the form you file with the county assessor to claim the Prop 19 property
+    tax exclusion after recording a parent-to-child deed.
+  </p>
+  <Callout type="info" title="Recording the deed does not claim the exclusion">
+    <p>
+      The deed and the exclusion are separate processes managed by different offices. The county
+      recorder records the deed. The county assessor processes the exclusion claim. If you record
+      the deed and never file the BOE-19-P, the county assessor will likely trigger a standard
+      reassessment. <strong>File the BOE-19-P as soon as possible after recording the deed</strong>
+      — ideally the same week.
+    </p>
+  </Callout>
+  <ul>
+    <li><strong>Who files it:</strong> The child (grantee)</li>
+    <li><strong>Where to file:</strong> County assessor's office in the county where the property is located</li>
+    <li><strong>Deadline:</strong> Within 3 years of the transfer date, OR before the property is sold — whichever comes first</li>
+    <li><strong>Where to get the form:</strong> boe.ca.gov and most county assessor websites</li>
+    <li><strong>Cost:</strong> No fee to file the BOE-19-P</li>
+  </ul>
+
+  <!-- Complete Filing Sequence -->
+  <h2>The Complete Filing Sequence: Deed + PCOR + BOE-19-P</h2>
+  <p>A parent-to-child transfer in California involves three distinct documents, filed in a specific sequence.</p>
+  <div class="process-steps">
+    <ProcessStep
+      number={1}
+      title="Prepare the quitclaim deed"
+      description="The parent (grantor) executes a quitclaim deed naming the child (grantee) as the new owner. The deed must include full legal names, the complete legal description of the property (not just the street address), the APN (Assessor's Parcel Number), and the consideration amount."
+    />
+    <ProcessStep
+      number={2}
+      title="Notarize the deed (Cal. Civ. Code § 1189)"
+      description="The grantor signs the deed in front of a California notary public. California does not require witnesses — notarization alone is the execution requirement. The notary must witness your signature in real time; do not sign before the notary is present."
+    />
+    <ProcessStep
+      number={3}
+      title="Complete the Preliminary Change of Ownership Report (PCOR)"
+      description="The PCOR (form BOE-502-A) is filed with the county recorder at the time of recording, or within 45 days. Under Cal. Rev. & Tax. Code § 480.3, a deed presented for recording without a PCOR will still be recorded — but the county recorder will charge an additional fee (typically $20). The PCOR is not optional."
+    />
+    <ProcessStep
+      number={4}
+      title="Record the deed at the county recorder"
+      description="Take the original signed, notarized deed and the PCOR to the county recorder's office in the county where the property is located. Most California counties charge $14–$20 for the first page and $3 per additional page. No documentary transfer tax applies to parent-to-child gift transfers."
+    />
+    <ProcessStep
+      number={5}
+      title="File the BOE-19-P with the county assessor"
+      description="As soon as possible after recording — ideally within the same week — file form BOE-19-P with the county assessor's office. Bring or attach a copy of the recorded deed. The assessor will review the claim and determine whether the Prop 19 exclusion applies."
+      isLast={true}
+    />
+  </div>
+
+  <!-- Execution Requirements -->
+  <h2>How to Execute a California Quitclaim Deed (Cal. Civ. Code § 1092)</h2>
+  <ComparisonTable
+    headers={['California Rule']}
+    rows={[
+      { label: 'Grantor signature', values: ['Required — the grantor (parent) must sign'] },
+      { label: 'Notarization', values: ['Required — Cal. Civ. Code § 1189'] },
+      { label: 'Witnesses', values: ['Not required — California is notary-only'] },
+      { label: 'Grantee signature', values: ['Not required for the transfer to be effective'] },
+      { label: 'Delivery', values: ['Required — the deed must be delivered to and accepted by the grantee'] },
+    ]}
+  />
+  <p><strong>Common mistakes to avoid:</strong></p>
+  <ul>
+    <li>Using a generic, non-California deed form — California has specific county formatting requirements</li>
+    <li>Listing the street address as the "legal description" — copy the legal description from the prior deed or county assessor's records</li>
+    <li>Signing before the notary — the notary must witness the signature in real time</li>
+    <li>Recording in the wrong county — record in the county where the property is physically located</li>
+  </ul>
+
   <FAQ items={faqItems} />
+
+  <!-- Statutory Citation Block -->
+  <div class="statute-block">
+    <p class="statute-block__label">Statutory Citation Block</p>
+    <ul class="statute-block__list">
+      <li><strong>Cal. Civ. Code § 1092</strong> — Quitclaim deed form and effect</li>
+      <li><strong>Cal. Civ. Code § 1189</strong> — Acknowledgment / notarization requirement</li>
+      <li><strong>Cal. Rev. & Tax. Code § 63.2</strong> — Parent-child exclusion, effective Feb. 16, 2021 (Prop 19)</li>
+      <li><strong>Cal. Rev. & Tax. Code § 63.1</strong> — Pre-Prop 19 exclusion (superseded for transfers after Feb. 16, 2021)</li>
+      <li><strong>Cal. Const. art. XIII A, § 2.1</strong> — Proposition 19 constitutional amendment</li>
+      <li><strong>Cal. Gov't Code § 27361</strong> — Recording fees</li>
+      <li><strong>Cal. Rev. & Tax. Code § 480.3</strong> — PCOR requirement at recording</li>
+      <li><strong>Cal. Fam. Code § 750</strong> — Community property presumption</li>
+    </ul>
+    <p class="statute-block__note">Last Verified: June 2026. Next scheduled review: July 2027 or upon any California legislative session affecting Cal. Rev. & Tax. Code § 63.2.</p>
+  </div>
+
+  <!-- Related Guides -->
+  <div class="related-guides">
+    <h2>Related Guides</h2>
+    <ul>
+      <li><a href="/what-is-a-quitclaim-deed/">What is a quitclaim deed?</a></li>
+      <li><a href="/quitclaim-deed/for-divorce/">Quitclaim deed for divorce</a></li>
+      <li><a href="/quitclaim-deed/florida/">Florida quitclaim deed requirements</a></li>
+    </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-6);
+  }
+  .h1-date {
+    font-weight: 400;
+    color: var(--color-text-muted);
+    font-size: 0.85em;
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    line-height: 1.25;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li {
+    margin-bottom: var(--space-2);
+  }
+
+  a {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+  a:hover {
+    color: var(--color-teal-hover);
+  }
+
+  .cta-block {
+    background: var(--color-teal-light);
+    border: 1px solid var(--color-teal-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin: var(--space-8) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+  .cta-block__disclaimer {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-4);
+    margin-bottom: 0;
+  }
+
+  .dollar-example {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    margin: var(--space-5) 0;
+  }
+  .dollar-example__heading {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+  .dollar-example__note {
+    font-style: italic;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+  }
+
+  .process-steps {
+    margin: var(--space-6) 0;
+  }
+
+  .statute-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    margin: var(--space-8) 0;
+    font-size: var(--text-sm);
+  }
+  .statute-block__label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+  .statute-block__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+  }
+  .statute-block__list li {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+    font-size: var(--text-sm);
+  }
+  .statute-block__note {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    margin: 0;
+  }
+
+  .related-guides {
+    margin-top: var(--space-10);
+  }
+  .related-guides ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+  }
+</style>

@@ -4,77 +4,490 @@ import CitableAnswerBlock from '../../components/CitableAnswerBlock.astro';
 import DeedForm from '../../components/DeedForm.astro';
 import FAQ from '../../components/FAQ.astro';
 import Disclaimer from '../../components/Disclaimer.astro';
+import Callout from '../../components/ui/Callout.astro';
+import ComparisonTable from '../../components/ui/ComparisonTable.astro';
+import ProcessStep from '../../components/ui/ProcessStep.astro';
+
+const title = 'Quitclaim Deed for Divorce: How to Transfer Property When You Split';
+const description =
+  'Transferring property in a divorce? A quitclaim deed moves the title — but not the mortgage. Step-by-step guide, checklist, and $14.99 state-specific deed form.';
 
 const faqItems = [
   {
-    question: 'Does a quitclaim deed transfer my mortgage to my ex-spouse?',
-    answer: 'No. A quitclaim deed only transfers ownership interest, not mortgage liability. You remain responsible for the mortgage until it is refinanced in your ex-spouse\'s name alone, or the lender agrees to a loan assumption. Always address the mortgage separately from the deed.',
+    question: 'Does a quitclaim deed remove me from the mortgage?',
+    answer:
+      "No. A quitclaim deed only transfers property ownership — it has no effect on the mortgage. If your name is on the mortgage, you remain responsible for the debt regardless of whether you still own the property. To be removed from the mortgage, the remaining spouse must refinance the loan in their name alone. The deed handles title; the refinance handles the mortgage. Both steps are needed.",
   },
   {
-    question: 'Do I need a court order to use a quitclaim deed in a divorce?',
-    answer: 'If you and your spouse agree on the property division, you can sign a quitclaim deed voluntarily — no court order is required. If the divorce is contested and a judge orders the transfer, the order itself may be sufficient in some states, but a quitclaim deed provides cleaner title documentation.',
+    question: "What if my ex won't sign the quitclaim deed?",
+    answer:
+      "If the divorce decree assigns the property to you but your ex refuses to sign the deed, return to court. A judge can hold your ex in contempt of the divorce decree, order them to sign, or — in some jurisdictions — issue an order that substitutes for the deed and directs the county recorder to transfer title without the refusing party's signature. Consult your divorce attorney immediately; you have legal remedies.",
   },
   {
-    question: 'Should the quitclaim deed be filed before or after the divorce is final?',
-    answer: 'It can be done either way, but most attorneys recommend filing the deed as close to the divorce finalization as possible — and certainly before either party incurs new debts or liens that could affect the property.',
+    question: 'Do I need a lawyer to prepare a quitclaim deed for a divorce?',
+    answer:
+      "You are not legally required to use an attorney to prepare or record a quitclaim deed. For a clean, uncontested transfer where both parties agree, many people complete this without an attorney. If there is any complexity — community property state, dispute about the transfer, existing mortgage complications — legal review is worth the cost.",
   },
   {
-    question: 'Is a quitclaim deed for divorce taxable?',
-    answer: 'Under IRS rules, property transfers between spouses incident to divorce are generally not taxable events. However, documentary stamp taxes and transfer taxes vary by state. Florida, for example, may have a transfer tax exemption for divorce transfers. Consult a tax professional for your specific situation.',
+    question: 'How long does recording a quitclaim deed take?',
+    answer:
+      "Most county recorder's offices record a deed the same day or within 1–3 business days of submission. Some counties offer over-the-counter recording where you receive a stamped copy immediately. Others require submission by mail and return the recorded copy by mail. Contact your county recorder's office to confirm their process.",
+  },
+  {
+    question: 'What about capital gains taxes when I sell the house later?',
+    answer:
+      "Under IRC § 1041, transfers of property between divorcing spouses are generally not taxable events at the time of transfer — no gain or loss is recognized. The receiving spouse takes the property at the original cost basis. When you eventually sell the home, capital gains taxes are based on the original purchase price, not when the deed was transferred to you. The $250,000 federal exclusion ($500,000 for married couples) for primary residence sales may apply if you meet the ownership and use tests. Consult a tax professional for your specific situation.",
+  },
+  {
+    question: 'Is a quitclaim deed enough, or do I also need to file something with the divorce court?',
+    answer:
+      "The deed handles the property transfer in the public title record. The divorce court does not need a copy of the recorded deed to finalize the divorce. However, you should keep a copy of the recorded deed in your personal records alongside your divorce decree. In California, a Preliminary Change of Ownership Report (PCOR) is also required at recording. Check your county recorder's office for transfer tax requirements specific to your state.",
+  },
+  {
+    question: 'Who pays the recording fees and transfer taxes?',
+    answer:
+      "Recording fees are typically $10–$30 for the first page. Transfer taxes vary widely by state and county — some states exempt transfers between divorcing spouses; others charge based on the loan balance or fair market value of the property. Who pays is usually addressed in the divorce decree or marital settlement agreement. Confirm your county's requirements with the recorder's office before filing.",
   },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Quitclaim Deed for Divorce",
-  "description": "How to use a quitclaim deed to transfer property during or after divorce. Covers what you need, how it works, and state-specific requirements.",
-};
----
-<BaseLayout
-  title="Quitclaim Deed for Divorce — How It Works | QuitclaimForm.com"
-  description="Use a quitclaim deed to transfer property between spouses during or after divorce. Learn what you need, how it works, and how to avoid common mistakes."
-  canonical="/quitclaim-deed/for-divorce"
->
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+const witnessRows = [
+  { label: 'Notary only (no separate witnesses)', values: ['California, Texas, New York, Illinois, Colorado, Arizona, and most others'] },
+  { label: 'Notary + 2 witnesses', values: ['Florida (Fla. Stat. § 689.01), South Carolina, Virginia'] },
+  { label: 'Notary + 1 witness', values: ['Georgia, Louisiana, Vermont'] },
+];
 
-  <nav class="text-sm text-gray-500 mb-6">
-    <a href="/" class="hover:text-blue-600">Home</a>
-    <span class="mx-2">/</span>
-    <a href="/quitclaim-deed-form" class="hover:text-blue-600">Quitclaim Deed Form</a>
-    <span class="mx-2">/</span>
-    <span>For Divorce</span>
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://quitclaimform.com/quitclaim-deed/for-divorce/',
+    datePublished: '2026-07-01',
+    dateModified: '2026-07-01',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://quitclaimform.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://quitclaimform.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How to Use a Quitclaim Deed in a Divorce',
+    description:
+      "A quitclaim deed transfers one spouse's ownership interest in real property to the other during or after a divorce. The departing spouse signs the deed as grantor, the deed is notarized and recorded with the county, and the mortgage is handled separately via refinance.",
+    totalTime: 'PT3H',
+    tool: [
+      { '@type': 'HowToTool', name: 'Quitclaim Deed Form' },
+      { '@type': 'HowToTool', name: 'Notary Public' },
+    ],
+    estimatedCost: {
+      '@type': 'MonetaryAmount',
+      currency: 'USD',
+      value: '14.99',
+      description: 'Quitclaim deed form — plus county recording fees ($10–$30 typical)',
+    },
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: 'Confirm the divorce decree specifies who gets the property',
+        text: 'Review your divorce decree or marital settlement agreement to confirm which spouse retains the property. The deed cannot be prepared until ownership is established in writing by agreement or court order.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: 'The departing spouse signs the quitclaim deed as grantor',
+        text: "The spouse giving up their ownership interest (grantor) signs the deed transferring their interest to the remaining spouse (grantee). The deed must include both parties' full legal names and addresses, plus the property's legal description from the existing deed.",
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: "Notarize the deed — and verify your state's witness requirements",
+        text: 'All states require the grantor\'s signature to be notarized. Florida requires two witnesses in addition to the notary (Fla. Stat. § 689.01). Georgia and some other states require one witness. Most states require only a notary. Never sign before the notary is present.',
+        url: 'https://quitclaimform.com/quitclaim-deed/for-divorce/#notarization',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: "Record the deed at the county recorder's office",
+        text: "File the signed, notarized deed with the county recorder or clerk of court in the county where the property is located. Pay the recording fee. Recording places the transfer in the public record and makes it effective against third parties.",
+      },
+      {
+        '@type': 'HowToStep',
+        position: 5,
+        name: 'Refinance the mortgage to remove the departing spouse',
+        text: "The quitclaim deed does not affect the mortgage. The remaining spouse must refinance the loan in their name alone to remove the departing spouse's liability. Record the deed first — most lenders require title to reflect sole ownership before a refinance can close.",
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://quitclaimform.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Quitclaim Deed', item: 'https://quitclaimform.com/quitclaim-deed-form/' },
+      { '@type': 'ListItem', position: 3, name: 'Quitclaim Deed for Divorce', item: 'https://quitclaimform.com/quitclaim-deed/for-divorce/' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/quitclaim-deed/for-divorce/"
+>
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/what-is-a-quitclaim-deed/">Quitclaim Deed</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">For Divorce</span>
   </nav>
 
-  <h1 class="text-3xl font-bold mb-6">Quitclaim Deed for Divorce</h1>
+  <!-- H1 -->
+  <h1 class="page-h1">Quitclaim Deed for Divorce: How to Transfer Property When You Split</h1>
 
+  <!-- Citable Answer Block -->
   <CitableAnswerBlock
-    question="Can a quitclaim deed be used in divorce?"
-    answer="Yes. A quitclaim deed is the standard instrument for transferring real property between spouses in a divorce. One spouse (the grantor) signs away their interest in the marital home to the other spouse (the grantee). The deed must still be signed, notarized, and recorded per state law."
-    source="Family Law Practice Guide; state real property statutes"
+    question="Can a quitclaim deed be used to transfer property in a divorce?"
+    answer="Yes. A quitclaim deed transfers one spouse's ownership interest in real property to the other during or after a divorce. The departing spouse (grantor) signs over whatever interest they hold; the remaining spouse (grantee) receives full title. The deed must be signed, notarized, and recorded with the county to be legally effective — but it does not affect the mortgage."
+    source="IRC § 1041 (tax-free transfer); Fla. Stat. § 689.01 (witness requirements, Florida); state real property statutes"
   />
-
-  <p class="text-gray-700 mb-4 leading-relaxed">
-    When a couple divorces and agrees that one spouse will keep the family home, the other spouse typically
-    signs a quitclaim deed to transfer their ownership interest. This is one of the most common uses of
-    a quitclaim deed.
-  </p>
-
-  <h2 class="text-2xl font-bold mt-10 mb-4">What You Need for a Divorce Quitclaim Deed</h2>
-  <ul class="list-disc list-inside text-gray-700 space-y-2 mb-6">
-    <li>Full legal name of the spouse giving up the property (grantor)</li>
-    <li>Full legal name of the spouse keeping the property (grantee)</li>
-    <li>Property address</li>
-    <li>Legal description (from your current deed or county records)</li>
-    <li>State where the property is located</li>
-    <li>Witnesses (if required by your state — Florida requires 2)</li>
-    <li>Notary public</li>
-  </ul>
-
-  <h2 class="text-2xl font-bold mt-10 mb-4">Generate Your Divorce Quitclaim Deed</h2>
-  <DeedForm />
 
   <Disclaimer />
 
+  <!-- Last Updated -->
+  <p class="last-updated">Last Updated: July 2026</p>
+
+  <!-- Checklist -->
+  <div class="checklist-box">
+    <h2 class="checklist-box__heading">7-Step Divorce Quitclaim Deed Checklist</h2>
+    <p class="checklist-box__intro">Before you start, confirm all seven boxes:</p>
+    <ol class="checklist-box__list">
+      <li>Your divorce decree (or marital settlement agreement) names who gets the property</li>
+      <li>You know which spouse is the grantor (transferring) and which is the grantee (receiving)</li>
+      <li>You have the property's legal description — from your existing deed or county records, not just the street address</li>
+      <li>You know your state's notarization and witness requirements (Florida requires 2 witnesses; most states require only a notary)</li>
+      <li>You have confirmed with your lender how the mortgage will be handled (the deed does not remove anyone from the loan)</li>
+      <li>You know where to record the deed (county recorder, county clerk, or register of deeds — varies by state)</li>
+      <li>If you are in a community property state, both spouses may need to sign regardless of who holds title</li>
+    </ol>
+  </div>
+
+  <!-- THE MOST IMPORTANT THING -->
+  <h2>The Most Important Thing Most People Don't Know</h2>
+  <Callout type="warning" title="A quitclaim deed transfers TITLE — it does not touch the MORTGAGE">
+    <p>
+      This is the single most common misunderstanding in divorce property transfers, and it has real
+      consequences. When the departing spouse signs a quitclaim deed, they give up their ownership
+      interest in the property. Their name comes off the title. The remaining spouse now owns the
+      home outright — at least on paper.
+    </p>
+    <p>
+      But the mortgage is a separate contract between the borrower and the lender. A quitclaim deed
+      has no legal effect on that contract. If both spouses signed the original mortgage, both spouses
+      remain legally responsible for the debt after the deed transfer — even if only one of them now
+      owns the home.
+    </p>
+  </Callout>
+  <p>
+    <strong>The practical result:</strong> If the remaining spouse stops paying the mortgage, the
+    departing spouse's credit score is still at risk. The lender can still pursue both borrowers.
+    The departing spouse has no ownership but still carries the liability.
+  </p>
+  <p>
+    <strong>The solution:</strong> The remaining spouse needs to refinance the mortgage in their name
+    alone. This removes the departing spouse from the loan. The quitclaim deed handles the title;
+    the refinance handles the mortgage. Both steps are needed for a clean separation.
+  </p>
+  <p>
+    If refinancing isn't possible immediately (due to credit, income, or market conditions), this
+    arrangement should be addressed explicitly in the divorce decree — ideally with a deadline for
+    the refinance and provisions for what happens if the deadline is missed.
+  </p>
+
+  <!-- Generator CTA -->
+  <div class="cta-block" id="generator">
+    <h2 class="cta-block__heading">Generate Your Divorce Quitclaim Deed — $14.99</h2>
+    <p class="cta-block__body">State-specific form with the correct witness blocks, notary acknowledgment, and consideration language for divorce transfers. Instant PDF download.</p>
+    <DeedForm />
+  </div>
+
+  <!-- Step by Step -->
+  <h2>How a Quitclaim Deed Works in a Divorce (Step by Step)</h2>
+  <div class="process-steps">
+    <ProcessStep
+      number={1}
+      title="Confirm the divorce decree specifies who gets the property"
+      description="A quitclaim deed cannot be prepared until there is an agreement — or a court order — about who receives the property. If the divorce is not yet finalized, your marital settlement agreement should specify the property disposition. Do not prepare the deed until this is clear in writing."
+    />
+    <ProcessStep
+      number={2}
+      title="The departing spouse signs the deed as grantor"
+      description="The spouse giving up their ownership interest is the grantor. The spouse keeping the property is the grantee. The deed must include: both parties' full legal names and addresses; the property's legal description (not just the street address — copy this exactly from the existing deed); and the consideration amount."
+    />
+    <ProcessStep
+      number={3}
+      title="Notarize — and check your state's witness requirements"
+      description="Every state requires the grantor's signature to be notarized. The grantor must sign in front of the notary — never sign before presenting the document. Florida requires two witnesses (Fla. Stat. § 689.01); Georgia and some states require one; most states require only a notary. See the table below."
+    />
+    <ProcessStep
+      number={4}
+      title="Record the deed at the county recorder's office"
+      description="Recording is what makes the transfer legally effective against third parties. Take the original signed, notarized deed to the county recorder's office (sometimes called the county clerk or register of deeds) in the county where the property is located. Pay the recording fee — typically $10–$30 for the first page."
+    />
+    <ProcessStep
+      number={5}
+      title="Handle the mortgage separately"
+      description="Record the deed first. Then pursue the refinance — most lenders will not refinance into one spouse's name until title actually reflects that spouse as the owner. Confirm this sequence with your lender before you start."
+      isLast={true}
+    />
+  </div>
+
+  <!-- Witness Requirements by State -->
+  <h2 id="notarization">Witness Requirements by State</h2>
+  <ComparisonTable headers={['States']} rows={witnessRows} />
+  <p>
+    <a href="/quitclaim-deed/florida/">Florida's two-witness requirement</a> is the most frequently
+    missed. A Florida deed signed with only a notary and no witnesses is defective and may be rejected
+    for recording or challenged later. If your property is in Florida, make sure two witnesses sign
+    — in addition to the notary.
+  </p>
+
+  <!-- Community Property -->
+  <h2>Community Property vs. Equitable Distribution States</h2>
+  <p>Where you live determines what each spouse owns going into the divorce — which affects who needs to sign what.</p>
+  <p>
+    <strong>Community property states:</strong> California, Texas, Arizona, Nevada, Washington, Idaho,
+    Louisiana, Wisconsin. In these states, most property acquired during the marriage is owned equally
+    by both spouses — regardless of whose name is on the deed. Both spouses usually need to sign to
+    convey community property, even if the title shows only one name.
+  </p>
+  <p>
+    <strong>Equitable distribution states:</strong> All other states (the majority). Property is owned
+    by whoever holds title unless a court order provides otherwise. If the home is titled in only one
+    spouse's name, only that spouse's signature is needed on the deed. If both names are on the deed,
+    both spouses must sign as grantors.
+  </p>
+
+  <!-- Decree vs Deed -->
+  <h2>Divorce Decree vs. Quitclaim Deed: Why You Need Both</h2>
+  <p>
+    A divorce decree (or marital settlement agreement) is a court order that says who gets what. It
+    is legally binding between the spouses and can be enforced by the court. But a divorce decree does
+    <strong>not</strong> transfer title to real property on its own.
+  </p>
+  <p>
+    To actually move the property from one spouse to the other — so that title reflects the new
+    ownership in the public record — a deed must be signed and recorded. The decree tells everyone
+    what's supposed to happen; the deed is what makes it happen.
+  </p>
+  <p>
+    In practice: if you have a divorce decree saying your ex gets the house but no recorded deed,
+    your ex is the beneficial owner under the decree but title still shows both names (or your name
+    alone). This creates problems with refinancing, future sales, and estate planning.
+  </p>
+
+  <!-- What if Ex Won't Sign -->
+  <h2>What If My Ex Won't Sign?</h2>
+  <p>
+    If the divorce decree assigns the property to one spouse but the other spouse refuses to sign
+    the quitclaim deed, there are legal remedies.
+  </p>
+  <ul>
+    <li><strong>Return to court for an enforcement order:</strong> A court can hold a non-complying spouse in contempt of a divorce decree and order them to sign the deed.</li>
+    <li><strong>Court-ordered deed substitution:</strong> In some jurisdictions, a court can issue an order that functions as a deed — directing the county recorder to transfer title without the refusing spouse's signature.</li>
+    <li><strong>Commissioner or clerk signing:</strong> In some states, a court commissioner or clerk of court can sign the deed on behalf of a party who refuses to comply with a court order.</li>
+  </ul>
+  <p>
+    The key point: if your ex refuses to sign, you are not without recourse. You have a court order.
+    Get your divorce attorney involved immediately.
+  </p>
+
+  <!-- Timing -->
+  <h2>Timing: Record the Deed Before Refinancing</h2>
+  <p>
+    Most lenders require the title to reflect the remaining spouse as the sole owner before they will
+    complete a refinance in that spouse's name alone. If you try to refinance first, many lenders will
+    delay or decline until the deed is recorded.
+  </p>
+  <p>
+    Additionally, recording the deed establishes the transfer date in the public record. This matters
+    for tax purposes and for the lender's title search.
+  </p>
+  <p>
+    In almost all standard situations: <strong>record the deed first, then refinance.</strong>
+  </p>
+
+  <!-- Tax Considerations -->
+  <h2>Tax Considerations (IRC § 1041)</h2>
+  <p>
+    Transfers of property between divorcing spouses are generally not taxable events under federal law.
+    Under <strong>IRC § 1041</strong>, transfers of property between spouses (or incident to divorce)
+    are treated as gifts for income tax purposes — meaning no gain or loss is recognized at the time
+    of transfer. The receiving spouse takes the property at the transferring spouse's adjusted cost basis.
+  </p>
+  <Callout type="info" title="General information only — not tax advice">
+    <p>
+      This is a general federal rule. State tax treatment varies. Some states impose documentary
+      transfer taxes on deed recordings; others exempt transfers between divorcing spouses. For the
+      tax consequences of your specific property transfer, consult a CPA or tax attorney.
+    </p>
+  </Callout>
+
   <FAQ items={faqItems} />
+
+  <!-- Related Guides -->
+  <div class="related-guides">
+    <h2>Related Guides</h2>
+    <ul>
+      <li><a href="/what-is-a-quitclaim-deed/">What is a quitclaim deed?</a></li>
+      <li><a href="/quitclaim-deed/florida/">Florida quitclaim deed — witness requirements</a></li>
+      <li><a href="/quitclaim-deed/california/parents-to-children/">California parent-to-child quitclaim deed</a></li>
+    </ul>
+  </div>
 </BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-6);
+  }
+
+  .last-updated {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: calc(-1 * var(--space-2));
+    margin-bottom: var(--space-6);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li {
+    margin-bottom: var(--space-2);
+  }
+
+  a {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+  a:hover {
+    color: var(--color-teal-hover);
+  }
+
+  .checklist-box {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin: var(--space-6) 0;
+  }
+  .checklist-box__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+  .checklist-box__intro {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-4);
+  }
+  .checklist-box__list {
+    list-style-type: decimal;
+    padding-left: var(--space-6);
+    margin: 0;
+  }
+  .checklist-box__list li {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+    line-height: 1.65;
+  }
+
+  .cta-block {
+    background: var(--color-teal-light);
+    border: 1px solid var(--color-teal-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin: var(--space-8) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+
+  .process-steps {
+    margin: var(--space-6) 0;
+  }
+
+  .related-guides {
+    margin-top: var(--space-10);
+  }
+  .related-guides ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+  }
+</style>
