@@ -1,30 +1,32 @@
 import type { APIRoute } from 'astro';
-import { stripe } from '../../lib/stripe';
 import { generateQuitclaimDeed } from '../../lib/pdf';
 
-export const GET: APIRoute = async ({ url }) => {
-  const sessionId = url.searchParams.get('session_id');
-  if (!sessionId) return new Response('Missing session_id', { status: 400 });
+export const POST: APIRoute = async ({ request }) => {
+  const data = await request.json();
 
-  const session = await stripe.checkout.sessions.retrieve(sessionId);
-  if (session.payment_status !== 'paid') {
-    return new Response('Payment not complete', { status: 402 });
+  const required = ['grantorName', 'granteeName', 'propertyAddress', 'legalDescription', 'state'];
+  for (const field of required) {
+    if (!data[field]) {
+      return new Response(JSON.stringify({ error: `Missing required field: ${field}` }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
   }
 
-  const meta = session.metadata || {};
   const pdf = await generateQuitclaimDeed({
-    grantorName: meta.grantorName || '',
-    granteeName: meta.granteeName || '',
-    propertyAddress: meta.propertyAddress || '',
-    legalDescription: meta.legalDesc || '',
-    consideration: meta.consideration || '$10.00',
-    state: meta.state || '',
+    grantorName: data.grantorName,
+    granteeName: data.granteeName,
+    propertyAddress: data.propertyAddress,
+    legalDescription: data.legalDescription,
+    consideration: data.consideration || '$10.00',
+    state: data.state,
   });
 
   return new Response(pdf, {
     headers: {
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename="quitclaim-deed-${meta.state?.toLowerCase() || 'deed'}.pdf"`,
+      'Content-Disposition': `attachment; filename="quitclaim-deed-${String(data.state).toLowerCase()}.pdf"`,
     },
   });
 };
