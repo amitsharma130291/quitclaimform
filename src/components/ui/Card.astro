@@ -1,20 +1,21 @@
 ---
 interface Props {
+  variant?: 'default' | 'featured';
   class?: string;
   href?: string;
   [key: string]: any;
 }
 
-const { class: className = '', href, ...rest } = Astro.props;
+const { variant = 'default', class: className = '', href, ...rest } = Astro.props;
 const Tag = href ? 'a' : 'div';
 ---
 
 {Tag === 'a' ? (
-  <a href={href} class:list={['card', className]} {...rest}>
+  <a href={href} class:list={['card', `card--${variant}`, className]} {...rest}>
     <slot />
   </a>
 ) : (
-  <div class:list={['card', className]} {...rest}>
+  <div class:list={['card', `card--${variant}`, className]} {...rest}>
     <slot />
   </div>
 )}
@@ -35,9 +36,14 @@ const Tag = href ? 'a' : 'div';
   }
 
   .card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
     border-color: var(--color-teal-border);
+  }
+
+  /* Featured variant */
+  .card--featured {
+    border-radius: var(--radius-xl);
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,6 +1,7 @@
 ---
 interface Props {
   variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
   href?: string;
   type?: 'button' | 'submit' | 'reset';
   class?: string;
@@ -10,6 +11,7 @@ interface Props {
 
 const {
   variant = 'primary',
+  size = 'md',
   href,
   type = 'button',
   class: className = '',
@@ -23,7 +25,7 @@ const Tag = href ? 'a' : 'button';
 {Tag === 'a' ? (
   <a
     href={href}
-    class:list={['btn', `btn--${variant}`, className]}
+    class:list={['btn', `btn--${variant}`, `btn--${size}`, className]}
     {...rest}
   >
     <slot />
@@ -32,7 +34,7 @@ const Tag = href ? 'a' : 'button';
   <button
     type={type}
     disabled={disabled}
-    class:list={['btn', `btn--${variant}`, className]}
+    class:list={['btn', `btn--${variant}`, `btn--${size}`, className]}
     {...rest}
   >
     <slot />
@@ -44,10 +46,8 @@ const Tag = href ? 'a' : 'button';
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    padding: 0.75rem 1.5rem;
     border-radius: var(--radius-md);
     font-family: var(--font-body);
-    font-size: var(--text-sm);
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
@@ -81,6 +81,27 @@ const Tag = href ? 'a' : 'button';
     transform: none;
   }
 
+  /* Sizes */
+  .btn--sm {
+    height: 36px;
+    padding: 0 var(--space-4);
+    font-size: var(--text-xs);
+    border-radius: var(--radius-sm);
+  }
+
+  .btn--md {
+    height: 50px;
+    padding: 0 1.5rem;
+    font-size: var(--text-sm);
+  }
+
+  .btn--lg {
+    height: 58px;
+    padding: 0 2rem;
+    font-size: var(--text-base);
+    border-radius: var(--radius-lg);
+  }
+
   /* Primary */
   .btn--primary {
     background: var(--color-teal);
@@ -92,47 +113,48 @@ const Tag = href ? 'a' : 'button';
   .btn--primary:hover {
     background: var(--color-teal-hover);
     border-color: var(--color-teal-hover);
+    transform: translateY(-1px);
     box-shadow: var(--shadow-md);
   }
 
   .btn--primary:active {
     background: var(--color-teal-active);
     border-color: var(--color-teal-active);
+    transform: translateY(0);
   }
 
   /* Secondary */
   .btn--secondary {
     background: var(--color-surface);
-    color: var(--color-teal);
-    border-color: var(--color-teal-border);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
     box-shadow: var(--shadow-sm);
   }
 
   .btn--secondary:hover {
-    background: var(--color-teal-light);
-    border-color: var(--color-teal);
+    background: var(--color-surface-subtle);
+    border-color: var(--color-border);
     box-shadow: var(--shadow-md);
   }
 
   .btn--secondary:active {
-    background: var(--color-teal-light);
-    border-color: var(--color-teal-hover);
+    background: var(--color-divider);
   }
 
   /* Ghost */
   .btn--ghost {
     background: transparent;
-    color: var(--color-text-primary);
+    color: var(--color-teal);
     border-color: transparent;
   }
 
   .btn--ghost:hover {
-    background: var(--color-surface-subtle);
-    border-color: var(--color-border);
+    background: var(--color-teal-light);
+    border-color: transparent;
     box-shadow: none;
   }
 
   .btn--ghost:active {
-    background: var(--color-divider);
+    background: var(--color-teal-light);
   }
 </style>

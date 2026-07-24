@@ -24,10 +24,8 @@ const year = new Date().getFullYear();
         <h3 class="site-footer__col-heading">Learn</h3>
         <ul role="list">
           <li><a href="/what-is-a-quitclaim-deed/">What is a Quitclaim Deed?</a></li>
-          <li><a href="/how-to-fill-out-a-quitclaim-deed/">How to Fill Out a Quitclaim Deed</a></li>
-          <li><a href="/quitclaim-deed-vs-warranty-deed/">Quitclaim vs Warranty Deed</a></li>
-          <li><a href="/when-to-use-a-quitclaim-deed/">When to Use a Quitclaim Deed</a></li>
-          <li><a href="/quitclaim-deed-requirements/">Requirements by State</a></li>
+          <li><a href="/how-to-file-a-quitclaim-deed/">How to File a Quitclaim Deed</a></li>
+          <li><a href="/quitclaim-deed-requirements/">State Requirements</a></li>
         </ul>
       </div>
 
@@ -47,11 +45,11 @@ const year = new Date().getFullYear();
       <div class="site-footer__col">
         <h3 class="site-footer__col-heading">Company</h3>
         <ul role="list">
-          <li><a href="/about/">About Us</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
           <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
           <li><a href="/terms/">Terms of Service</a></li>
-          <li><a href="/sitemap/">Sitemap</a></li>
         </ul>
       </div>
 
@@ -60,11 +58,8 @@ const year = new Date().getFullYear();
 
   <div class="site-footer__bottom">
     <div class="container">
-      <p class="site-footer__copyright">
-        &copy; {year} QuitclaimForm.com. All rights reserved.
-      </p>
-      <p class="site-footer__legal-note">
-        Not a law firm. Not legal advice. Consult a licensed attorney for your specific situation.
+      <p class="site-footer__bottom-bar">
+        &copy; {year} QuitclaimForm.com &nbsp;&middot;&nbsp; Not a law firm &nbsp;&middot;&nbsp; Not legal advice &nbsp;&middot;&nbsp; Last updated July 2026
       </p>
     </div>
   </div>
@@ -78,8 +73,8 @@ const year = new Date().getFullYear();
   }
 
   .site-footer .container {
-    padding-top: var(--space-8);
-    padding-bottom: var(--space-7);
+    padding-top: var(--space-9);
+    padding-bottom: var(--space-9);
   }
 
   .site-footer__grid {
@@ -163,20 +158,13 @@ const year = new Date().getFullYear();
     padding-bottom: var(--space-5);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--space-3);
+    justify-content: center;
   }
 
-  .site-footer__copyright {
+  .site-footer__bottom-bar {
     font-size: var(--text-xs);
     color: var(--color-text-muted);
-  }
-
-  .site-footer__legal-note {
-    font-size: var(--text-xs);
-    color: var(--color-text-muted);
-    text-align: right;
+    text-align: center;
   }
 
   /* Tablet: 2-column */
@@ -205,11 +193,7 @@ const year = new Date().getFullYear();
 
     .site-footer__bottom .container {
       flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .site-footer__legal-note {
-      text-align: left;
+      align-items: center;
     }
   }
 </style>
