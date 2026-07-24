@@ -3,80 +3,815 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import DeedForm from '../components/DeedForm.astro';
 import FAQ from '../components/FAQ.astro';
 import Disclaimer from '../components/Disclaimer.astro';
+import CitableAnswerBlock from '../components/CitableAnswerBlock.astro';
 
-const faqItems = [
-  {
-    question: 'What is a quitclaim deed?',
-    answer: 'A quitclaim deed transfers whatever interest the grantor has in a property to the grantee, without making any guarantees about the title. It is commonly used between family members, divorcing spouses, or to clear a cloud on title.',
-  },
-  {
-    question: 'How much does it cost to use QuitclaimForm.com?',
-    answer: 'Generating a preview is free. You pay $14.99 to download your completed, state-compliant PDF deed.',
-  },
-  {
-    question: 'Is a quitclaim deed legally binding?',
-    answer: 'Yes, when properly executed (signed, witnessed, and notarized per your state\'s requirements) and recorded with your county recorder, a quitclaim deed is legally binding. Requirements vary by state.',
-  },
-  {
-    question: 'Do I need a lawyer to complete a quitclaim deed?',
-    answer: 'QuitclaimForm.com is a self-help service. We strongly recommend consulting a licensed real estate attorney, especially if the transfer involves significant assets, a divorce, or complex ownership arrangements.',
-  },
-];
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://quitclaimform.com';
 
-const schema = {
+// ── Schema ─────────────────────────────────────────────────────────────────
+const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "QuitclaimForm.com",
-  "url": "https://quitclaimform.com",
-  "description": "Free quitclaim deed generator — state-compliant PDF for all 50 states. $14.99 download.",
+  "url": siteUrl,
+  "description": "Free quitclaim deed generator — state-specific, ready-to-sign PDF for all 50 states. Preview free, download for $14.99.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": { "@type": "EntryPoint", "urlTemplate": `${siteUrl}/quitclaim-deed/{state}/` },
+    "query-input": "required name=state"
+  }
 };
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Free Quitclaim Deed Generator",
+  "description": "An online tool that generates a state-specific, legally formatted quitclaim deed PDF in minutes. Enter property and party details, preview free, download for $14.99. Covers all 50 states with the correct witness blocks, notary acknowledgment language, and state-specific instructions.",
+  "serviceType": "Legal Document Generator",
+  "provider": {
+    "@type": "Organization",
+    "name": "QuitclaimForm.com",
+    "url": siteUrl
+  },
+  "areaServed": { "@type": "Country", "name": "United States" },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "description": "Free deed preview — $14.99 for the ready-to-sign PDF download"
+  }
+};
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Create a Quitclaim Deed Online",
+  "description": "Use QuitclaimForm.com to create a state-specific quitclaim deed in under 10 minutes. Select your state, enter party and property details, preview, and download a ready-to-sign PDF for $14.99.",
+  "totalTime": "PT10M",
+  "tool": [
+    { "@type": "HowToTool", "name": "Quitclaim Deed Form Generator" },
+    { "@type": "HowToTool", "name": "Notary Public" }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep", "position": 1,
+      "name": "Select your state",
+      "text": "Choose the state where the property is located. Requirements vary significantly by state — the generator automatically applies the correct statutory language, signature blocks, and witness requirements."
+    },
+    {
+      "@type": "HowToStep", "position": 2,
+      "name": "Enter grantor and grantee information",
+      "text": "Enter the full legal names and mailing addresses of the grantor (person transferring the interest) and the grantee (person receiving the interest). Names must exactly match the current title."
+    },
+    {
+      "@type": "HowToStep", "position": 3,
+      "name": "Enter the property legal description",
+      "text": "Copy the legal description from the existing deed or county property records. Do not use the street address alone — the legal description is required. The generator explains where to find it."
+    },
+    {
+      "@type": "HowToStep", "position": 4,
+      "name": "Select vesting and consideration",
+      "text": "Specify how the grantee will hold title (joint tenancy, tenancy in common, etc.) and the consideration amount. For family transfers, '$1 and other valuable consideration' is standard in most states."
+    },
+    {
+      "@type": "HowToStep", "position": 5,
+      "name": "Preview free, download for $14.99",
+      "text": "Review the completed deed for free. Download the ready-to-sign PDF for $14.99. Sign in front of a notary — and witnesses if your state requires them — then record with your county recorder."
+    }
+  ]
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a quitclaim deed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A quitclaim deed is a legal document that transfers whatever property interest the grantor currently holds to the grantee — with no warranty of title and no guarantee the grantor owns the property free and clear. It is commonly used between family members, divorcing spouses, and to transfer property into trusts or LLCs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does a quitclaim deed remove me from the mortgage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. A quitclaim deed transfers property ownership only — it has no effect on the mortgage. The grantor remains personally liable on the loan until the lender refinances or formally releases them. This is one of the most important points for divorcing spouses."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need a notary for a quitclaim deed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, in all 50 states. The grantor's signature must be acknowledged before a notary public. Several states also require witnesses: Florida requires two witnesses under Fla. Stat. § 689.01; Georgia requires one. The generator includes the correct signature block for your state."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use the same quitclaim deed form in every state?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Quitclaim deed requirements are set by each state's property code. Florida requires two witnesses; California requires a Preliminary Change of Ownership Report at recording; Texas requires both spouses to sign on community property. A generic form is not automatically valid in every state."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost to record a quitclaim deed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Recording fees vary by county — typically $10 to $30 for the first page, plus $5 to $15 per additional page. Many states also charge documentary transfer tax based on the consideration amount. Florida charges $0.70 per $100; Texas has no state deed transfer tax. The generator's instructions include current fee guidance for your state."
+      }
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": siteUrl + "/"
+    }
+  ]
+};
+
+// ── FAQ items for the FAQ component ────────────────────────────────────────
+const faqItems = [
+  {
+    question: 'What is a quitclaim deed?',
+    answer:
+      'A quitclaim deed is a legal document that transfers whatever property interest the grantor currently holds to the grantee — with no warranty of title and no guarantee the grantor actually owns the property free and clear. It is commonly used between family members, divorcing spouses, and to transfer property into a trust or LLC. The grantor "quits" — meaning releases — their claim to the property.',
+  },
+  {
+    question: 'Does a quitclaim deed remove me from the mortgage?',
+    answer:
+      'No. A quitclaim deed transfers property ownership only — it has no effect on the mortgage. If you sign over a property with a mortgage on it, you remain personally liable on the loan until the lender refinances or formally releases you. This is one of the most important points for divorcing spouses: a quitclaim deed from the departing spouse does not remove them from the mortgage.',
+  },
+  {
+    question: 'Do I need a notary for a quitclaim deed?',
+    answer:
+      'Yes, in all 50 states. The grantor must sign the deed before a notary public. Several states also require one or two witnesses in addition to the notary — Florida and Louisiana require two witnesses; Georgia requires one. The generator includes the correct notary acknowledgment language and the right number of witness signature lines for whichever state you select.',
+  },
+  {
+    question: 'What is the legal description, and where do I find it?',
+    answer:
+      'The legal description is the formal recorded description of the property boundaries — not the street address. Find it on the existing deed, in county property records, or in a title report. It looks like a metes-and-bounds description, a lot-and-block number within a recorded plat, or a section/township/range identifier. Using only a street address is legally insufficient and will result in the deed being rejected or defective.',
+  },
+  {
+    question: 'Can I use the same quitclaim deed form in every state?',
+    answer:
+      'No. Quitclaim deed requirements are set by each state\'s property code. Florida requires two witnesses (Fla. Stat. § 689.01); California requires a Preliminary Change of Ownership Report at recording (Cal. Rev. & Tax. Code § 480.3); Texas requires both spouses to sign on community property (Tex. Fam. Code § 3.102). A generic form is not valid in every state. The generator applies the correct statutory language for whichever state you select.',
+  },
+  {
+    question: 'How much does it cost to record a quitclaim deed?',
+    answer:
+      'Recording fees vary by county and state — typically $10 to $30 for the first page, plus $5 to $15 per additional page. Many states also charge documentary transfer or stamp tax: Florida charges $0.70 per $100 of consideration; California charges approximately $0.55 per $500; Texas has no state deed transfer tax. The generator\'s instruction sheet includes current recording fee guidance and transfer tax information for your state.',
+  },
+  {
+    question: 'What happens if I make a mistake on a quitclaim deed?',
+    answer:
+      'Minor errors (a misspelled name, a transposed digit) may be correctable with a corrective quitclaim deed. More significant errors — a wrong legal description, reversed grantor and grantee names, missing required signatures — may require a new deed from the original grantor. If the original grantor is unavailable, correcting the title may require a quiet title action in court. Double-check every field before generating, and have a real estate attorney review the completed deed before recording.',
+  },
+  {
+    question: 'Do I need a lawyer to prepare a quitclaim deed?',
+    answer:
+      'An attorney is not legally required in most states, and many people complete straightforward family transfers without one. However, an attorney is strongly recommended when: the property has a mortgage, the transfer is part of a divorce, the property is in California and involves a parent-to-child transfer after Prop 19, there is any ambiguity in the title history, or the transfer is part of an estate plan. This generator produces a legally formatted deed template — it does not verify your ownership interest or provide legal advice.',
+  },
+];
 ---
+
 <BaseLayout
   title="Free Quitclaim Deed Generator — All 50 States | QuitclaimForm.com"
-  description="Generate a state-compliant quitclaim deed in minutes. Free preview, $14.99 PDF download. Covers all 50 states with the correct witness and notary requirements."
+  description="Generate a state-specific quitclaim deed in minutes. Free preview — $14.99 PDF download. Correct witness blocks, notary language, and recording instructions for all 50 states."
   canonical="/"
 >
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
-  <div class="text-center mb-10">
-    <h1 class="text-4xl font-bold text-gray-900 mb-4">Free Quitclaim Deed Generator</h1>
-    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-      Create a state-compliant quitclaim deed in minutes. Preview free, download your PDF for $14.99.
-      Covers all 50 states with the correct witness and notary requirements.
-    </p>
-    <div class="mt-4 flex justify-center gap-4 flex-wrap text-sm text-gray-500">
-      <span>✓ All 50 states</span>
-      <span>✓ Correct margins for recording</span>
-      <span>✓ State-specific witness requirements</span>
-      <span>✓ Instant download</span>
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <p class="hero__eyebrow">Free Quitclaim Deed Generator</p>
+        <h1 class="hero__heading" id="hero-heading">
+          Create a State-Specific<br />Quitclaim Deed in Minutes
+        </h1>
+        <p class="hero__subheading">
+          Enter your property and party details, preview your deed free, and download
+          a ready-to-sign PDF for $14.99. The correct witness blocks, notary language,
+          and recording instructions for all 50 states — automatically applied.
+        </p>
+        <ul class="hero__trust" aria-label="Key features">
+          <li>
+            <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            All 50 states
+          </li>
+          <li>
+            <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            3&quot; recording margin on page 1
+          </li>
+          <li>
+            <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            State-specific witness requirements
+          </li>
+          <li>
+            <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Instant PDF download
+          </li>
+        </ul>
+      </div>
+
+      <div class="hero__form-wrap" id="generator">
+        <DeedForm />
+        <Disclaimer />
+      </div>
     </div>
-  </div>
+  </section>
 
-  <DeedForm />
+  <!-- ── Citable answer block ───────────────────────────────────────────── -->
+  <section class="container section-gap" aria-labelledby="definition-heading">
+    <CitableAnswerBlock
+      question="What is a quitclaim deed?"
+      answer="A quitclaim deed is a legal document that transfers whatever property interest the grantor currently holds to the grantee — with no warranty of title and no guarantee the grantor actually owns the property free and clear. It is valid in all 50 states when properly executed (signed before a notary, and witnessed where required) and recorded."
+      source="Restatement (Third) of Property § 5.1; Cal. Civ. Code § 1092; Fla. Stat. § 689.02; Tex. Prop. Code § 5.022. Last verified: July 2026."
+    />
+    <p class="body-copy">
+      Quitclaim deeds are most commonly used between parties who already know each other — spouses dividing property in a divorce, parents transferring a home to a child, an owner moving property into a trust or LLC, or someone clearing a name from a title. Because the deed carries no title warranty, it is not appropriate for standard arm's-length real estate sales. For a full explanation, see our guide on <a href="/what-is-a-quitclaim-deed/" class="text-link">what is a quitclaim deed</a>.
+    </p>
+  </section>
 
-  <Disclaimer />
+  <!-- ── How it works ───────────────────────────────────────────────────── -->
+  <section class="how-it-works container section-gap" aria-labelledby="how-heading" id="how-it-works">
+    <h2 class="section-heading" id="how-heading">How It Works</h2>
+    <p class="section-intro">
+      From first click to recorded deed in four steps. The generator handles the state-specific details automatically.
+    </p>
+    <ol class="steps" role="list">
+      <li class="step">
+        <span class="step__number" aria-hidden="true">1</span>
+        <div class="step__body">
+          <h3 class="step__title">Select your state</h3>
+          <p class="step__desc">
+            Choose the state where the property is located. Witness requirements, notary acknowledgment language, documentary stamp tax rules, and required accompanying forms all vary by state. The generator applies the correct settings automatically.
+          </p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step__number" aria-hidden="true">2</span>
+        <div class="step__body">
+          <h3 class="step__title">Enter grantor, grantee, and property details</h3>
+          <p class="step__desc">
+            Full legal names (exactly as they appear on current title), mailing addresses, the property's legal description from the existing deed or county records, consideration amount, and how the grantee will hold title. The generator prompts you for each field and explains where to find the information.
+          </p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step__number" aria-hidden="true">3</span>
+        <div class="step__body">
+          <h3 class="step__title">Preview free, download for $14.99</h3>
+          <p class="step__desc">
+            Review the completed deed before paying anything. Download the ready-to-sign PDF for $14.99. Your download includes the deed and a one-page instruction sheet covering notarisation, witness requirements, required accompanying filings, and recording instructions for your specific state.
+          </p>
+        </div>
+      </li>
+      <li class="step">
+        <span class="step__number" aria-hidden="true">4</span>
+        <div class="step__body">
+          <h3 class="step__title">Sign, notarise, and record</h3>
+          <p class="step__desc">
+            Sign before a notary public — do not sign before the notary is present. Bring witnesses if your state requires them. Take the signed, notarised deed to the county recorder's office in the county where the property is located. Pay the recording fee and the transfer is complete.
+          </p>
+        </div>
+      </li>
+    </ol>
+    <div class="how-it-works__cta">
+      <a href="#generator" class="btn-primary">Start My Deed — Free Preview</a>
+    </div>
+  </section>
 
-  <section class="mt-12">
-    <h2 class="text-2xl font-bold mb-6">Common Uses for Quitclaim Deeds</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <a href="/quitclaim-deed/for-divorce" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
-        <h3 class="font-semibold text-blue-700 mb-2">Quitclaim Deed for Divorce</h3>
-        <p class="text-sm text-gray-600">Transfer property between spouses during or after divorce proceedings.</p>
+  <!-- ── Why a generator instead of a generic PDF ─────────────────────── -->
+  <section class="why-generator container section-gap" aria-labelledby="why-heading">
+    <h2 class="section-heading" id="why-heading">Why State-Specific Matters</h2>
+    <p class="section-intro">
+      A generic quitclaim deed form is designed to work in the most permissive state possible. It may be accepted in some states. In others, it will be rejected — or worse, recorded but legally defective.
+    </p>
+
+    <div class="state-cards" role="list">
+      <article class="state-card" role="listitem">
+        <div class="state-card__badge">Florida</div>
+        <h3 class="state-card__rule">Two witnesses required</h3>
+        <p class="state-card__detail">
+          Under <a href="/quitclaim-deed/florida/" class="text-link">Fla. Stat. § 689.01</a>, every deed must be signed before two witnesses plus a notary. A deed executed with only a notary and no witnesses is defective under Florida law. Most generic PDF templates include no witness lines at all.
+        </p>
+      </article>
+
+      <article class="state-card" role="listitem">
+        <div class="state-card__badge">California</div>
+        <h3 class="state-card__rule">PCOR required at recording</h3>
+        <p class="state-card__detail">
+          California requires a Preliminary Change of Ownership Report (form BOE-502-A) at the time of recording under Cal. Rev. &amp; Tax. Code § 480.3. <a href="/quitclaim-deed/california/parents-to-children/" class="text-link">Parent-to-child transfers after Prop 19 (Feb. 2021)</a> must also apply for the reassessment exclusion with form BOE-19-P within three years.
+        </p>
+      </article>
+
+      <article class="state-card" role="listitem">
+        <div class="state-card__badge">Texas</div>
+        <h3 class="state-card__rule">Both spouses must sign</h3>
+        <p class="state-card__detail">
+          Texas community property law (Tex. Fam. Code § 3.102) requires both spouses to sign any deed conveying community property — even if only one spouse is on the title. A deed from only one spouse may convey only that spouse's half-interest, leaving the other's intact.
+        </p>
+      </article>
+
+      <article class="state-card" role="listitem">
+        <div class="state-card__badge">Georgia</div>
+        <h3 class="state-card__rule">One official witness required</h3>
+        <p class="state-card__detail">
+          Georgia requires one witness on a quitclaim deed under O.C.G.A. § 44-5-30, in addition to notarisation. Georgia also adopted a Transfer-on-Death Deed framework in 2024 (O.C.G.A. § 44-17-1) that may be relevant for estate-planning transfers.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── Common uses ─────────────────────────────────────────────────────── -->
+  <section class="uses container section-gap" aria-labelledby="uses-heading">
+    <h2 class="section-heading" id="uses-heading">Common Uses for Quitclaim Deeds</h2>
+    <p class="section-intro">
+      Quitclaim deeds are designed for transfers between parties who know and trust each other's ownership situation. Here are the most common scenarios.
+    </p>
+    <div class="use-cards">
+      <a href="/quitclaim-deed/for-divorce/" class="use-card">
+        <div class="use-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3 class="use-card__title">Quitclaim Deed for Divorce</h3>
+        <p class="use-card__desc">Transfer property between spouses during or after divorce proceedings. Includes guidance on the mortgage — which the deed alone does not resolve.</p>
+        <span class="use-card__link" aria-hidden="true">Learn more &rarr;</span>
       </a>
-      <a href="/quitclaim-deed/florida" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
-        <h3 class="font-semibold text-blue-700 mb-2">Florida Quitclaim Deed</h3>
-        <p class="text-sm text-gray-600">Florida requires 2 witnesses plus notarization. Get the correct form.</p>
+
+      <a href="/quitclaim-deed/florida/" class="use-card">
+        <div class="use-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 class="use-card__title">Florida Quitclaim Deed</h3>
+        <p class="use-card__desc">Florida requires two witnesses plus a notary under Fla. Stat. § 689.01. Homestead property has additional spouse-joinder requirements. Get the correct form.</p>
+        <span class="use-card__link" aria-hidden="true">Learn more &rarr;</span>
       </a>
-      <a href="/quitclaim-deed/california/parents-to-children" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
-        <h3 class="font-semibold text-blue-700 mb-2">California: Parents to Children</h3>
-        <p class="text-sm text-gray-600">Parent-to-child transfers in California have special tax implications.</p>
+
+      <a href="/quitclaim-deed/california/parents-to-children/" class="use-card">
+        <div class="use-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+        </div>
+        <h3 class="use-card__title">California: Parents to Children</h3>
+        <p class="use-card__desc">California Prop 19 (effective Feb. 16, 2021) changed the property tax reassessment exclusion for parent-to-child transfers significantly. Get Prop 19-compliant guidance.</p>
+        <span class="use-card__link" aria-hidden="true">Learn more &rarr;</span>
       </a>
-      <a href="/quitclaim-deed-form" class="block p-5 border border-gray-200 rounded-lg hover:border-blue-400 transition-colors">
-        <h3 class="font-semibold text-blue-700 mb-2">Full Deed Form</h3>
-        <p class="text-sm text-gray-600">Complete the full deed generation form with all details.</p>
+
+      <a href="/quitclaim-deed-form/" class="use-card">
+        <div class="use-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3 class="use-card__title">Quitclaim Deed Form</h3>
+        <p class="use-card__desc">Need the form itself? The full quitclaim deed generator lets you create, preview, and download a state-compliant deed for any of the 50 states.</p>
+        <span class="use-card__link" aria-hidden="true">Go to form &rarr;</span>
+      </a>
+
+      <a href="/what-is-a-quitclaim-deed/" class="use-card">
+        <div class="use-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3 class="use-card__title">What Is a Quitclaim Deed?</h3>
+        <p class="use-card__desc">Not sure if you need a quitclaim deed, a warranty deed, or a grant deed? Our guide explains the differences, the risks, and the common mistakes.</p>
+        <span class="use-card__link" aria-hidden="true">Read the guide &rarr;</span>
+      </a>
+
+      <a href="/quitclaim-deed/" class="use-card">
+        <div class="use-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        </div>
+        <h3 class="use-card__title">All 50 State Guides</h3>
+        <p class="use-card__desc">State-specific requirements, recording fees, documentary stamp tax rules, and witness and notary requirements for all 50 states. Find your state.</p>
+        <span class="use-card__link" aria-hidden="true">Browse all states &rarr;</span>
       </a>
     </div>
   </section>
 
-  <FAQ items={faqItems} />
+  <!-- ── FAQ ────────────────────────────────────────────────────────────── -->
+  <section class="container section-gap">
+    <FAQ items={faqItems} />
+  </section>
+
+  <!-- ── Bottom CTA ─────────────────────────────────────────────────────── -->
+  <section class="cta-band" aria-labelledby="cta-band-heading">
+    <div class="container cta-band__inner">
+      <h2 class="cta-band__heading" id="cta-band-heading">Ready to create your quitclaim deed?</h2>
+      <p class="cta-band__sub">
+        Preview free. Download the ready-to-sign PDF for $14.99. State-specific language, correct witness blocks, and recording instructions included.
+      </p>
+      <a href="#generator" class="btn-primary cta-band__btn">Start My Deed</a>
+      <p class="cta-band__disclaimer">Not a law firm. Not legal advice. For informational purposes only.</p>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  /* ── Section rhythm ────────────────────────────────────────────────────── */
+  .section-gap {
+    padding-top: var(--space-9);
+    padding-bottom: var(--space-9);
+  }
+
+  .section-heading {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+    line-height: 1.15;
+  }
+
+  .section-intro {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-bottom: var(--space-7);
+  }
+
+  .body-copy {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    max-width: 680px;
+    margin-top: var(--space-5);
+  }
+
+  .text-link {
+    color: var(--color-teal);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+    transition: color var(--duration-micro) var(--ease-standard);
+  }
+  .text-link:hover { color: var(--color-teal-hover); }
+
+  /* ── Hero ──────────────────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(160deg, #F0FAF9 0%, #FAFAF8 60%);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-9) 0 var(--space-8);
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  .hero__text {
+    padding-top: var(--space-5);
+  }
+
+  .hero__eyebrow {
+    display: inline-block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-teal);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero__heading {
+    font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__subheading {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-6);
+    max-width: 520px;
+  }
+
+  .hero__trust {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .hero__trust li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+
+  .hero__check {
+    flex-shrink: 0;
+    color: var(--color-teal);
+  }
+
+  .hero__form-wrap {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 900px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+    }
+    .hero__text {
+      padding-top: 0;
+      text-align: center;
+    }
+    .hero__subheading {
+      max-width: 100%;
+    }
+    .hero__trust {
+      align-items: center;
+    }
+  }
+
+  /* ── How it works ──────────────────────────────────────────────────────── */
+  .steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    margin-bottom: var(--space-7);
+  }
+
+  .step {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+  }
+
+  .step__number {
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--color-teal);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: var(--text-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.1rem;
+  }
+
+  .step__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-h4);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+    line-height: 1.3;
+  }
+
+  .step__desc {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .how-it-works__cta {
+    text-align: center;
+    margin-top: var(--space-6);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+    background: var(--color-teal);
+    color: #ffffff !important;
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.25);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-teal-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(15, 118, 110, 0.3);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  /* ── Why generator — state cards ─────────────────────────────────────── */
+  .state-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+
+  .state-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
+  }
+
+  .state-card:hover {
+    border-color: var(--color-teal-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .state-card__badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    background: var(--color-teal-light);
+    color: var(--color-teal);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-3);
+  }
+
+  .state-card__rule {
+    font-family: var(--font-heading);
+    font-size: var(--text-h4);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+  }
+
+  .state-card__detail {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 767px) {
+    .state-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Common uses ───────────────────────────────────────────────────────── */
+  .use-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+
+  .use-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-enter);
+  }
+
+  .use-card:hover {
+    border-color: var(--color-teal-border);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .use-card__icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--color-teal-light);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-teal);
+    flex-shrink: 0;
+  }
+
+  .use-card__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+
+  .use-card__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .use-card__link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-teal);
+    margin-top: auto;
+  }
+
+  @media (max-width: 900px) {
+    .use-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .use-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ── Bottom CTA band ───────────────────────────────────────────────────── */
+  .cta-band {
+    background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-teal-hover) 100%);
+    padding: var(--space-9) 0;
+    margin-top: var(--space-7);
+  }
+
+  .cta-band__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+  }
+
+  .cta-band__heading {
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.15;
+    max-width: 560px;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-band__sub {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  .cta-band__btn {
+    background: #ffffff;
+    color: var(--color-teal) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    font-size: var(--text-lg);
+    padding: 0.875rem 2.25rem;
+    margin-top: var(--space-2);
+  }
+
+  .cta-band__btn:hover {
+    background: #F0FAF9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  }
+
+  .cta-band__disclaimer {
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: var(--space-2);
+  }
+</style>
