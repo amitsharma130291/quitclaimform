@@ -19,7 +19,7 @@ export const POST: APIRoute = async ({ request }) => {
     granteeName: data.granteeName,
     propertyAddress: data.propertyAddress,
     legalDescription: data.legalDescription,
-    consideration: data.consideration || '$10.00',
+    consideration: data.consideration || 'Ten Dollars ($10.00) and other good and valuable consideration',
     state: data.state,
   });
 

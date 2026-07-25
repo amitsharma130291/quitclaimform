@@ -24,8 +24,9 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     doc.on('end', () => resolve(Buffer.concat(chunks)));
     doc.on('error', reject);
 
-    // Position page 1 cursor at 3" (216pt) from top for the recording header.
-    doc.y = 216;
+    // Position page 1 cursor at 2" (144pt) from top for the recording header.
+    // 72pt standard margin + 72pt recording space = 144pt from top of page.
+    doc.y = 144;
 
     // Recording header block (upper right of the 3" space)
     doc.fontSize(10).font('Times-Roman');
