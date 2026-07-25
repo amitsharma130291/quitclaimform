@@ -13,12 +13,6 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const web3FormsKey = import.meta.env.WEB3FORMS_KEY;
-    if (!web3FormsKey) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Contact form is not configured.' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
-    }
 
     const payload = {
       access_key: web3FormsKey,

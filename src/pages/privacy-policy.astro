@@ -17,6 +17,7 @@ const schema = {
 <BaseLayout title={title} description={description} canonical="/privacy-policy/" noindex={false}>
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 
+  <div class="page-content">
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a>
     <span aria-hidden="true">/</span>
@@ -140,9 +141,16 @@ const schema = {
       <a href="/contact/">Contact Form</a>
     </p>
   </div>
+  </div>
 </BaseLayout>
 
 <style>
+  .page-content {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 3rem clamp(1.25rem, 5vw, 3rem);
+  }
+
   .breadcrumb {
     display: flex;
     align-items: center;
