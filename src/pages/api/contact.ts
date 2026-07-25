@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import nodemailer from 'nodemailer';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -12,41 +13,57 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const web3FormsKey = import.meta.env.WEB3FORMS_KEY;
+    const gmailUser = import.meta.env.GMAIL_USER;
+    const gmailPass = import.meta.env.GMAIL_APP_PASSWORD;
 
-    const payload = {
-      access_key: web3FormsKey,
-      name,
-      email,
-      subject: subject || 'Contact Form Submission — WhatIsAQuitclaimDeed.com',
-      message,
-      to: 'amitsharma00261@gmail.com',
-      from_name: 'WhatIsAQuitclaimDeed.com Contact Form',
-    };
+    if (!gmailPass) {
+      console.error('[contact api] GMAIL_APP_PASSWORD is not set');
+      return new Response(
+        JSON.stringify({ success: false, error: 'Server email configuration is missing (GMAIL_APP_PASSWORD not set).' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(payload),
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: gmailUser || 'amitsharma00261@gmail.com',
+        pass: gmailPass,
+      },
     });
 
-    const result = await response.json();
-
-    if (result.success) {
+    // Verify SMTP connection before attempting to send
+    try {
+      await transporter.verify();
+    } catch (verifyErr: unknown) {
+      const errMsg = verifyErr instanceof Error ? verifyErr.message : String(verifyErr);
+      console.error('[contact api] SMTP verify failed:', verifyErr);
       return new Response(
-        JSON.stringify({ success: true, message: 'Your message has been sent successfully.' }),
-        { status: 200, headers: { 'Content-Type': 'application/json' } }
-      );
-    } else {
-      return new Response(
-        JSON.stringify({ success: false, error: result.message || 'Failed to send message.' }),
+        JSON.stringify({ success: false, error: `SMTP connection failed: ${errMsg}` }),
         { status: 502, headers: { 'Content-Type': 'application/json' } }
       );
     }
-  } catch (err) {
-    console.error('[contact api]', err);
+
+    await transporter.sendMail({
+      from: `"WhatIsAQuitclaimDeed.com" <${gmailUser || 'amitsharma00261@gmail.com'}>`,
+      to: 'amitsharma00261@gmail.com',
+      replyTo: email,
+      subject: subject || `Contact Form: ${name} — WhatIsAQuitclaimDeed.com`,
+      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
+      html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>`,
+    });
+
     return new Response(
-      JSON.stringify({ success: false, error: 'Internal server error.' }),
+      JSON.stringify({ success: true, message: 'Your message has been sent successfully.' }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  } catch (err: unknown) {
+    const errMsg = err instanceof Error ? err.message : String(err);
+    console.error('[contact api] send error:', err);
+    return new Response(
+      JSON.stringify({ success: false, error: `Failed to send message: ${errMsg}` }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
