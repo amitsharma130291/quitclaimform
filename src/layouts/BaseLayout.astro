@@ -19,13 +19,13 @@ const {
   noindex = false,
 } = Astro.props;
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://quitclaimform.com';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://whatisaquitclaimdeed.com';
 const canonicalUrl = canonical ? `${siteUrl}${canonical}` : Astro.url.href;
 
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "QuitclaimForm.com",
+  "name": "WhatIsAQuitclaimDeed.com",
   "url": siteUrl,
   "logo": `${siteUrl}/logo.svg`,
   "description": "Self-help legal document preparation service for quitclaim deeds in all 50 states.",
@@ -60,7 +60,7 @@ const orgJsonLd = {
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={`${siteUrl}${ogImage}`} />
-  <meta property="og:site_name" content="QuitclaimForm.com" />
+  <meta property="og:site_name" content="WhatIsAQuitclaimDeed.com" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />

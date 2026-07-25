@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'About WhatIsAQuitclaimDeed.com';
+const description =
+  'WhatIsAQuitclaimDeed.com is a free online quitclaim deed generator. Learn who we are, what we do, and why we built this tool for homeowners, families, and real estate professionals.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: 'https://whatisaquitclaimdeed.com/about/',
+  description,
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/about/">
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">About</span>
+  </nav>
+
+  <h1 class="page-h1">About WhatIsAQuitclaimDeed.com</h1>
+
+  <section class="content-section">
+    <h2>What We Do</h2>
+    <p>
+      WhatIsAQuitclaimDeed.com is a free online tool that helps homeowners, families, and real estate
+      professionals generate state-specific quitclaim deeds in minutes. We cover all 50 states, with
+      the correct witness blocks, notary acknowledgment language, and recording instructions built in.
+    </p>
+    <p>
+      Our deed generator produces a ready-to-sign PDF you can download instantly — no account required,
+      no payment, no hidden fees. Print it, sign it in front of a notary, and file it with your county
+      recorder.
+    </p>
+  </section>
+
+  <section class="content-section">
+    <h2>Why We Built This</h2>
+    <p>
+      Quitclaim deeds are one of the most common real estate documents used in the United States.
+      People use them to transfer property between family members, resolve ownership after a divorce,
+      clear up title defects, and add or remove a spouse or partner from a deed.
+    </p>
+    <p>
+      For straightforward transfers, many people do not need to hire an attorney to prepare the deed
+      itself. But finding a correct, state-specific form has historically meant navigating
+      county websites, paying for generic templates, or guessing at requirements that vary significantly
+      by state.
+    </p>
+    <p>
+      We built WhatIsAQuitclaimDeed.com to solve that problem: one place where anyone can generate
+      a legally formatted, state-specific quitclaim deed for free.
+    </p>
+  </section>
+
+  <section class="content-section">
+    <h2>What We Are Not</h2>
+    <div class="notice-box">
+      <p>
+        <strong>WhatIsAQuitclaimDeed.com is not a law firm.</strong> We are a document preparation
+        service. Nothing on this site constitutes legal advice, and using our tool does not create an
+        attorney-client relationship. If your situation is complex — a contested transfer, title
+        disputes, estate planning, or a community property question — please consult a licensed
+        real estate attorney in your state.
+      </p>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <h2>Contact Us</h2>
+    <p>
+      Have a question, found an error, or want to provide feedback? We would love to hear from you.
+    </p>
+    <a href="/contact/" class="btn-link">Contact Us &rarr;</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-8);
+  }
+
+  .content-section {
+    margin-bottom: var(--space-8);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  .notice-box {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-teal);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  .notice-box p {
+    margin: 0;
+  }
+
+  .btn-link {
+    display: inline-block;
+    color: var(--color-teal);
+    font-weight: 600;
+    text-decoration: underline;
+    font-size: var(--text-base);
+  }
+  .btn-link:hover {
+    color: var(--color-teal-hover);
+  }
+</style>

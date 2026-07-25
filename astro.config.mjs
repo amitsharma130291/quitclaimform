@@ -6,5 +6,5 @@ export default defineConfig({
   output: 'server',
   adapter: vercel(),
   integrations: [tailwind()],
-  site: 'https://quitclaimform.com',
+  site: 'https://whatisaquitclaimdeed.com',
 });

@@ -5,13 +5,13 @@ import FAQ from '../components/FAQ.astro';
 import Disclaimer from '../components/Disclaimer.astro';
 import CitableAnswerBlock from '../components/CitableAnswerBlock.astro';
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://quitclaimform.com';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://whatisaquitclaimdeed.com';
 
 // ── Schema ─────────────────────────────────────────────────────────────────
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "QuitclaimForm.com",
+  "name": "WhatIsAQuitclaimDeed.com",
   "url": siteUrl,
   "description": "Free quitclaim deed generator — state-specific, ready-to-sign PDF for all 50 states. 100% free, no payment required.",
   "potentialAction": {
@@ -29,7 +29,7 @@ const serviceSchema = {
   "serviceType": "Legal Document Generator",
   "provider": {
     "@type": "Organization",
-    "name": "QuitclaimForm.com",
+    "name": "WhatIsAQuitclaimDeed.com",
     "url": siteUrl
   },
   "areaServed": { "@type": "Country", "name": "United States" },
@@ -45,7 +45,7 @@ const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "How to Create a Quitclaim Deed Online",
-  "description": "Use QuitclaimForm.com to create a state-specific quitclaim deed in under 10 minutes. Select your state, enter party and property details, and download a ready-to-sign PDF for free.",
+  "description": "Use WhatIsAQuitclaimDeed.com to create a state-specific quitclaim deed in under 10 minutes. Select your state, enter party and property details, and download a ready-to-sign PDF for free.",
   "totalTime": "PT10M",
   "tool": [
     { "@type": "HowToTool", "name": "Quitclaim Deed Form Generator" },
@@ -186,7 +186,7 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="Free Quitclaim Deed Generator — All 50 States | QuitclaimForm.com"
+  title="Free Quitclaim Deed Generator — All 50 States | WhatIsAQuitclaimDeed.com"
   description="Generate a state-specific quitclaim deed in minutes. Free PDF download. Correct witness blocks, notary language, and recording instructions for all 50 states."
   canonical="/"
 >

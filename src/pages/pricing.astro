@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Pricing — WhatIsAQuitclaimDeed.com';
+const description =
+  'WhatIsAQuitclaimDeed.com is completely free. Generate a state-specific quitclaim deed and download the ready-to-sign PDF — no payment, no account, no hidden fees.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  url: 'https://whatisaquitclaimdeed.com/pricing/',
+  description,
+};
+---
+
+<BaseLayout title={title} description={description} canonical="/pricing/">
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Pricing</span>
+  </nav>
+
+  <h1 class="page-h1">Pricing</h1>
+
+  <p class="lead">
+    WhatIsAQuitclaimDeed.com is 100% free. There is no premium plan, no subscription, and no hidden
+    fees.
+  </p>
+
+  <div class="pricing-card">
+    <div class="pricing-card__badge">Free</div>
+    <div class="pricing-card__price">$0</div>
+    <p class="pricing-card__tagline">Everything included. Always.</p>
+    <ul class="pricing-card__features">
+      <li>
+        <span class="feature-check" aria-hidden="true">✓</span>
+        State-specific quitclaim deed for all 50 states
+      </li>
+      <li>
+        <span class="feature-check" aria-hidden="true">✓</span>
+        Correct witness blocks and notary acknowledgment language
+      </li>
+      <li>
+        <span class="feature-check" aria-hidden="true">✓</span>
+        Instant PDF download — ready to print and sign
+      </li>
+      <li>
+        <span class="feature-check" aria-hidden="true">✓</span>
+        No account required
+      </li>
+      <li>
+        <span class="feature-check" aria-hidden="true">✓</span>
+        No credit card required
+      </li>
+      <li>
+        <span class="feature-check" aria-hidden="true">✓</span>
+        State-specific recording instructions included
+      </li>
+    </ul>
+    <a href="/quitclaim-deed-form/" class="btn-cta">Generate My Free Deed</a>
+  </div>
+
+  <section class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <h3>Is this really free?</h3>
+      <p>
+        Yes. There is no catch. We generate your deed and you download the PDF at no charge.
+        We do not upsell, we do not ask for a credit card, and we do not send you to a payment screen.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Will you ever charge for this?</h3>
+      <p>
+        Our core deed generator will remain free. We may introduce optional add-on services in the
+        future, but generating and downloading a quitclaim deed will always be free of charge.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Are there any government fees?</h3>
+      <p>
+        Using our tool is free. However, recording your deed with the county recorder's office does
+        involve a government filing fee — typically $10–$30 for the first page, with additional fees
+        per page. These fees go directly to the county and are not charged by us.
+      </p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Do I need to create an account?</h3>
+      <p>
+        No account is required. Fill out the form, generate your deed, and download the PDF — that
+        is all.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-5);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-8);
+    max-width: 640px;
+  }
+
+  .pricing-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    max-width: 480px;
+    margin-bottom: var(--space-10);
+    box-shadow: 0 2px 16px rgba(16, 24, 40, 0.06);
+  }
+
+  .pricing-card__badge {
+    display: inline-block;
+    background: var(--color-teal-light);
+    color: var(--color-teal);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: var(--space-4);
+  }
+
+  .pricing-card__price {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1;
+    margin-bottom: var(--space-2);
+  }
+
+  .pricing-card__tagline {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .pricing-card__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-7);
+  }
+
+  .pricing-card__features li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .feature-check {
+    color: var(--color-teal);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .btn-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.85rem var(--space-6);
+    background: var(--color-teal);
+    color: #ffffff;
+    font-size: var(--text-base);
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .btn-cta:hover {
+    background: var(--color-teal-hover);
+    transform: translateY(-1px);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-6);
+  }
+
+  .faq-section {
+    margin-bottom: var(--space-10);
+  }
+
+  .faq-item {
+    margin-bottom: var(--space-7);
+  }
+
+  h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+
+  p {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin: 0;
+  }
+</style>
