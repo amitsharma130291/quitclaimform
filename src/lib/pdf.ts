@@ -35,6 +35,13 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     doc.text(data.propertyAddress);
     doc.moveDown(1);
 
+    // Disclaimer line (small italic, above title)
+    doc.fontSize(7).font('Times-Italic').text(
+      'PREPARED USING WHATISAQUITCLAIMDEED.COM SELF-HELP TOOL — NOT LEGAL ADVICE — CONSULT A LICENSED ATTORNEY BEFORE USE',
+      { align: 'center' }
+    );
+    doc.moveDown(0.5);
+
     // Title
     doc.fontSize(14).font('Times-Bold').text('QUITCLAIM DEED', { align: 'center' });
     doc.moveDown();
