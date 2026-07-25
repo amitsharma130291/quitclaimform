@@ -1,5 +1,4 @@
 import type { APIRoute } from 'astro';
-import nodemailer from 'nodemailer';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -13,38 +12,43 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const gmailAppPassword = import.meta.env.GMAIL_APP_PASSWORD;
-    if (!gmailAppPassword) {
+    const web3FormsKey = import.meta.env.WEB3FORMS_KEY;
+    if (!web3FormsKey) {
       return new Response(
         JSON.stringify({ success: false, error: 'Contact form is not configured.' }),
         { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'amitsharma00261@gmail.com',
-        pass: gmailAppPassword,
-      },
-    });
-
-    await transporter.sendMail({
-      from: `"WhatIsAQuitclaimDeed.com Contact Form" <amitsharma00261@gmail.com>`,
-      to: 'amitsharma00261@gmail.com',
-      replyTo: email,
+    const payload = {
+      access_key: web3FormsKey,
+      name,
+      email,
       subject: subject || 'Contact Form Submission — WhatIsAQuitclaimDeed.com',
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `<p><strong>Name:</strong> ${name}</p>
-<p><strong>Email:</strong> ${email}</p>
-<hr />
-<p>${message.replace(/\n/g, '<br />')}</p>`,
+      message,
+      to: 'amitsharma00261@gmail.com',
+      from_name: 'WhatIsAQuitclaimDeed.com Contact Form',
+    };
+
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
     });
 
-    return new Response(
-      JSON.stringify({ success: true, message: 'Your message has been sent successfully.' }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
-    );
+    const result = await response.json();
+
+    if (result.success) {
+      return new Response(
+        JSON.stringify({ success: true, message: 'Your message has been sent successfully.' }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } }
+      );
+    } else {
+      return new Response(
+        JSON.stringify({ success: false, error: result.message || 'Failed to send message.' }),
+        { status: 502, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
   } catch (err) {
     console.error('[contact api]', err);
     return new Response(
