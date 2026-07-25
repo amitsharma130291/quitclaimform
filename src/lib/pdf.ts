@@ -49,7 +49,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     doc.moveDown();
 
     doc.text(
-      `WITNESSETH, that the Grantor, for and in consideration of the sum of ${data.consideration || 'Ten Dollars ($10.00) and other good and valuable consideration'}, ` +
+      `WITNESSETH, that the Grantor, for and in consideration of ${data.consideration}, ` +
       `the receipt whereof is hereby acknowledged, hereby remises, releases and quitclaims unto the Grantee all right, title, interest, claim and demand ` +
       `which the Grantor has in and to the following described lot or parcel of land, situate, lying and being in the State of ${data.state}:`,
       { align: 'justify' }
