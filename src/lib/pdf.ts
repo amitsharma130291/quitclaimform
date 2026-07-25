@@ -13,7 +13,7 @@ interface DeedData {
 export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
   return new Promise<Buffer>((resolve, reject) => {
     // Use 1" top margin for all pages; page 1 recording header is positioned
-    // manually at the 3" mark via doc.y so subsequent pages keep the standard 1" top.
+    // manually at the 2" mark via doc.y so subsequent pages keep the standard 1" top.
     const doc = new PDFDocument({
       size: 'LETTER',
       margins: { top: 72, bottom: 72, left: 72, right: 72 },
