@@ -2,6 +2,8 @@
 
 State-compliant quitclaim deed generator. Free PDF download.
 
+<!-- Last updated: 2026-07-25 -->
+
 ## Tech Stack
 
 - **Framework:** Astro 4 (SSR, Vercel adapter)
