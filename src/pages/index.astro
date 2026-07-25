@@ -13,7 +13,7 @@ const websiteSchema = {
   "@type": "WebSite",
   "name": "QuitclaimForm.com",
   "url": siteUrl,
-  "description": "Free quitclaim deed generator — state-specific, ready-to-sign PDF for all 50 states. Preview free, download for $14.99.",
+  "description": "Free quitclaim deed generator — state-specific, ready-to-sign PDF for all 50 states. 100% free, no payment required.",
   "potentialAction": {
     "@type": "SearchAction",
     "target": { "@type": "EntryPoint", "urlTemplate": `${siteUrl}/quitclaim-deed/{state}/` },
@@ -25,7 +25,7 @@ const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Free Quitclaim Deed Generator",
-  "description": "An online tool that generates a state-specific, legally formatted quitclaim deed PDF in minutes. Enter property and party details, preview free, download for $14.99. Covers all 50 states with the correct witness blocks, notary acknowledgment language, and state-specific instructions.",
+  "description": "An online tool that generates a state-specific, legally formatted quitclaim deed PDF in minutes. Enter property and party details and download free. Covers all 50 states with the correct witness blocks, notary acknowledgment language, and state-specific instructions.",
   "serviceType": "Legal Document Generator",
   "provider": {
     "@type": "Organization",
@@ -37,7 +37,7 @@ const serviceSchema = {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
-    "description": "Free deed preview — $14.99 for the ready-to-sign PDF download"
+    "description": "Free deed generator — free PDF download, no payment required"
   }
 };
 
@@ -45,7 +45,7 @@ const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "How to Create a Quitclaim Deed Online",
-  "description": "Use QuitclaimForm.com to create a state-specific quitclaim deed in under 10 minutes. Select your state, enter party and property details, preview, and download a ready-to-sign PDF for $14.99.",
+  "description": "Use QuitclaimForm.com to create a state-specific quitclaim deed in under 10 minutes. Select your state, enter party and property details, and download a ready-to-sign PDF for free.",
   "totalTime": "PT10M",
   "tool": [
     { "@type": "HowToTool", "name": "Quitclaim Deed Form Generator" },
@@ -74,8 +74,8 @@ const howToSchema = {
     },
     {
       "@type": "HowToStep", "position": 5,
-      "name": "Preview free, download for $14.99",
-      "text": "Review the completed deed for free. Download the ready-to-sign PDF for $14.99. Sign in front of a notary — and witnesses if your state requires them — then record with your county recorder."
+      "name": "Download your free PDF",
+      "text": "Download the ready-to-sign PDF for free. Sign in front of a notary — and witnesses if your state requires them — then record with your county recorder."
     }
   ]
 };
@@ -187,7 +187,7 @@ const faqItems = [
 
 <BaseLayout
   title="Free Quitclaim Deed Generator — All 50 States | QuitclaimForm.com"
-  description="Generate a state-specific quitclaim deed in minutes. Free preview — $14.99 PDF download. Correct witness blocks, notary language, and recording instructions for all 50 states."
+  description="Generate a state-specific quitclaim deed in minutes. Free PDF download. Correct witness blocks, notary language, and recording instructions for all 50 states."
   canonical="/"
 >
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
@@ -208,8 +208,8 @@ const faqItems = [
           Create a <span class="hero__gradient">State-Specific</span><br />Quitclaim Deed in Minutes
         </h1>
         <p class="hero__subheading">
-          Enter your property and party details, preview your deed free, and download
-          a ready-to-sign PDF for $14.99. The correct witness blocks, notary language,
+          Enter your property and party details and download
+          a ready-to-sign PDF for free. The correct witness blocks, notary language,
           and recording instructions for all 50 states — automatically applied.
         </p>
         <ul class="hero__trust" aria-label="Key features">
@@ -274,9 +274,9 @@ const faqItems = [
       </li>
       <li class="step-card">
         <span class="step-card__num" aria-hidden="true">03</span>
-        <h3 class="step-card__title">Preview free, download for $14.99</h3>
+        <h3 class="step-card__title">Download your free PDF</h3>
         <p class="step-card__desc">
-          Review the completed deed before paying anything. Download the ready-to-sign PDF for $14.99. Includes a one-page instruction sheet covering notarisation, witness requirements, and recording instructions for your state.
+          Download the ready-to-sign PDF for free. Includes a one-page instruction sheet covering notarisation, witness requirements, and recording instructions for your state.
         </p>
       </li>
       <li class="step-card">
@@ -288,7 +288,7 @@ const faqItems = [
       </li>
     </ol>
     <div class="how-it-works__cta">
-      <a href="#generator" class="btn-primary">Start My Deed — Free Preview</a>
+      <a href="#generator" class="btn-primary">Generate My Free Deed</a>
     </div>
   </section>
 
@@ -413,9 +413,9 @@ const faqItems = [
       <p class="cta-band__label">State-specific • Notary-ready • Instant PDF</p>
       <h2 class="cta-band__heading" id="cta-band-heading">Ready to create your quitclaim deed?</h2>
       <p class="cta-band__sub">
-        Preview free. Download the ready-to-sign PDF for $14.99. Correct witness blocks, notary language, and recording instructions included.
+        100% free. Download the ready-to-sign PDF instantly. Correct witness blocks, notary language, and recording instructions included.
       </p>
-      <a href="#generator" class="btn-primary cta-band__btn">Start My Deed — Free Preview</a>
+      <a href="#generator" class="btn-primary cta-band__btn">Generate My Free Deed</a>
       <p class="cta-band__disclaimer">Not a law firm. Not legal advice. For informational purposes only.</p>
     </div>
   </section>
