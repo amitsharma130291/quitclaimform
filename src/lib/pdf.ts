@@ -33,7 +33,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     doc.text('After recording return to:', { continued: false });
     doc.text(data.grantorName);
     doc.text(data.propertyAddress);
-    doc.moveDown(2);
+    doc.moveDown(1);
 
     // Title
     doc.fontSize(14).font('Times-Bold').text('QUITCLAIM DEED', { align: 'center' });
@@ -64,23 +64,23 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     // Signature block
     doc.font('Times-Roman').fontSize(11);
     doc.text('IN WITNESS WHEREOF, Grantor has executed this deed on the date first written above.');
-    doc.moveDown(3);
+    doc.moveDown(2);
 
     // Signature lines
     doc.text('Witness #1 Signature: _________________________________');
     doc.moveDown();
     doc.text('Witness #2 Signature: _________________________________');
-    doc.moveDown(2);
+    doc.moveDown();
     doc.text('Grantor Signature: ____________________________________');
     doc.moveDown();
     doc.text(`Printed Name: ${data.grantorName}`);
-    doc.moveDown(2);
+    doc.moveDown();
 
     // Notary block — keep the entire block together.
     // Estimate: state/county lines (~2 lines) + acknowledgement paragraph (~4 lines) +
     // signature lines (~3 lines) ≈ ~200pt minimum. If less space remains on the
     // current page, push to a new page so the block is never split.
-    const notaryBlockHeight = 200;
+    const notaryBlockHeight = 160;
     const pageBottom = (doc.page.height as number) - (doc.page.margins.bottom as number);
     if (doc.y + notaryBlockHeight > pageBottom) {
       doc.addPage();
