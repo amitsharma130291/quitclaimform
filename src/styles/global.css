@@ -65,7 +65,7 @@ h1, h2, h3, h4, h5, h6 {
 .container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 clamp(1.125rem, 4vw, 3rem);
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
 }
 .container--article {
   max-width: var(--container-article);
@@ -74,6 +74,14 @@ h1, h2, h3, h4, h5, h6 {
 .container--wide {
   max-width: var(--container-wide);
   margin: 0 auto;
+}
+
+/* Full-bleed escape: sections that deliberately span the full viewport
+   (e.g. hero, cta-band with their own background colours) need to
+   break out of <main>'s horizontal padding. */
+main > .hero,
+main > .cta-band {
+  margin-inline: calc(-1 * clamp(1.25rem, 5vw, 3rem));
 }
 
 /* Reveal animation */
