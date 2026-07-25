@@ -12,15 +12,20 @@ interface DeedData {
 
 export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
   return new Promise<Buffer>((resolve, reject) => {
+    // Use 1" top margin for all pages; page 1 recording header is positioned
+    // manually at the 3" mark via doc.y so subsequent pages keep the standard 1" top.
     const doc = new PDFDocument({
       size: 'LETTER',
-      margins: { top: 216, bottom: 72, left: 72, right: 72 }, // 3" top, 1" others
+      margins: { top: 72, bottom: 72, left: 72, right: 72 },
     });
 
     const chunks: Buffer[] = [];
     doc.on('data', (chunk: Buffer) => chunks.push(chunk));
     doc.on('end', () => resolve(Buffer.concat(chunks)));
     doc.on('error', reject);
+
+    // Position page 1 cursor at 3" (216pt) from top for the recording header.
+    doc.y = 216;
 
     // Recording header block (upper right of the 3" space)
     doc.fontSize(10).font('Times-Roman');
@@ -69,6 +74,16 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     doc.moveDown();
     doc.text(`Printed Name: ${data.grantorName}`);
     doc.moveDown(2);
+
+    // Notary block — keep the entire block together.
+    // Estimate: state/county lines (~2 lines) + acknowledgement paragraph (~4 lines) +
+    // signature lines (~3 lines) ≈ ~200pt minimum. If less space remains on the
+    // current page, push to a new page so the block is never split.
+    const notaryBlockHeight = 200;
+    const pageBottom = (doc.page.height as number) - (doc.page.margins.bottom as number);
+    if (doc.y + notaryBlockHeight > pageBottom) {
+      doc.addPage();
+    }
 
     // Notary block
     doc.text('STATE OF _______________');
