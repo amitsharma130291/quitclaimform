@@ -79,6 +79,15 @@ const orgJsonLd = {
 
   <!-- Organization JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BLX5M9VBFR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BLX5M9VBFR');
+  </script>
 </head>
 <body>
   <!-- Skip link for accessibility -->
