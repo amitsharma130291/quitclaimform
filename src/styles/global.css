@@ -21,24 +21,26 @@ html {
 
 body {
   font-family: var(--font-body);
+  font-size: 1.0625rem;
   color: var(--color-text-primary);
   background: var(--color-bg);
-  line-height: 1.7;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
   color: var(--color-text-primary);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-teal);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: 2.5px solid var(--color-teal);
+  outline-offset: 4px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 5px rgba(15, 118, 110, 0.15);
 }
 
 /* Skip link */
