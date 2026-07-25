@@ -15,7 +15,7 @@ const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Free Quitclaim Deed Form Generator",
-  "description": "Generate a state-specific quitclaim deed form in minutes. Enter your property and party details, preview for free, and download a ready-to-sign PDF for $14.99. The generator applies the correct statutory language, signature blocks, and state-specific instructions for all 50 states.",
+  "description": "Generate a state-specific quitclaim deed form in minutes. Enter your property and party details and download a ready-to-sign PDF for free. The generator applies the correct statutory language, signature blocks, and state-specific instructions for all 50 states.",
   "serviceType": "Legal Document Generator",
   "provider": {
     "@type": "Organization",
@@ -27,7 +27,7 @@ const serviceSchema = {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD",
-    "description": "Free preview — $14.99 for PDF download"
+    "description": "Free PDF download — no payment required"
   }
 };
 
@@ -35,7 +35,7 @@ const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "How to Create a Quitclaim Deed Form Online",
-  "description": "Use this free generator to create a state-specific, legally formatted quitclaim deed form. Select your state, enter party and property information, preview, and download a ready-to-sign PDF for $14.99.",
+  "description": "Use this free generator to create a state-specific, legally formatted quitclaim deed form. Select your state, enter party and property information, and download a ready-to-sign PDF for free.",
   "totalTime": "PT10M",
   "tool": [
     { "@type": "HowToTool", "name": "Quitclaim Deed Form Generator" },
@@ -65,7 +65,7 @@ const howToSchema = {
     {
       "@type": "HowToStep", "position": 5,
       "name": "Preview and download",
-      "text": "Review the generated deed for free. Download the completed PDF for $14.99, then sign before a notary and record with your county recorder's office."
+      "text": "Download the completed PDF for free, then sign before a notary and record with your county recorder's office."
     }
   ]
 };
@@ -124,7 +124,7 @@ const comparisonRows = [
   { label: "Documentary transfer tax guidance", values: ["None", "State-specific transfer tax information"], highlight: false },
   { label: "Post-execution instructions", values: ["None", "Notarisation, recording, and required accompanying forms"], highlight: false },
   { label: "California Prop 19 guidance", values: ["Absent or outdated", "Current (reflects post-Feb 2021 rules)"], highlight: false },
-  { label: "Preview before purchase", values: ["No", "Free preview — pay $14.99 only when ready"], highlight: true },
+  { label: "Free PDF included", values: ["No", "Yes — free download, no payment required"], highlight: true },
 ];
 
 // ── Witness requirement table data ─────────────────────────────────────────────
@@ -188,7 +188,7 @@ const faqItems = [
 
 <BaseLayout
   title="Quitclaim Deed Form: Free Generator + PDF Download"
-  description="Generate a state-specific quitclaim deed form in minutes. Enter your property details, download a ready-to-sign PDF for $14.99 — the right language for your state, every time."
+  description="Generate a state-specific quitclaim deed form in minutes. Enter your property details, download a ready-to-sign PDF for free — the right language for your state, every time."
   canonical="/quitclaim-deed-form/"
 >
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
@@ -210,7 +210,7 @@ const faqItems = [
     <h1 class="qdf-hero__h1">Quitclaim Deed Form</h1>
     <p class="qdf-hero__lede">
       A state-specific, legally formatted quitclaim deed — generated from your information, ready to sign
-      and record. Free preview. Download the completed PDF for $14.99.
+      and record. Download the completed PDF for free.
     </p>
   </header>
 
@@ -616,7 +616,7 @@ const faqItems = [
   <section class="qdf-bottom-cta" aria-labelledby="bottom-cta-heading">
     <h2 id="bottom-cta-heading">Ready to Generate Your Quitclaim Deed?</h2>
     <p>
-      Free preview. Download the state-specific, ready-to-sign PDF for $14.99.
+      Free. Download the state-specific, ready-to-sign PDF instantly.
       The correct language, signature blocks, and filing instructions for your state — automatically.
     </p>
     <a href="#generator" class="btn-primary qdf-cta-btn">Start My Deed</a>
