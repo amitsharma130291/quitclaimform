@@ -200,9 +200,12 @@ const faqItems = [
   <section class="hero" aria-labelledby="hero-heading">
     <div class="container hero__inner">
       <div class="hero__text">
-        <p class="hero__eyebrow">Free Quitclaim Deed Generator</p>
+        <div class="hero__eyebrow-wrap">
+          <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+          <p class="hero__eyebrow">Free Quitclaim Deed Generator</p>
+        </div>
         <h1 class="hero__heading" id="hero-heading">
-          Create a State-Specific<br />Quitclaim Deed in Minutes
+          Create a <span class="hero__gradient">State-Specific</span><br />Quitclaim Deed in Minutes
         </h1>
         <p class="hero__subheading">
           Enter your property and party details, preview your deed free, and download
@@ -254,42 +257,34 @@ const faqItems = [
     <p class="section-intro">
       From first click to recorded deed in four steps. The generator handles the state-specific details automatically.
     </p>
-    <ol class="steps" role="list">
-      <li class="step">
-        <span class="step__number" aria-hidden="true">1</span>
-        <div class="step__body">
-          <h3 class="step__title">Select your state</h3>
-          <p class="step__desc">
-            Choose the state where the property is located. Witness requirements, notary acknowledgment language, documentary stamp tax rules, and required accompanying forms all vary by state. The generator applies the correct settings automatically.
-          </p>
-        </div>
+    <ol class="steps-grid" role="list">
+      <li class="step-card">
+        <span class="step-card__num" aria-hidden="true">01</span>
+        <h3 class="step-card__title">Select your state</h3>
+        <p class="step-card__desc">
+          Choose the state where the property is located. Witness requirements, notary acknowledgment language, documentary stamp tax rules, and required accompanying forms all vary by state. The generator applies the correct settings automatically.
+        </p>
       </li>
-      <li class="step">
-        <span class="step__number" aria-hidden="true">2</span>
-        <div class="step__body">
-          <h3 class="step__title">Enter grantor, grantee, and property details</h3>
-          <p class="step__desc">
-            Full legal names (exactly as they appear on current title), mailing addresses, the property's legal description from the existing deed or county records, consideration amount, and how the grantee will hold title. The generator prompts you for each field and explains where to find the information.
-          </p>
-        </div>
+      <li class="step-card">
+        <span class="step-card__num" aria-hidden="true">02</span>
+        <h3 class="step-card__title">Enter grantor, grantee, and property details</h3>
+        <p class="step-card__desc">
+          Full legal names (exactly as they appear on current title), mailing addresses, the property's legal description from the existing deed or county records, consideration amount, and how the grantee will hold title.
+        </p>
       </li>
-      <li class="step">
-        <span class="step__number" aria-hidden="true">3</span>
-        <div class="step__body">
-          <h3 class="step__title">Preview free, download for $14.99</h3>
-          <p class="step__desc">
-            Review the completed deed before paying anything. Download the ready-to-sign PDF for $14.99. Your download includes the deed and a one-page instruction sheet covering notarisation, witness requirements, required accompanying filings, and recording instructions for your specific state.
-          </p>
-        </div>
+      <li class="step-card">
+        <span class="step-card__num" aria-hidden="true">03</span>
+        <h3 class="step-card__title">Preview free, download for $14.99</h3>
+        <p class="step-card__desc">
+          Review the completed deed before paying anything. Download the ready-to-sign PDF for $14.99. Includes a one-page instruction sheet covering notarisation, witness requirements, and recording instructions for your state.
+        </p>
       </li>
-      <li class="step">
-        <span class="step__number" aria-hidden="true">4</span>
-        <div class="step__body">
-          <h3 class="step__title">Sign, notarise, and record</h3>
-          <p class="step__desc">
-            Sign before a notary public — do not sign before the notary is present. Bring witnesses if your state requires them. Take the signed, notarised deed to the county recorder's office in the county where the property is located. Pay the recording fee and the transfer is complete.
-          </p>
-        </div>
+      <li class="step-card">
+        <span class="step-card__num" aria-hidden="true">04</span>
+        <h3 class="step-card__title">Sign, notarise, and record</h3>
+        <p class="step-card__desc">
+          Sign before a notary public — do not sign before the notary is present. Bring witnesses if your state requires them. Take the signed deed to the county recorder's office. Pay the recording fee and the transfer is complete.
+        </p>
       </li>
     </ol>
     <div class="how-it-works__cta">
@@ -306,6 +301,7 @@ const faqItems = [
 
     <div class="state-cards" role="list">
       <article class="state-card" role="listitem">
+        <div class="state-card__top-accent" aria-hidden="true"></div>
         <div class="state-card__badge">Florida</div>
         <h3 class="state-card__rule">Two witnesses required</h3>
         <p class="state-card__detail">
@@ -314,6 +310,7 @@ const faqItems = [
       </article>
 
       <article class="state-card" role="listitem">
+        <div class="state-card__top-accent" aria-hidden="true"></div>
         <div class="state-card__badge">California</div>
         <h3 class="state-card__rule">PCOR required at recording</h3>
         <p class="state-card__detail">
@@ -322,6 +319,7 @@ const faqItems = [
       </article>
 
       <article class="state-card" role="listitem">
+        <div class="state-card__top-accent" aria-hidden="true"></div>
         <div class="state-card__badge">Texas</div>
         <h3 class="state-card__rule">Both spouses must sign</h3>
         <p class="state-card__detail">
@@ -330,6 +328,7 @@ const faqItems = [
       </article>
 
       <article class="state-card" role="listitem">
+        <div class="state-card__top-accent" aria-hidden="true"></div>
         <div class="state-card__badge">Georgia</div>
         <h3 class="state-card__rule">One official witness required</h3>
         <p class="state-card__detail">
@@ -409,12 +408,14 @@ const faqItems = [
 
   <!-- ── Bottom CTA ─────────────────────────────────────────────────────── -->
   <section class="cta-band" aria-labelledby="cta-band-heading">
+    <div class="cta-band__noise" aria-hidden="true"></div>
     <div class="container cta-band__inner">
+      <p class="cta-band__label">State-specific • Notary-ready • Instant PDF</p>
       <h2 class="cta-band__heading" id="cta-band-heading">Ready to create your quitclaim deed?</h2>
       <p class="cta-band__sub">
-        Preview free. Download the ready-to-sign PDF for $14.99. State-specific language, correct witness blocks, and recording instructions included.
+        Preview free. Download the ready-to-sign PDF for $14.99. Correct witness blocks, notary language, and recording instructions included.
       </p>
-      <a href="#generator" class="btn-primary cta-band__btn">Start My Deed</a>
+      <a href="#generator" class="btn-primary cta-band__btn">Start My Deed — Free Preview</a>
       <p class="cta-band__disclaimer">Not a law firm. Not legal advice. For informational purposes only.</p>
     </div>
   </section>
@@ -423,30 +424,31 @@ const faqItems = [
 <style>
   /* ── Section rhythm ────────────────────────────────────────────────────── */
   .section-gap {
-    padding-top: var(--space-9);
-    padding-bottom: var(--space-9);
+    padding-top: clamp(5rem, 8vw, 8rem);
+    padding-bottom: clamp(5rem, 8vw, 8rem);
   }
 
   .section-heading {
-    font-size: var(--text-h2);
-    font-weight: 700;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800;
     color: var(--color-text-primary);
     margin-bottom: var(--space-4);
-    line-height: 1.15;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
 
   .section-intro {
     font-size: var(--text-lg);
     color: var(--color-text-secondary);
-    line-height: 1.7;
-    max-width: 640px;
-    margin-bottom: var(--space-7);
+    line-height: 1.75;
+    max-width: 600px;
+    margin-bottom: var(--space-8);
   }
 
   .body-copy {
     font-size: var(--text-base);
     color: var(--color-text-secondary);
-    line-height: 1.75;
+    line-height: 1.8;
     max-width: 680px;
     margin-top: var(--space-5);
   }
@@ -462,61 +464,95 @@ const faqItems = [
 
   /* ── Hero ──────────────────────────────────────────────────────────────── */
   .hero {
-    background: linear-gradient(160deg, #F0FAF9 0%, #FAFAF8 60%);
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 0%, rgba(15, 118, 110, 0.07) 0%, transparent 70%),
+      linear-gradient(180deg, #F2FAF9 0%, #FAFAF8 100%);
     border-bottom: 1px solid var(--color-border);
-    padding: var(--space-9) 0 var(--space-8);
+    padding: clamp(4rem, 7vw, 7rem) 0 clamp(3.5rem, 6vw, 6rem);
   }
 
   .hero__inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-8);
-    align-items: start;
+    gap: var(--space-9);
+    align-items: center;
   }
 
   .hero__text {
-    padding-top: var(--space-5);
+    padding-top: var(--space-3);
+  }
+
+  /* Eyebrow pill */
+  .hero__eyebrow-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(15, 118, 110, 0.08);
+    border: 1px solid rgba(15, 118, 110, 0.18);
+    border-radius: 999px;
+    padding: 0.3rem 0.9rem 0.3rem 0.6rem;
+    margin-bottom: var(--space-5);
+  }
+
+  .hero__eyebrow-dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-teal);
+    animation: pulse-dot 2.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
   }
 
   .hero__eyebrow {
-    display: inline-block;
+    display: inline;
     font-size: var(--text-sm);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    font-weight: 700;
+    letter-spacing: 0.01em;
     color: var(--color-teal);
-    margin-bottom: var(--space-4);
   }
 
   .hero__heading {
-    font-size: clamp(2.1rem, 4.5vw, 3.4rem);
-    font-weight: 700;
+    font-size: clamp(2.4rem, 4.5vw, 3.75rem);
+    font-weight: 800;
     color: var(--color-text-primary);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
     margin-bottom: var(--space-5);
+  }
+
+  .hero__gradient {
+    background: linear-gradient(135deg, #0F766E 0%, #0891B2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .hero__subheading {
     font-size: var(--text-lg);
     color: var(--color-text-secondary);
-    line-height: 1.7;
+    line-height: 1.75;
     margin-bottom: var(--space-6);
-    max-width: 520px;
+    max-width: 500px;
   }
 
   .hero__trust {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 0.625rem;
   }
 
   .hero__trust li {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    font-size: var(--text-sm);
+    font-size: 0.9375rem;
     font-weight: 500;
     color: var(--color-text-secondary);
   }
@@ -529,14 +565,25 @@ const faqItems = [
   .hero__form-wrap {
     background: var(--color-surface);
     border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg);
-    padding: var(--space-6);
+    box-shadow: var(--shadow-xl);
+    padding: var(--space-7);
     border: 1px solid var(--color-border);
+    position: relative;
   }
 
-  @media (max-width: 900px) {
+  .hero__form-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: calc(var(--radius-xl) + 1px);
+    background: linear-gradient(135deg, rgba(15, 118, 110, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 960px) {
     .hero__inner {
       grid-template-columns: 1fr;
+      gap: var(--space-7);
     }
     .hero__text {
       padding-top: 0;
@@ -544,56 +591,83 @@ const faqItems = [
     }
     .hero__subheading {
       max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
     }
     .hero__trust {
       align-items: center;
     }
+    .hero__eyebrow-wrap {
+      display: inline-flex;
+    }
   }
 
-  /* ── How it works ──────────────────────────────────────────────────────── */
-  .steps {
+  /* ── How it works — numbered grid ────────────────────────────────────── */
+  .steps-grid {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
-    margin-bottom: var(--space-7);
-  }
-
-  .step {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-5);
-    align-items: flex-start;
+    margin-bottom: var(--space-8);
+    counter-reset: step-counter;
   }
 
-  .step__number {
-    flex-shrink: 0;
-    width: 2.25rem;
-    height: 2.25rem;
-    border-radius: 50%;
-    background: var(--color-teal);
-    color: #fff;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: var(--text-base);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 0.1rem;
+  .step-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-5) var(--space-5);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-enter);
   }
 
-  .step__title {
+  .step-card:hover {
+    border-color: var(--color-teal-border);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+
+  .step-card__num {
+    display: block;
     font-family: var(--font-heading);
-    font-size: var(--text-h4);
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: rgba(15, 118, 110, 0.13);
+    line-height: 1;
+    margin-bottom: var(--space-4);
+    user-select: none;
+  }
+
+  .step-card__title {
+    font-family: var(--font-heading);
+    font-size: 1.0625rem;
     font-weight: 700;
     color: var(--color-text-primary);
-    margin-bottom: var(--space-2);
+    margin-bottom: var(--space-3);
     line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
-  .step__desc {
-    font-size: var(--text-base);
+  .step-card__desc {
+    font-size: var(--text-sm);
     color: var(--color-text-secondary);
     line-height: 1.7;
+  }
+
+  @media (max-width: 900px) {
+    .steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 540px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .how-it-works__cta {
@@ -604,12 +678,13 @@ const faqItems = [
   .btn-primary {
     display: inline-flex;
     align-items: center;
-    padding: 0.75rem 1.75rem;
+    padding: 0.8rem 1.875rem;
     background: var(--color-teal);
     color: #ffffff !important;
     font-family: var(--font-heading);
     font-size: var(--text-base);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.01em;
     border-radius: var(--radius-md);
     text-decoration: none;
     border: none;
@@ -618,17 +693,17 @@ const faqItems = [
       background var(--duration-fast) var(--ease-standard),
       transform var(--duration-fast) var(--ease-standard),
       box-shadow var(--duration-fast) var(--ease-standard);
-    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.25);
+    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.28), 0 1px 2px rgba(15, 118, 110, 0.15);
   }
 
   .btn-primary:hover {
     background: var(--color-teal-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(15, 118, 110, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 118, 110, 0.35), 0 2px 6px rgba(15, 118, 110, 0.2);
   }
 
   .btn-primary:active {
-    transform: scale(0.98);
+    transform: scale(0.98) translateY(0);
   }
 
   /* ── Why generator — state cards ─────────────────────────────────────── */
@@ -644,19 +719,41 @@ const faqItems = [
     border-radius: var(--radius-lg);
     padding: var(--space-6);
     box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
     transition:
       border-color var(--duration-fast) var(--ease-standard),
-      box-shadow var(--duration-fast) var(--ease-standard);
+      box-shadow var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-enter);
   }
 
   .state-card:hover {
     border-color: var(--color-teal-border);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  /* Top accent line — appears on hover */
+  .state-card__top-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-teal) 0%, #0891B2 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-standard) var(--ease-enter);
+    border-radius: 0 0 2px 2px;
+  }
+
+  .state-card:hover .state-card__top-accent {
+    transform: scaleX(1);
   }
 
   .state-card__badge {
     display: inline-block;
-    padding: 0.2rem 0.65rem;
+    padding: 0.2rem 0.7rem;
     background: var(--color-teal-light);
     color: var(--color-teal);
     font-size: var(--text-xs);
@@ -669,17 +766,18 @@ const faqItems = [
 
   .state-card__rule {
     font-family: var(--font-heading);
-    font-size: var(--text-h4);
+    font-size: 1.125rem;
     font-weight: 700;
     color: var(--color-text-primary);
     margin-bottom: var(--space-3);
     line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   .state-card__detail {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
-    line-height: 1.7;
+    line-height: 1.72;
   }
 
   @media (max-width: 767px) {
@@ -702,7 +800,7 @@ const faqItems = [
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: var(--space-5);
+    padding: var(--space-5) var(--space-5) var(--space-5);
     text-decoration: none;
     box-shadow: var(--shadow-sm);
     transition:
@@ -714,12 +812,12 @@ const faqItems = [
   .use-card:hover {
     border-color: var(--color-teal-border);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
 
   .use-card__icon {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.75rem;
+    height: 2.75rem;
     background: var(--color-teal-light);
     border-radius: var(--radius-md);
     display: flex;
@@ -735,12 +833,13 @@ const faqItems = [
     font-weight: 700;
     color: var(--color-text-primary);
     line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   .use-card__desc {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
-    line-height: 1.65;
+    line-height: 1.7;
     flex: 1;
   }
 
@@ -763,14 +862,27 @@ const faqItems = [
     }
   }
 
-  /* ── Bottom CTA band ───────────────────────────────────────────────────── */
+  /* ── Dark gradient CTA band ────────────────────────────────────────────── */
   .cta-band {
-    background: linear-gradient(135deg, var(--color-teal) 0%, var(--color-teal-hover) 100%);
-    padding: var(--space-9) 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(8, 145, 178, 0.18) 0%, transparent 70%),
+      linear-gradient(135deg, #0A2A2A 0%, #0F3D3A 40%, #0D2E32 100%);
+    padding: clamp(5rem, 8vw, 8rem) 0;
     margin-top: var(--space-7);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-band__noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.035;
+    pointer-events: none;
   }
 
   .cta-band__inner {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -778,40 +890,55 @@ const faqItems = [
     gap: var(--space-4);
   }
 
-  .cta-band__heading {
-    font-size: var(--text-h2);
+  .cta-band__label {
+    font-size: var(--text-xs);
     font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(15, 118, 110, 0.9);
+    background: rgba(15, 118, 110, 0.12);
+    border: 1px solid rgba(15, 118, 110, 0.25);
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+  }
+
+  .cta-band__heading {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 800;
     color: #ffffff;
-    line-height: 1.15;
+    line-height: 1.05;
     max-width: 560px;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.035em;
+    margin-top: var(--space-1);
   }
 
   .cta-band__sub {
     font-size: var(--text-lg);
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.6;
-    max-width: 520px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.65;
+    max-width: 480px;
   }
 
   .cta-band__btn {
     background: #ffffff;
-    color: var(--color-teal) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    color: #0A2A2A !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
     font-size: var(--text-lg);
-    padding: 0.875rem 2.25rem;
+    padding: 0.9375rem 2.5rem;
+    border-radius: 999px;
     margin-top: var(--space-2);
   }
 
   .cta-band__btn:hover {
     background: #F0FAF9;
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 8px 36px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
   .cta-band__disclaimer {
     font-size: var(--text-xs);
-    color: rgba(255, 255, 255, 0.65);
-    margin-top: var(--space-2);
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: var(--space-1);
+    letter-spacing: 0.01em;
   }
 </style>

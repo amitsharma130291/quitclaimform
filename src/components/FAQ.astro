@@ -29,9 +29,10 @@ const faqSchema = {
       <details class="faq__item">
         <summary class="faq__summary" id={`faq-q-${i}`}>
           <span class="faq__question">{item.question}</span>
-          <span class="faq__chevron" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"/>
+          <span class="faq__icon" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
           </span>
         </summary>
@@ -53,23 +54,38 @@ const faqSchema = {
   .faq__heading {
     font-family: var(--font-heading);
     font-size: var(--text-h3);
-    font-weight: 700;
+    font-weight: 800;
     color: var(--color-text-primary);
-    margin-bottom: var(--space-6);
-    line-height: 1.2;
+    margin-bottom: var(--space-7);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
   }
 
   .faq__list {
     display: flex;
     flex-direction: column;
+    gap: var(--space-2);
   }
 
   .faq__item {
-    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard);
   }
 
-  .faq__item:first-child {
-    border-top: 1px solid var(--color-border);
+  .faq__item:hover {
+    border-color: var(--color-teal-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  details[open].faq__item {
+    border-color: var(--color-teal-border);
+    box-shadow: 0 0 0 1px var(--color-teal-border), var(--shadow-md);
   }
 
   .faq__summary {
@@ -77,7 +93,7 @@ const faqSchema = {
     align-items: center;
     justify-content: space-between;
     gap: var(--space-4);
-    padding: var(--space-5) 0;
+    padding: var(--space-5) var(--space-5);
     cursor: pointer;
     list-style: none;
     user-select: none;
@@ -87,44 +103,62 @@ const faqSchema = {
   .faq__summary::-webkit-details-marker { display: none; }
   .faq__summary::marker { display: none; }
 
-  .faq__summary:hover .faq__question {
-    color: var(--color-teal);
-  }
-
   .faq__question {
     font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: var(--text-base);
+    font-weight: 700;
+    font-size: 1.0625rem;
     color: var(--color-text-primary);
     line-height: 1.4;
     transition: color var(--duration-micro) var(--ease-standard);
   }
 
-  .faq__chevron {
-    flex-shrink: 0;
-    color: var(--color-text-muted);
-    display: flex;
-    align-items: center;
-    transition: transform var(--duration-fast) var(--ease-enter);
+  .faq__summary:hover .faq__question {
+    color: var(--color-teal);
   }
 
-  details[open] .faq__chevron {
-    transform: rotate(180deg);
+  details[open] .faq__question {
+    color: var(--color-teal);
+  }
+
+  .faq__icon {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-enter);
+  }
+
+  details[open] .faq__icon {
+    background: var(--color-teal-light);
+    border-color: var(--color-teal-border);
+    color: var(--color-teal);
+    transform: rotate(45deg);
   }
 
   .faq__answer {
-    padding-top: 0;
-    padding-bottom: var(--space-5);
+    padding: 0 var(--space-5) var(--space-5);
+    border-top: 1px solid var(--color-divider);
   }
 
   .faq__answer p {
     font-family: var(--font-body);
     font-size: var(--text-base);
     color: var(--color-text-secondary);
-    line-height: 1.7;
+    line-height: 1.75;
+    padding-top: var(--space-4);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .faq__chevron { transition: none; }
+    .faq__icon { transition: none; }
   }
 </style>
