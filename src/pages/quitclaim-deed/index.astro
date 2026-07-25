@@ -1,0 +1,223 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Quitclaim Deed by State — State-Specific Requirements & Guides';
+const description =
+  'Find quitclaim deed requirements for your state. Witness rules, notary language, recording fees, and download a ready-to-sign PDF — specific to your state.';
+
+const states = [
+  { name: 'Florida', slug: 'florida', blurb: 'Requires 2 witnesses + notary. No doc stamp exemption for family transfers.' },
+  { name: 'California', slug: 'california', blurb: 'No witnesses required. Prop 19 rules apply for parent-to-child transfers.' },
+  { name: 'Divorce / Separation', slug: 'for-divorce', blurb: 'Transfer property between spouses as part of a divorce settlement.' },
+];
+
+const comingSoon = [
+  'Texas', 'New York', 'Illinois', 'Georgia', 'Arizona',
+  'Colorado', 'Washington', 'Nevada', 'Ohio', 'Pennsylvania',
+  'Michigan', 'North Carolina', 'Virginia', 'Tennessee', 'Indiana',
+];
+---
+
+<BaseLayout title={title} description={description} canonical="/quitclaim-deed/">
+  <div class="page-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">State Guides</span>
+    </nav>
+
+    <h1 class="page-h1">Quitclaim Deed Requirements by State</h1>
+
+    <p class="lead">
+      Every state has different rules for witnesses, notarization, and recording. Select your
+      state below to see the exact requirements — and generate a correctly formatted deed PDF
+      in minutes.
+    </p>
+
+    <h2 class="section-heading">Available State Guides</h2>
+    <div class="state-grid">
+      {states.map((s) => (
+        <a href={`/quitclaim-deed/${s.slug}/`} class="state-card">
+          <div class="state-card__name">{s.name}</div>
+          <p class="state-card__blurb">{s.blurb}</p>
+          <span class="state-card__cta">View guide →</span>
+        </a>
+      ))}
+    </div>
+
+    <h2 class="section-heading coming-soon-heading">More States Coming Soon</h2>
+    <ul class="coming-soon-list">
+      {comingSoon.map((name) => (
+        <li>{name}</li>
+      ))}
+    </ul>
+
+    <div class="all-states-cta">
+      <p>
+        Don't see your state? Our deed generator already handles all 50 states — just
+        select your state in the form and we'll apply the correct requirements automatically.
+      </p>
+      <a href="/quitclaim-deed-form/" class="btn-primary">Generate My Deed — All 50 States</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem clamp(1.25rem, 5vw, 3rem);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-5);
+  }
+
+  .lead {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-8);
+    max-width: 660px;
+  }
+
+  .section-heading {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-5);
+  }
+
+  .coming-soon-heading {
+    margin-top: var(--space-10);
+  }
+
+  /* State cards grid */
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
+  }
+
+  .state-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition:
+      border-color var(--duration-fast) var(--ease-standard),
+      box-shadow var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .state-card:hover {
+    border-color: var(--color-teal);
+    box-shadow: 0 4px 16px rgba(15, 118, 110, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .state-card__name {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .state-card__blurb {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    flex: 1;
+    margin: 0;
+  }
+
+  .state-card__cta {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-teal);
+    margin-top: var(--space-2);
+  }
+
+  /* Coming soon list */
+  .coming-soon-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-10);
+  }
+
+  .coming-soon-list li {
+    padding: 0.35rem 0.875rem;
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* CTA block */
+  .all-states-cta {
+    background: linear-gradient(135deg, #f0fdfa 0%, #e6fff9 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    text-align: center;
+  }
+
+  .all-states-cta p {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    max-width: 520px;
+    margin: 0 auto var(--space-5);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.75rem;
+    background: var(--color-teal);
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: var(--text-base);
+    border-radius: 999px;
+    text-decoration: none;
+    transition:
+      background var(--duration-fast) var(--ease-standard),
+      transform var(--duration-fast) var(--ease-standard);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-teal-hover);
+    transform: translateY(-1px);
+  }
+</style>
