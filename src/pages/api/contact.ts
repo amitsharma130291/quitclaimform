@@ -3,8 +3,9 @@ import nodemailer from 'nodemailer';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const pageUrl = request.headers.get('referer') || 'https://whatisaquitclaimdeed.com/contact';
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, message } = body;
 
     if (!name || !email || !message) {
       return new Response(
@@ -50,9 +51,9 @@ export const POST: APIRoute = async ({ request }) => {
       from: `"WhatIsAQuitclaimDeed.com" <${gmailUser || 'amitsharma00261@gmail.com'}>`,
       to: 'amitsharma00261@gmail.com',
       replyTo: email,
-      subject: subject || `Contact Form: ${name} — WhatIsAQuitclaimDeed.com`,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-      html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>`,
+      subject: `[WhatIsAQuitclaimDeed.com] Contact from ${name}`,
+      text: `Site: WhatIsAQuitclaimDeed.com\nPage: ${pageUrl}\n\nName: ${name}\nEmail: ${email}\n\n${message}`,
+      html: `<p><strong>Site:</strong> WhatIsAQuitclaimDeed.com</p><p><strong>Page:</strong> <a href="${pageUrl}">${pageUrl}</a></p><hr><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong></p><p>${message.replace(/\n/g, '<br>')}</p>`,
     });
 
     return new Response(
