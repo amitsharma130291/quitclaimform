@@ -6,6 +6,19 @@ const RATE_LIMIT = 5;
 const WINDOW_MS = 60_000; // 1 minute
 
 export const onRequest = defineMiddleware(async (context, next) => {
+  // Redirect *.vercel.app preview URLs to the canonical domain
+  const host = context.request.headers.get('host') || '';
+  if (host.endsWith('.vercel.app')) {
+    const url = new URL(context.request.url);
+    const canonical = 'https://whatisaquitclaimdeed.com' + url.pathname + url.search;
+    return new Response(null, {
+      status: 301,
+      headers: {
+        Location: canonical,
+      },
+    });
+  }
+
   const { url, request } = context;
 
   if (url.pathname === '/api/generate-pdf') {

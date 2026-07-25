@@ -19,8 +19,8 @@ const {
   noindex = false,
 } = Astro.props;
 
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://whatisaquitclaimdeed.com';
-const canonicalUrl = canonical ? `${siteUrl}${canonical}` : Astro.url.href;
+const siteUrl = 'https://whatisaquitclaimdeed.com';
+const canonicalUrl = canonical ? `${siteUrl}${canonical}` : `${siteUrl}${Astro.url.pathname}`;
 
 const orgJsonLd = {
   "@context": "https://schema.org",
