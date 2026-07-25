@@ -3,8 +3,8 @@
 <header class="site-header" id="site-header">
   <div class="container">
     <nav class="site-nav" aria-label="Main navigation">
-      <a href="/" class="logo" aria-label="WhatIsAQuitclaimDeed home">
-        WhatIsAQuitclaimDeed<span class="logo-dot" aria-hidden="true">.</span>com
+      <a href="/" class="logo" aria-label="QuitclaimDeed home">
+        <img src="/logo.png" alt="QuitclaimDeed logo" class="site-logo">
       </a>
 
       <ul class="nav-links" role="list">
@@ -132,22 +132,15 @@
 
   /* Logo */
   .logo {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.125rem;
-    color: var(--color-text-primary);
     text-decoration: none;
     flex-shrink: 0;
-    letter-spacing: -0.02em;
-    transition: color var(--duration-micro) var(--ease-standard);
+    display: flex;
+    align-items: center;
   }
 
-  .logo:hover {
-    color: var(--color-teal);
-  }
-
-  .logo-dot {
-    color: var(--color-teal);
+  .site-logo {
+    height: 36px;
+    width: auto;
   }
 
   /* Nav links */
