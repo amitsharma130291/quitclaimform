@@ -122,12 +122,15 @@ const faqItems = [
 
         <button
           class="tier-cta tier-cta--paid"
-          disabled
-          aria-disabled="true"
-          aria-label="Get the Complete Filing Bundle for $9.97 — coming soon"
+          id="coming-soon-btn"
+          type="button"
+          aria-label="Complete Filing Bundle — Coming Soon at $9.97"
         >
-          Get the Complete Filing Bundle — $9.97
+          Coming Soon — $9.97
         </button>
+        <p class="coming-soon-note" id="coming-soon-msg" aria-live="polite" style="display:none; margin-top: 0.5rem; font-size: 0.85rem; color: var(--color-text-muted, #6b7280); text-align: center;">
+          We&#39;re putting the finishing touches on this bundle. Check back soon.
+        </p>
 
         <p class="paid-muted">The deed is free. The part where the county actually accepts it is $9.97.</p>
         <p class="paid-trust">One-time payment. Instant access. No subscription.</p>
@@ -171,6 +174,15 @@ const faqItems = [
     <FAQ items={faqItems} />
 
   </div>
+<script>
+  const btn = document.getElementById('coming-soon-btn');
+  const msg = document.getElementById('coming-soon-msg');
+  if (btn && msg) {
+    btn.addEventListener('click', () => {
+      msg.style.display = msg.style.display === 'none' ? 'block' : 'none';
+    });
+  }
+</script>
 </BaseLayout>
 
 <style>
@@ -384,13 +396,16 @@ const faqItems = [
     background: var(--color-teal-light);
   }
 
-  /* Paid — amber/gold, disabled (coming soon) */
+  /* Paid — amber/gold, active coming-soon */
   .tier-cta--paid {
     background: #d97706;
     color: #ffffff;
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.95;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 1;
+  }
+  .tier-cta--paid:hover {
+    background: #b45309;
   }
 
   /* Below paid CTA */
