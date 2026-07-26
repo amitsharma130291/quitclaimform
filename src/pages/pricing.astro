@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FAQ from '../components/FAQ.astro';
 
 const title = 'Pricing — WhatIsAQuitclaimDeed.com';
 const description =
-  'WhatIsAQuitclaimDeed.com is free to use. Generate a state-specific quitclaim deed and download the ready-to-sign PDF at no charge. A $9.97 premium tier with attorney review is coming soon.';
+  'Get a free state-specific quitclaim deed, or add the Complete Filing Bundle ($9.97) with your county recording checklist, legal description guide, and 90-day re-download.';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -12,6 +13,14 @@ const schema = {
   url: 'https://whatisaquitclaimdeed.com/pricing/',
   description,
 };
+
+const faqItems = [
+  {
+    question: "What's the difference between downloading the deed and recording it?",
+    answer:
+      "Downloading gives you the signed document. Recording means filing it with your county recorder's office so it becomes part of the official property record. That's the step that legally transfers ownership. The Complete Filing Bundle walks you through exactly how to do that in your county.",
+  },
+];
 ---
 
 <BaseLayout title={title} description={description} canonical="/pricing/">
@@ -24,263 +33,143 @@ const schema = {
       <span aria-current="page">Pricing</span>
     </nav>
 
-    <h1 class="page-h1">Simple, transparent pricing</h1>
+    <h1 class="page-h1">Get your quitclaim deed. Or get everything you need to record it.</h1>
 
-    <p class="lead">
-      Generating and downloading your quitclaim deed is completely free. A premium tier with
-      additional services is in development and will be available soon.
-    </p>
+    <!-- Pain section -->
+    <section class="pain-section" aria-labelledby="pain-heading">
+      <h2 class="pain-heading" id="pain-heading">Before you download</h2>
 
-    <!-- Two-column tier cards -->
+      <p class="pain-para">
+        <strong>Downloading a deed and recording a deed are two different things.</strong> One is a
+        file on your computer. The other is what actually transfers ownership in the eyes of the law.
+      </p>
+
+      <p class="pain-para">
+        <strong>Most people find out the hard way that counties don't accept just any deed.</strong>
+        Each county has its own requirements: a specific cover sheet, minimum font size and margin
+        rules, a Transfer Tax Affidavit, sometimes a particular witness count. Bring the wrong
+        document and it comes back to you. You pay the filing fee again. You wait again. And while
+        the deed sits unrecorded, the transfer isn't legally done.
+      </p>
+
+      <p class="pain-para">
+        <strong>The legal description is where people freeze.</strong> It's not the street address.
+        It's a precise parcel description copied from the existing deed, and getting it wrong (or
+        copying slightly the wrong text) is one of the most common reasons deeds get rejected or,
+        worse, accepted with an error that causes problems later.
+      </p>
+
+      <p class="pain-para">
+        <strong>Then there's everything after you sign.</strong> Notarisation, witnesses, transfer
+        tax payment, filing order, tax assessor notification. Most people have no idea these steps
+        exist until they're standing at the recorder's office without half of them done. And if you
+        catch a typo after you've downloaded, with a single-download setup you're starting over from
+        scratch.
+      </p>
+    </section>
+
+    <!-- Two-column tier grid — paid card is DOM-first so it appears at top on mobile -->
     <div class="tiers-grid">
 
-      <!-- Free tier -->
-      <div class="tier-card tier-card--free">
+      <!-- Paid card (right on desktop, top on mobile) -->
+      <div class="tier-card tier-card--paid">
         <div class="tier-header">
-          <span class="tier-badge tier-badge--free">Free</span>
-          <div class="tier-price">
-            <span class="tier-price__amount">$0</span>
-            <span class="tier-price__period">forever</span>
-          </div>
-          <p class="tier-tagline">Everything you need to generate your deed.</p>
+          <p class="paid-title">Complete Filing Bundle — $9.97</p>
+          <p class="tier-subhead">Everything you need to actually get it recorded — not just downloaded.</p>
         </div>
+
         <ul class="tier-features">
           <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
+            <span class="feature-icon" aria-hidden="true">✓</span>
+            <span>
+              <strong>County-specific recording checklist:</strong> the exact cover sheet, margin
+              requirements, Transfer Tax Affidavit, witness count, and filing fee for your county —
+              not a generic list, your county
+            </span>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">✓</span>
+            <span>
+              <strong>90-day re-download:</strong> fix a typo, reprint, or pull a fresh copy any
+              time in the next 90 days
+            </span>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">✓</span>
+            <span>
+              <strong>Legal description guide:</strong> where to find it on your existing deed,
+              what to copy word for word, and what not to touch
+            </span>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">✓</span>
+            <span>
+              <strong>Post-signing step-by-step guide:</strong> notarise, gather witnesses, pay
+              transfer tax, file in the right order, notify the tax assessor — state-specific, not
+              generic
+            </span>
+          </li>
+          <li>
+            <span class="feature-icon" aria-hidden="true">✓</span>
+            <span>
+              <strong>Transfer tax calculator:</strong> enter your county, get the exact dollar
+              amount to bring to the recorder's office
+            </span>
+          </li>
+        </ul>
+
+        <p class="paid-instant-note">Delivered as an instant PDF download — no account required.</p>
+
+        <button
+          class="tier-cta tier-cta--paid"
+          disabled
+          aria-disabled="true"
+          aria-label="Get the Complete Filing Bundle for $9.97 — coming soon"
+        >
+          Get the Complete Filing Bundle — $9.97
+        </button>
+
+        <p class="paid-muted">The deed is free. The part where the county actually accepts it is $9.97.</p>
+        <p class="paid-trust">One-time payment. Instant access. No subscription.</p>
+        <p class="paid-guarantee">If it doesn't cover your county, email us for a full refund.</p>
+      </div>
+
+      <!-- Free card (left on desktop, bottom on mobile) -->
+      <div class="tier-card tier-card--free">
+        <div class="tier-header">
+          <p class="free-label">Free Deed</p>
+          <p class="free-price">$0</p>
+        </div>
+
+        <ul class="tier-features tier-features--free">
+          <li>
+            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
             State-specific deed for all 50 states
           </li>
           <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            Correct witness blocks and notary language
+            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
+            Correct witness blocks and notary language built in
           </li>
           <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            Instant PDF download — ready to print and sign
+            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
+            Instant PDF download
           </li>
           <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            State-specific recording instructions
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            No account required
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            No credit card required
+            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
+            No account required — no credit card
           </li>
         </ul>
-        <a href="/quitclaim-deed-form/" class="tier-cta tier-cta--primary">
-          Generate My Free Deed
+
+        <a href="/quitclaim-deed-form/" class="tier-cta tier-cta--free">
+          Get your free deed
         </a>
       </div>
 
-      <!-- Premium Coming Soon -->
-      <div class="tier-card tier-card--premium">
-        <div class="tier-header">
-          <span class="tier-badge tier-badge--premium">Coming Soon</span>
-          <div class="tier-price">
-            <span class="tier-price__amount">$9.97</span>
-            <span class="tier-price__period">one-time</span>
-          </div>
-          <p class="tier-tagline">For transfers where you want extra assurance.</p>
-        </div>
-        <ul class="tier-features">
-          <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            Everything in Free
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            Attorney-reviewed deed template for your state
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            Step-by-step recording guide for your county
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            Common-mistake checklist before you sign
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--yes" aria-hidden="true">✓</span>
-            Priority email support
-          </li>
-          <li class="feature-coming-soon-placeholder" aria-hidden="true">
-            <span class="feature-icon feature-icon--soon" aria-hidden="true">○</span>
-            More features in development
-          </li>
-        </ul>
-        <button
-          class="tier-cta tier-cta--disabled"
-          disabled
-          aria-disabled="true"
-          aria-label="Premium tier coming soon — not yet available"
-        >
-          Coming Soon — Notify Me
-        </button>
-        <p class="notify-note">Leave your email below to be notified when Premium launches.</p>
-      </div>
-
     </div>
-
-    <!-- Free tier context note -->
-    <div class="free-note">
-      <div class="free-note__icon" aria-hidden="true">ℹ</div>
-      <div class="free-note__body">
-        <strong>Why is the deed generator free?</strong>
-        <p>
-          We built this tool to make quitclaim deeds accessible to everyone. Recording a deed
-          already costs $10–$30 in government filing fees — that is enough. Our free generator
-          handles the document correctly so you do not need to pay a paralegal or buy overpriced
-          software. The $9.97 premium tier, when it launches, will be for people who want additional
-          services beyond the deed itself: county-specific guidance, attorney-reviewed language, and
-          support.
-        </p>
-      </div>
-    </div>
-
-    <!-- Comparison table -->
-    <section class="comparison-section" aria-labelledby="comparison-heading">
-      <h2 id="comparison-heading">Plan comparison</h2>
-
-      <div class="table-wrap">
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th scope="col" class="col-feature">Feature</th>
-              <th scope="col" class="col-free">Free<br /><span class="col-price">$0</span></th>
-              <th scope="col" class="col-premium">Premium<br /><span class="col-price col-price--premium">$9.97 <small>(coming soon)</small></span></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Quitclaim deed for all 50 states</td>
-              <td class="cell-check" aria-label="Included in Free"><span aria-hidden="true">✓</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>Correct witness and notary blocks</td>
-              <td class="cell-check" aria-label="Included in Free"><span aria-hidden="true">✓</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>Instant PDF download</td>
-              <td class="cell-check" aria-label="Included in Free"><span aria-hidden="true">✓</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>State-specific recording instructions</td>
-              <td class="cell-check" aria-label="Included in Free"><span aria-hidden="true">✓</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>No account required</td>
-              <td class="cell-check" aria-label="Included in Free"><span aria-hidden="true">✓</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>Attorney-reviewed deed template</td>
-              <td class="cell-no" aria-label="Not included in Free"><span aria-hidden="true">—</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>County-by-county recording guide</td>
-              <td class="cell-no" aria-label="Not included in Free"><span aria-hidden="true">—</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>Pre-signing checklist</td>
-              <td class="cell-no" aria-label="Not included in Free"><span aria-hidden="true">—</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-            <tr>
-              <td>Priority email support</td>
-              <td class="cell-no" aria-label="Not included in Free"><span aria-hidden="true">—</span></td>
-              <td class="cell-check" aria-label="Included in Premium"><span aria-hidden="true">✓</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Notify Me form -->
-    <section class="notify-section" aria-labelledby="notify-heading">
-      <h2 id="notify-heading">Get notified when Premium launches</h2>
-      <p class="notify-intro">
-        Enter your email and we will let you know when the $9.97 premium tier is available.
-        No spam. One email, when it is ready.
-      </p>
-      <form
-        class="notify-form"
-        action="https://whatisaquitclaimdeed.com/api/notify"
-        method="POST"
-        aria-label="Premium launch notification signup"
-      >
-        <label for="notify-email" class="sr-only">Email address</label>
-        <input
-          type="email"
-          id="notify-email"
-          name="email"
-          class="notify-input"
-          placeholder="your@email.com"
-          required
-          autocomplete="email"
-        />
-        <button type="submit" class="notify-submit">Notify Me</button>
-      </form>
-      <p class="notify-disclaimer">
-        We will only use your email to notify you about this product. We do not sell or share
-        email addresses.
-      </p>
-    </section>
 
     <!-- FAQ -->
-    <section class="faq-section" aria-labelledby="faq-heading">
-      <h2 id="faq-heading">Frequently asked questions</h2>
+    <FAQ items={faqItems} />
 
-      <div class="faq-item">
-        <h3>Is the deed generator really free?</h3>
-        <p>
-          Yes. You fill in the form, we generate the deed, and you download the PDF — no charge,
-          no credit card, no account. That will not change.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>What will the $9.97 premium tier include?</h3>
-        <p>
-          The premium tier is still in development. Planned features include an attorney-reviewed
-          deed template for your state, a county-specific recording guide, a pre-signing checklist,
-          and priority email support. Sign up above to be notified when it launches.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Will the free tier stay free once premium launches?</h3>
-        <p>
-          Yes. The core deed generator will remain free. The premium tier adds services for people
-          who want more than just the document.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Are there any government fees?</h3>
-        <p>
-          Using our tool is free. Recording your deed with the county recorder's office does involve
-          a government filing fee — typically $10–$30 for the first page, with additional charges per
-          page after that. These fees go directly to the county and are not charged by us.
-        </p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Is the $9.97 a subscription?</h3>
-        <p>
-          No. It will be a one-time payment for a single deed. There is no recurring charge, no
-          membership, and no auto-renewal.
-        </p>
-      </div>
-    </section>
   </div>
 </BaseLayout>
 
@@ -309,108 +198,127 @@ const schema = {
     text-decoration: underline;
   }
 
-  /* Heading and lead */
+  /* H1 */
   .page-h1 {
     font-family: var(--font-heading);
     font-size: var(--text-h1);
     font-weight: 800;
     color: var(--color-text-primary);
     line-height: 1.15;
+    margin-bottom: var(--space-7);
+    max-width: 760px;
+  }
+
+  /* Pain section */
+  .pain-section {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    margin-bottom: var(--space-7);
+  }
+  .pain-heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
     margin-bottom: var(--space-5);
   }
-
-  .lead {
-    font-size: var(--text-lg);
+  .pain-para {
+    font-size: var(--text-base);
     color: var(--color-text-secondary);
-    line-height: 1.7;
-    margin-bottom: var(--space-7);
-    max-width: 680px;
+    line-height: 1.75;
+    margin: 0 0 var(--space-4) 0;
+  }
+  .pain-para:last-child {
+    margin-bottom: 0;
+  }
+  .pain-para strong {
+    color: var(--color-text-primary);
   }
 
-  /* Tier grid */
+  /* Tier grid
+     DOM order: paid (first), free (second)
+     Desktop: free left (order:1), paid right (order:2)
+     Mobile:  paid top  (order:1), free bottom (order:2) */
   .tiers-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--space-5);
-    margin-bottom: var(--space-7);
+    margin-bottom: var(--space-8);
     align-items: start;
   }
+  .tier-card--free  { order: 1; }
+  .tier-card--paid  { order: 2; }
+
   @media (max-width: 640px) {
-    .tiers-grid {
-      grid-template-columns: 1fr;
-    }
+    .tiers-grid { grid-template-columns: 1fr; }
+    .tier-card--paid { order: 1; }
+    .tier-card--free { order: 2; }
   }
 
-  /* Tier card base */
+  /* Card base */
   .tier-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
   }
-  .tier-card--premium {
-    border-color: var(--color-teal-border);
-    background: linear-gradient(160deg, #f5faf9 0%, var(--color-surface) 60%);
+
+  /* Free card — ghost / secondary */
+  .tier-card--free {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
   }
 
-  /* Tier header */
-  .tier-header {
-    margin-bottom: var(--space-5);
+  /* Paid card — gold / amber dominant */
+  .tier-card--paid {
+    background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 50%, #fff8e7 100%);
+    border: 2px solid #d97706;
+    box-shadow: 0 4px 24px rgba(217, 119, 6, 0.18);
   }
 
-  .tier-badge {
-    display: inline-block;
-    font-size: var(--text-xs);
+  /* Free card header */
+  .free-label {
+    font-size: var(--text-sm);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-2) 0;
   }
-  .tier-badge--free {
-    background: var(--color-teal-light);
-    color: var(--color-teal);
-  }
-  .tier-badge--premium {
-    background: #F4F3FF;
-    color: #5B21B6;
-  }
-
-  .tier-price {
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-    margin-bottom: var(--space-2);
-  }
-  .tier-price__amount {
+  .free-price {
     font-family: var(--font-heading);
     font-size: 3rem;
     font-weight: 800;
     color: var(--color-text-primary);
     line-height: 1;
+    margin: 0 0 var(--space-5) 0;
   }
-  .tier-price__period {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
+
+  /* Paid card header */
+  .paid-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #92400e;
+    line-height: 1.25;
+    margin: 0 0 var(--space-2) 0;
+  }
+  .tier-subhead {
+    font-size: var(--text-base);
+    color: #78350f;
     font-weight: 500;
-  }
-
-  .tier-tagline {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    margin: 0;
     line-height: 1.5;
+    margin: 0 0 var(--space-5) 0;
   }
 
-  /* Feature list */
+  /* Feature lists */
   .tier-features {
     list-style: none;
     padding: 0;
-    margin: 0 0 var(--space-6) 0;
+    margin: 0 0 var(--space-5) 0;
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -422,22 +330,28 @@ const schema = {
     gap: 0.6rem;
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
-    line-height: 1.5;
+    line-height: 1.6;
   }
   .feature-icon {
     flex-shrink: 0;
     font-weight: 700;
-    margin-top: 0.05em;
+    color: #b45309;
+    margin-top: 0.1em;
   }
-  .feature-icon--yes {
+  .feature-icon--free {
     color: var(--color-teal);
   }
-  .feature-icon--soon {
-    color: var(--color-text-muted);
-  }
-  .feature-coming-soon-placeholder {
-    color: var(--color-text-muted) !important;
-    font-style: italic;
+
+  /* Paid instant-download note */
+  .paid-instant-note {
+    font-size: var(--text-sm);
+    color: #78350f;
+    font-weight: 500;
+    margin: 0 0 var(--space-5) 0;
+    padding: 0.6rem var(--space-4);
+    background: rgba(217, 119, 6, 0.08);
+    border-radius: var(--radius-md);
+    border-left: 3px solid #d97706;
   }
 
   /* CTAs */
@@ -446,9 +360,10 @@ const schema = {
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 0.8rem var(--space-5);
+    padding: 0.875rem var(--space-5);
     font-size: var(--text-base);
     font-weight: 700;
+    font-family: var(--font-body);
     border-radius: var(--radius-md);
     text-decoration: none;
     border: none;
@@ -457,257 +372,48 @@ const schema = {
       background var(--duration-fast) var(--ease-standard),
       transform var(--duration-fast) var(--ease-standard);
   }
-  .tier-cta--primary {
-    background: var(--color-teal);
+
+  /* Free — ghost outline */
+  .tier-cta--free {
+    background: transparent;
+    color: var(--color-teal);
+    border: 2px solid var(--color-teal);
+    margin-top: auto;
+  }
+  .tier-cta--free:hover {
+    background: var(--color-teal-light);
+  }
+
+  /* Paid — amber/gold, disabled (coming soon) */
+  .tier-cta--paid {
+    background: #d97706;
     color: #ffffff;
-  }
-  .tier-cta--primary:hover {
-    background: var(--color-teal-hover);
-    transform: translateY(-1px);
-  }
-  .tier-cta--disabled {
-    background: #E9E9E9;
-    color: #999999;
     cursor: not-allowed;
     pointer-events: none;
-    opacity: 0.75;
-    font-weight: 600;
+    opacity: 0.95;
   }
-  .notify-note {
+
+  /* Below paid CTA */
+  .paid-muted {
+    font-size: var(--text-sm);
+    color: #92400e;
+    text-align: center;
+    margin: var(--space-3) 0 0 0;
+    line-height: 1.5;
+  }
+  .paid-trust {
     font-size: var(--text-xs);
     color: var(--color-text-muted);
     text-align: center;
-    margin: 0.75rem 0 0 0;
+    margin: var(--space-2) 0 0 0;
     line-height: 1.5;
   }
-
-  /* Free tier note */
-  .free-note {
-    display: flex;
-    gap: var(--space-4);
-    background: var(--color-surface-subtle);
-    border: 1px solid var(--color-border);
-    border-left: 4px solid var(--color-teal);
-    border-radius: var(--radius-md);
-    padding: var(--space-5);
-    margin-bottom: var(--space-7);
-  }
-  .free-note__icon {
-    font-size: 1.25rem;
-    color: var(--color-teal);
-    line-height: 1.5;
-    flex-shrink: 0;
-  }
-  .free-note__body strong {
-    display: block;
-    font-family: var(--font-heading);
-    font-size: var(--text-base);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin-bottom: 0.4rem;
-  }
-  .free-note__body p {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  /* Comparison table */
-  .comparison-section {
-    margin-bottom: var(--space-7);
-  }
-  .comparison-section h2 {
-    font-family: var(--font-heading);
-    font-size: var(--text-h2);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-5);
-  }
-
-  .table-wrap {
-    overflow-x: auto;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-  }
-  .comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: var(--text-sm);
-  }
-  .comparison-table thead tr {
-    background: var(--color-surface-subtle);
-    border-bottom: 2px solid var(--color-border);
-  }
-  .comparison-table th {
-    padding: 1rem 1.25rem;
-    text-align: center;
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: var(--text-sm);
-    color: var(--color-text-primary);
-    white-space: nowrap;
-    line-height: 1.4;
-  }
-  .comparison-table th.col-feature {
-    text-align: left;
-    width: 55%;
-  }
-  .col-price {
-    display: block;
-    font-family: var(--font-body);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--color-text-muted);
-    margin-top: 0.2rem;
-  }
-  .col-price--premium {
-    color: #5B21B6;
-  }
-  .col-price small {
-    font-weight: 400;
-    opacity: 0.8;
-  }
-  .comparison-table tbody tr {
-    border-bottom: 1px solid var(--color-divider);
-  }
-  .comparison-table tbody tr:last-child {
-    border-bottom: none;
-  }
-  .comparison-table tbody tr:nth-child(even) {
-    background: var(--color-surface-subtle);
-  }
-  .comparison-table td {
-    padding: 0.85rem 1.25rem;
-    color: var(--color-text-secondary);
-    line-height: 1.5;
-  }
-  .comparison-table tbody td:first-child {
-    color: var(--color-text-primary);
-    font-weight: 500;
-  }
-  .cell-check {
-    text-align: center;
-    color: var(--color-teal);
-    font-weight: 700;
-    font-size: 1.1rem;
-  }
-  .cell-no {
-    text-align: center;
-    color: var(--color-text-muted);
-    font-size: 1rem;
-  }
-
-  /* Notify section */
-  .notify-section {
-    background: var(--color-surface);
-    border: 1px solid var(--color-teal-border);
-    border-radius: var(--radius-xl);
-    padding: var(--space-6);
-    margin-bottom: var(--space-7);
-    box-shadow: var(--shadow-sm);
-  }
-  .notify-section h2 {
-    font-family: var(--font-heading);
-    font-size: var(--text-h3);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-3);
-  }
-  .notify-intro {
-    font-size: var(--text-base);
-    color: var(--color-text-secondary);
-    line-height: 1.7;
-    margin-bottom: var(--space-5);
-  }
-  .notify-form {
-    display: flex;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-    margin-bottom: var(--space-3);
-  }
-  .notify-input {
-    flex: 1;
-    min-width: 220px;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    font-size: var(--text-base);
-    font-family: var(--font-body);
-    color: var(--color-text-primary);
-    background: var(--color-surface);
-    outline: none;
-    transition: border-color var(--duration-fast) var(--ease-standard);
-  }
-  .notify-input:focus {
-    border-color: var(--color-teal);
-    box-shadow: 0 0 0 3px var(--color-teal-light);
-  }
-  .notify-submit {
-    padding: 0.75rem 1.5rem;
-    background: var(--color-teal);
-    color: #ffffff;
-    font-size: var(--text-base);
-    font-weight: 700;
-    font-family: var(--font-body);
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    white-space: nowrap;
-    transition:
-      background var(--duration-fast) var(--ease-standard),
-      transform var(--duration-fast) var(--ease-standard);
-  }
-  .notify-submit:hover {
-    background: var(--color-teal-hover);
-    transform: translateY(-1px);
-  }
-  .notify-disclaimer {
+  .paid-guarantee {
     font-size: var(--text-xs);
     color: var(--color-text-muted);
-    margin: 0;
+    text-align: center;
+    margin: 0.375rem 0 0 0;
     line-height: 1.5;
-  }
-
-  /* FAQ */
-  .faq-section {
-    margin-bottom: var(--space-8);
-  }
-  .faq-section h2 {
-    font-family: var(--font-heading);
-    font-size: var(--text-h2);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-6);
-  }
-  .faq-item {
-    margin-bottom: var(--space-6);
-  }
-  .faq-item h3 {
-    font-family: var(--font-heading);
-    font-size: var(--text-h4);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-2);
-  }
-  .faq-item p {
-    font-size: var(--text-base);
-    color: var(--color-text-secondary);
-    line-height: 1.75;
-    margin: 0;
-  }
-
-  /* Screen reader only */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+    font-style: italic;
   }
 </style>
