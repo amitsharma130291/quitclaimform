@@ -1,0 +1,236 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FAQ from '../components/FAQ.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+
+const title = 'Quit Claim Deed: Yes, That Spelling Is Fine — Here\'s What It Means';
+const description =
+  'Searched for \'quit claim deed\'? You\'ve got the right thing. Learn what a quit claim (quitclaim) deed is, whether the spelling matters legally, and how to create one.';
+
+const faqItems = [
+  {
+    question: 'Is "quit claim deed" or "quitclaim deed" the correct spelling?',
+    answer:
+      'Both are correct. "Quitclaim deed" (one word) is the more modern standard, and you\'ll find it in most current legal references. "Quit claim deed" (two words) is an older form that\'s still widely used and accepted. County recorders and courts recognise both without issue.',
+  },
+  {
+    question: 'What\'s a "quick claim deed"? Is that the same thing?',
+    answer:
+      'Yes — "quick claim deed" is a common mishearing of "quitclaim deed." There\'s no legal document called a "quick claim deed," but if someone uses that phrase, they almost certainly mean a quitclaim deed.',
+  },
+  {
+    question: 'Can I write "quit claim deed" on the document itself, or will it be rejected?',
+    answer:
+      'You can write it either way. Recorders\' offices don\'t reject deeds based on whether the title uses one word or two. What they check is whether the required legal elements are present: proper parties, property description, signature, notarisation where required.',
+  },
+  {
+    question: 'Do I need a lawyer to prepare a quit claim deed?',
+    answer:
+      'You\'re not legally required to use a lawyer, though for complex situations — disputes, unclear title history, property with significant value — legal advice is worth the cost. For straightforward transfers (between spouses, family members, or into a trust), many people prepare the deed themselves using a generator or state-provided form and then have it notarized before recording.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://whatisaquitclaimdeed.com/quit-claim-deed/',
+    datePublished: '2026-07-01',
+    dateModified: '2026-07-29',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://whatisaquitclaimdeed.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://whatisaquitclaimdeed.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://whatisaquitclaimdeed.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Quit Claim Deed', item: 'https://whatisaquitclaimdeed.com/quit-claim-deed/' },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical="/quit-claim-deed/">
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Quit Claim Deed</span>
+  </nav>
+
+  <h1 class="page-h1">Quit Claim Deed: You Typed It Right (Sort Of)</h1>
+
+  <p class="lede">
+    If you searched for "quit claim deed" and landed here, here's the short version: you're in exactly the right place. Whether you spell it as two words ("quit claim deed"), hyphenated ("quit-claim deed"), or run together as one ("quitclaim deed"), they all refer to the same legal document. The spelling difference won't affect your search, and — here's the reassuring part — it usually won't affect your actual deed either.
+  </p>
+
+  <Disclaimer />
+
+  <h2>"Quit Claim Deed" and "Quitclaim Deed" Are the Same Thing</h2>
+  <p>There is no legal distinction between a "quit claim deed" and a "quitclaim deed." Both terms describe a document that transfers whatever ownership interest a person has in a property to someone else — without making any guarantees about the title.</p>
+  <p>That last part is important: a quitclaim deed transfers your interest, whatever it may be. If it turns out you had no interest, the recipient gets nothing. If there are liens, encumbrances, or competing claims on the property, those transfer too. This is what sets a quitclaim deed apart from a warranty deed, which comes with promises about the title's condition.</p>
+  <p>In everyday use, the two-word spelling ("quit claim deed") and the one-word spelling ("quitclaim deed") appear interchangeably across courthouses, law offices, and county recorder websites. You'll find both in official state statutes. Neither is wrong.</p>
+
+  <h2>Why Does the Spelling Vary So Much?</h2>
+  <p>Language evolves slowly, and legal terminology evolves even more slowly. The phrase originally came from the idea of "quitting" (giving up, relinquishing) a "claim" to property. Over decades, the two-word phrase was compressed in common usage into the single compound word "quitclaim."</p>
+  <ul>
+    <li><strong>Older statutes and forms</strong> often use the two-word or hyphenated version: "quit claim deed" or "quit-claim deed."</li>
+    <li><strong>Modern usage</strong> has largely settled on the one-word "quitclaim deed," which is what you'll see in most current legal guides and software.</li>
+    <li><strong>Search engines</strong> understand both and return the same results — which is how you ended up here.</li>
+  </ul>
+
+  <h2>Does the Spelling on the Deed Document Itself Matter?</h2>
+  <p>This is the question that really matters, and the answer is: not in the way you might fear.</p>
+  <p>If you draft a deed and type "quit claim deed" in the title instead of "quitclaim deed," it will not invalidate the document. Courts and county recorders routinely accept both. What determines whether a deed is valid has nothing to do with which spelling appears in the heading.</p>
+  <p>What actually matters for a valid quitclaim deed:</p>
+  <ol>
+    <li><strong>Grantor and grantee are clearly identified.</strong> The person transferring the property and the person receiving it must be named — full legal names, no ambiguity.</li>
+    <li><strong>The property is accurately described.</strong> This usually means the legal description from the county records (not just the street address).</li>
+    <li><strong>Words of conveyance are present.</strong> The deed must include language that actually transfers the interest — phrases like "does hereby remise, release, and quitclaim" or similar.</li>
+    <li><strong>The grantor signs.</strong> In most states, only the grantor needs to sign. Some states also require a notary seal or witnesses.</li>
+    <li><strong>The deed is recorded.</strong> After signing, you file it with your county recorder's or clerk's office and pay a small recording fee.</li>
+  </ol>
+  <p>The title of the document — whether it says "Quit Claim Deed" or "Quitclaim Deed" — does not change whether those five elements are satisfied.</p>
+
+  <h2>When Would You Use a Quit Claim Deed?</h2>
+  <p>Quitclaim deeds are most common in situations where the parties trust each other and a full title guarantee isn't necessary:</p>
+  <ul>
+    <li><strong>Transferring property between spouses</strong> during or after a divorce</li>
+    <li><strong>Adding or removing a spouse or partner</strong> from a title after marriage or separation</li>
+    <li><strong>Gifting property to a family member</strong> — a parent transferring to a child, for example</li>
+    <li><strong>Clearing up a title issue</strong> — removing a name that should no longer be on the deed</li>
+    <li><strong>Moving property into or out of a trust or LLC</strong></li>
+  </ul>
+  <p>They're generally not used in standard home sales between strangers, where buyers expect a warranty deed with title insurance.</p>
+
+  <div class="cta-block">
+    <h2 class="cta-block__heading">Create Your Quit Claim Deed in Minutes</h2>
+    <p class="cta-block__body">Our generator walks you through each required field — grantor, grantee, property description, consideration, and state-specific signature requirements. No account needed. Takes about five minutes.</p>
+    <a href="/quitclaim-deed-form/" class="btn btn--primary">Generate Your Quitclaim Deed Free &rarr;</a>
+  </div>
+
+  <FAQ items={faqItems} />
+
+  <h2>Related Pages</h2>
+  <ul>
+    <li><a href="/quitclaim-deed/">Quitclaim Deed — Full Hub Page</a></li>
+    <li><a href="/what-is-a-quitclaim-deed/">What Is a Quitclaim Deed?</a></li>
+    <li><a href="/quitclaim-deed-form/">Free Quitclaim Deed Form Generator</a></li>
+  </ul>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-4);
+  }
+
+  .lede {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-6);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li { margin-bottom: var(--space-2); }
+
+  a { color: var(--color-teal); text-decoration: underline; }
+  a:hover { color: var(--color-teal-hover); }
+
+  .cta-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+    margin: var(--space-10) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    margin-top: 0;
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+  .btn {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-base);
+    padding: var(--space-3) var(--space-7);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--duration-micro) var(--ease-standard);
+  }
+  .btn--primary {
+    background: var(--color-teal);
+    color: #ffffff;
+  }
+  .btn--primary:hover {
+    background: var(--color-teal-hover);
+    color: #ffffff;
+  }
+</style>

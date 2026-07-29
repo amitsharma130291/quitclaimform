@@ -1,0 +1,306 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FAQ from '../components/FAQ.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import ComparisonTable from '../components/ui/ComparisonTable.astro';
+
+const title = 'Quiet Claim Deed: Did You Mean Quitclaim Deed?';
+const description =
+  '"Quiet claim deed" is a common mishearing of quitclaim deed — but it also points to a completely different legal tool: the quiet title action. Learn which one you actually need.';
+
+const faqItems = [
+  {
+    question: 'Is "quiet claim deed" a real legal document?',
+    answer:
+      'No. "Quiet claim deed" is not a recognized legal term in any U.S. jurisdiction. The correct terms are "quitclaim deed" (a deed form for transferring ownership) and "quiet title action" (a court proceeding to resolve ownership disputes). If you saw "quiet claim deed" used by a government website or a court, it was almost certainly a typo or a phonetic error.',
+  },
+  {
+    question: 'Can a quitclaim deed be used to settle a property dispute?',
+    answer:
+      'Not effectively. A quitclaim deed only transfers whatever interest the grantor currently holds — it does not resolve the underlying question of who rightfully owns that interest. If two people both claim ownership, a quitclaim deed from one to the other doesn\'t extinguish the other\'s claim; a court judgment from a quiet title action does. Use a quitclaim deed after a dispute is resolved, not to resolve one.',
+  },
+  {
+    question: 'Do I need a lawyer for a quitclaim deed?',
+    answer:
+      'In most states, no attorney is required for a straightforward quitclaim deed — a transfer between family members, spouses, or from an individual into an LLC or trust. You do need a notary to witness the grantor\'s signature and a county recorder\'s office to record the deed. If the transfer is part of a divorce settlement, involves a property with a mortgage, or crosses state lines, consulting an attorney is worth the cost.',
+  },
+  {
+    question: 'How is a quiet title action different from title insurance?',
+    answer:
+      'Title insurance is a policy that protects you against future claims arising from defects in the title that existed before you purchased the property. A quiet title action is a legal proceeding that proactively establishes who owns property right now. If you discover a title problem after purchasing a property, your title insurance policy may cover the cost of a quiet title lawsuit on your behalf — which is why you should always call your title insurer before hiring an attorney out of pocket.',
+  },
+];
+
+const comparisonHeaders = ['Quiet Title Action', 'Quitclaim Deed'];
+const comparisonRows = [
+  { label: 'What it is', values: ['A court lawsuit', 'A deed form'] },
+  { label: 'Purpose', values: ['Resolve disputed ownership', 'Transfer ownership between parties'] },
+  { label: 'Who starts it', values: ['A party claiming ownership', 'The current owner (grantor)'] },
+  { label: 'Requires court', values: ['Yes', 'No'] },
+  { label: 'Requires attorney', values: ['Almost always', 'Rarely'] },
+  { label: 'Typical cost', values: ['$3,000–$15,000+', '$20–$150'] },
+  { label: 'Typical timeline', values: ['3–12 months', 'Days to weeks'] },
+  { label: 'Result', values: ['Court judgment', 'Recorded deed'] },
+  { label: 'Good for disputes', values: ['Yes', 'No'] },
+  { label: 'Good for transfers', values: ['No', 'Yes'] },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    url: 'https://whatisaquitclaimdeed.com/quiet-claim-deed/',
+    datePublished: '2026-07-01',
+    dateModified: '2026-07-29',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://whatisaquitclaimdeed.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://whatisaquitclaimdeed.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://whatisaquitclaimdeed.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Quiet Claim Deed', item: 'https://whatisaquitclaimdeed.com/quiet-claim-deed/' },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical="/quiet-claim-deed/">
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Quiet Claim Deed</span>
+  </nav>
+
+  <h1 class="page-h1">Quiet Claim Deed — What You're Really Looking For</h1>
+
+  <div class="intro-box">
+    <p>If you searched for "quiet claim deed," you're almost certainly looking for one of two very different things:</p>
+    <ol>
+      <li><strong>A quitclaim deed</strong> — a real estate document that transfers property ownership between two parties (this is what most people want).</li>
+      <li><strong>A quiet title action</strong> — a court lawsuit that settles who legally owns a piece of property when ownership is disputed.</li>
+    </ol>
+    <p>The names sound alike. The legal situations they address could not be more different. This page explains both, helps you identify which one fits your situation, and points you toward the right next step.</p>
+  </div>
+
+  <Disclaimer />
+
+  <h2>The Confusion: Where "Quiet Claim" Comes From</h2>
+  <p>"Quiet claim deed" isn't a real legal term — it's a phonetic blend of two separate concepts:</p>
+  <ul>
+    <li><strong>Quitclaim deed</strong> (pronounced "kwit-klaym deed") — a deed form used to transfer whatever ownership interest one person holds in a property to another.</li>
+    <li><strong>Quiet title</strong> — a legal action used to "quiet" (resolve) competing claims on a property's title.</li>
+  </ul>
+  <p>Spell-checkers don't flag "quiet claim deed" because every word is real. Legal databases return zero results because the phrase isn't in any statute. You're not alone: tens of thousands of people type it every month.</p>
+
+  <h2>Which One Do You Actually Need?</h2>
+  <p><strong>If you're here because you want to transfer property</strong> — add a spouse to a deed, remove an ex-partner, gift property to a family member, or move real estate into an LLC or trust — <strong>you want a quitclaim deed.</strong> Skip ahead to the <a href="#quitclaim-deed-explained">quitclaim deed section</a> below, or go straight to our <a href="/quitclaim-deed-form/">free quitclaim deed generator</a>.</p>
+  <p><strong>If you're here because someone is disputing ownership of your property</strong>, a neighbor claims part of your land, an old mortgage or lien won't go away, or you inherited property with a clouded title — <strong>you may need a quiet title action.</strong></p>
+
+  <h2 id="quiet-title-explained">Quiet Title Action Explained</h2>
+  <p>A quiet title action is a lawsuit filed in court asking a judge to declare who legally owns a piece of real property. The court's ruling "quiets" all competing claims — hence the name.</p>
+
+  <h3>When is a quiet title action used?</h3>
+  <ul>
+    <li><strong>Adverse possession claims.</strong> You've used a strip of your neighbor's land for decades and want legal title to it, or a neighbor claims the reverse.</li>
+    <li><strong>Disputed inheritance.</strong> Multiple heirs each claim they own the property and disagree about the terms of a will or trust.</li>
+    <li><strong>Clouded title.</strong> A previous owner's unpaid lien, a forged deed in the chain of title, or an old mortgage that was paid off but never properly released.</li>
+    <li><strong>Tax sale purchases.</strong> You bought a property at a tax sale and need a court to confirm your clean ownership before a lender will issue a mortgage.</li>
+    <li><strong>Boundary disputes.</strong> Survey maps conflict, and two property owners each believe the fence is in the wrong place.</li>
+  </ul>
+
+  <h3>Key facts about quiet title actions</h3>
+  <ul>
+    <li>They require filing a lawsuit in the county where the property is located.</li>
+    <li>All parties with a potential claim must be named and served.</li>
+    <li>The process typically takes three to twelve months and costs thousands of dollars in attorney fees and court costs.</li>
+    <li>You will almost certainly need a real estate attorney.</li>
+    <li>The result is a court judgment — not a deed form you fill out yourself.</li>
+  </ul>
+
+  <h2 id="quitclaim-deed-explained">Quitclaim Deed Explained</h2>
+  <p>A quitclaim deed is a real estate deed that transfers the grantor's ownership interest in a property to the grantee — with no warranties. The grantor makes no promises about the quality of the title; they simply hand over whatever interest they have.</p>
+
+  <h3>When is a quitclaim deed used?</h3>
+  <ul>
+    <li><strong>Between family members.</strong> Gifting a home to a child, adding a parent to a deed, or transferring property as part of an estate plan.</li>
+    <li><strong>Between spouses.</strong> Adding a new spouse after marriage, removing an ex-spouse after divorce, or refinancing in one spouse's name alone.</li>
+    <li><strong>Into a business entity.</strong> Moving a property from personal ownership into an LLC or a family trust.</li>
+    <li><strong>Correcting a title error.</strong> Fixing a misspelled name, a wrong legal description, or a missing signature on a prior deed.</li>
+  </ul>
+
+  <h3>Key facts about quitclaim deeds</h3>
+  <ul>
+    <li>You fill out the form yourself (or generate one online).</li>
+    <li>The grantor's signature is notarized, and the deed is recorded at the county recorder's office.</li>
+    <li>No attorney is required in most states for a straightforward transfer.</li>
+    <li>A quitclaim deed does not resolve title disputes — it only passes along whatever interest the grantor currently holds.</li>
+    <li>Cost: typically $20–$150 for notarization and recording fees.</li>
+  </ul>
+
+  <h2>Side-by-Side Comparison</h2>
+  <ComparisonTable headers={comparisonHeaders} rows={comparisonRows} />
+
+  <h2>What to Do If You Have a Title Dispute</h2>
+  <p>If you believe your situation involves a genuine title dispute, take these steps before deciding on a quiet title action:</p>
+  <ol>
+    <li><strong>Pull the chain of title.</strong> Order a title search from a title company or your county recorder's office. This shows every deed, mortgage, and lien recorded against the property. Many disputes resolve once all parties see the documented chain.</li>
+    <li><strong>Contact your title insurance company.</strong> If you have an owner's title insurance policy, call your insurer. Defending your title is exactly what that policy covers — the insurer may handle the quiet title action at no cost to you.</li>
+    <li><strong>Consult a real estate attorney.</strong> A 30-minute consultation will tell you whether a quiet title action is warranted, likely to succeed, and proportionate to the value of the disputed interest.</li>
+    <li><strong>Consider mediation first.</strong> Boundary disputes and family inheritance disagreements often settle through mediation faster and cheaper than litigation.</li>
+  </ol>
+
+  <div class="cta-block">
+    <h2 class="cta-block__heading">If You're Looking for the Deed Form</h2>
+    <p class="cta-block__body">Most people who land on this page are simply looking for a quitclaim deed form. Use our free generator to create a state-specific, legally formatted deed in minutes. No account required. No subscription. Works in all 50 states.</p>
+    <a href="/quitclaim-deed-form/" class="btn btn--primary">Generate Your Quitclaim Deed Now &rarr;</a>
+  </div>
+
+  <FAQ items={faqItems} />
+
+  <h2>Related Pages</h2>
+  <ul>
+    <li><a href="/quitclaim-deed/">Quitclaim Deed — Complete Guide</a></li>
+    <li><a href="/quit-claim-deed/">Quit Claim Deed — Spelling Explained</a></li>
+    <li><a href="/what-is-a-quitclaim-deed/">What Is a Quitclaim Deed?</a></li>
+    <li><a href="/quitclaim-deed-form/">Free Quitclaim Deed Form Generator</a></li>
+  </ul>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-6);
+  }
+
+  .intro-box {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+  .intro-box p, .intro-box li {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+  }
+  .intro-box ol {
+    padding-left: var(--space-6);
+    margin: var(--space-3) 0;
+  }
+  .intro-box p:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li { margin-bottom: var(--space-2); }
+
+  a { color: var(--color-teal); text-decoration: underline; }
+  a:hover { color: var(--color-teal-hover); }
+
+  .cta-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+    margin: var(--space-10) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    margin-top: 0;
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+  .btn {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-base);
+    padding: var(--space-3) var(--space-7);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--duration-micro) var(--ease-standard);
+  }
+  .btn--primary {
+    background: var(--color-teal);
+    color: #ffffff;
+  }
+  .btn--primary:hover {
+    background: var(--color-teal-hover);
+    color: #ffffff;
+  }
+</style>

@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FAQ from '../components/FAQ.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import Callout from '../components/ui/Callout.astro';
+
+const title = 'Quick Deed: What You\'re Actually Looking For (And Yes, It\'s Fast)';
+const description =
+  'Searching for a \'quick deed\'? That\'s a quitclaim deed — and the good news is it really is the fastest way to transfer property. Here\'s what you need to know.';
+
+const faqItems = [
+  {
+    question: 'Is "quick deed" the same as a quitclaim deed?',
+    answer:
+      '"Quick deed" isn\'t an official legal term — it\'s a common shorthand people use when they want a fast, simple property transfer. In practice, they\'re almost always referring to a quitclaim deed, which is the most common instrument for exactly that purpose. Some people also say "quit claim," "quick claim deed," or "quit deed" — all roads lead to the same document.',
+  },
+  {
+    question: 'How fast can a quitclaim deed actually be completed?',
+    answer:
+      'The deed itself can be prepared and signed in a single day. Notarization takes minutes. Recording at the county recorder\'s office typically takes one to fourteen days depending on the county\'s workload. The entire process, from blank page to recorded deed, can happen inside a week in most jurisdictions.',
+  },
+  {
+    question: 'Do I need a lawyer to file a quitclaim deed?',
+    answer:
+      'Not in most states. Quitclaim deeds are public-facing legal documents, and many states allow individuals to prepare and file them without an attorney. That said, if your situation involves a contested divorce, tax consequences, or a complicated title history, legal advice is worth the cost. For straightforward family transfers, the paperwork itself is manageable without a lawyer.',
+  },
+  {
+    question: 'Can a quitclaim deed be used to remove someone from a mortgage?',
+    answer:
+      'No. A quitclaim deed changes who holds title to the property — it has no effect on the mortgage. To remove someone from the loan, the remaining owner needs to refinance in their name alone. This requires lender approval and a full underwriting process. The deed and the mortgage are two separate legal instruments, and each one has to be addressed independently.',
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://whatisaquitclaimdeed.com/quick-deed/',
+    datePublished: '2026-07-01',
+    dateModified: '2026-07-29',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://whatisaquitclaimdeed.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://whatisaquitclaimdeed.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://whatisaquitclaimdeed.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Quick Deed', item: 'https://whatisaquitclaimdeed.com/quick-deed/' },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical="/quick-deed/">
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Quick Deed</span>
+  </nav>
+
+  <h1 class="page-h1">Quick Deed: What It Is and Why a Quitclaim Deed Is Exactly What You Need</h1>
+
+  <p class="lede">
+    You need to move property from one person to another — fast. Maybe it's a divorce settlement, an estate handoff, adding a spouse to a title, or just tidying up a family situation that's been left too long. You searched for "quick deed" because you need exactly that: something quick.
+  </p>
+
+  <p class="lede-sub">
+    Here's the thing: "quick deed" isn't a legal term. There's no document called a quick deed in any US state. But what you're describing — a simple, fast, low-friction property transfer — absolutely exists. It's called a <strong>quitclaim deed</strong>. And the reason people reach for "quick deed" as a phrase is because a quitclaim deed really is the quickest deed there is.
+  </p>
+
+  <Disclaimer />
+
+  <h2>Get Your Deed in 4 Steps</h2>
+  <p>Need it fast? Here's the process from start to recorded:</p>
+  <ol>
+    <li><strong>Fill out the generator</strong> — takes 6–10 minutes</li>
+    <li><strong>Print and sign before a notary</strong> — most UPS Stores and banks offer walk-in notary services</li>
+    <li><strong>File with your county recorder</strong> — bring two copies, pay the filing fee</li>
+    <li><strong>Keep your recorded copy</strong> — the recorder stamps and returns one copy as proof</li>
+  </ol>
+  <p>That's it. No attorney required for a straightforward transfer between family members or in a divorce settlement.</p>
+
+  <h2>What People Mean by "Quick Deed"</h2>
+  <p>When someone searches for a quick deed, they usually fall into one of a few situations:</p>
+  <ul>
+    <li><strong>Divorce settlements</strong> where one spouse is signing their share of the marital home over to the other.</li>
+    <li><strong>Estate transfers</strong> where heirs need to move property out of a deceased person's name without a full probate battle.</li>
+    <li><strong>Adding or removing a co-owner</strong> — putting a partner on the title, or taking an ex off it.</li>
+    <li><strong>Family gifting</strong> where parents transfer a home to an adult child, often for Medicaid planning or just simplicity.</li>
+    <li><strong>Clearing up an inherited mess</strong> — correcting a title with a missing or outdated name.</li>
+  </ul>
+  <p>What all of these share: the parties already know and trust each other, the title doesn't need a warranty, and everyone just wants it done. That's the exact use case a quitclaim deed was built for.</p>
+
+  <h2>Why a Quitclaim Deed Is Actually Fast</h2>
+  <p>Compared to other deed types, a quitclaim deed is genuinely the fastest option. Here's why.</p>
+  <p>A <strong>warranty deed</strong> — the kind used in most home sales — requires the grantor to guarantee the title is clean. That means a title search, title insurance, lender sign-off, and often an escrow process that runs four to six weeks.</p>
+  <p>A <strong>grant deed</strong> (common in California) falls somewhere in between: it carries implied warranties about ownership history, so it still tends to require a title review.</p>
+  <p>A <strong>quitclaim deed</strong> carries no warranties at all. The person signing it says: "I'm transferring whatever interest I have in this property to you." Full stop. No title search is legally required. No lender is typically involved. No escrow. In many cases, you can prepare the deed, sign it before a notary, and have it recorded at the county recorder's office the same week.</p>
+
+  <h2>When Speed Actually Matters</h2>
+  <p>Not every property transfer is urgent, but some are genuinely time-sensitive:</p>
+  <ul>
+    <li><strong>Divorce finalization:</strong> Courts sometimes set deadlines for property division. A signed and recorded quitclaim deed is often required before the divorce is finalized.</li>
+    <li><strong>Medicaid planning:</strong> Transferring a home before an applicant hits a five-year lookback period has hard calendar deadlines.</li>
+    <li><strong>Estate settlements:</strong> Heirs may need to transfer property quickly to sell it, refinance it, or stop tax and maintenance costs from accumulating on an estate.</li>
+    <li><strong>Mortgage refinancing:</strong> A lender won't refinance a home with the wrong people on title. A quitclaim deed to get the title right before closing unblocks the whole deal.</li>
+  </ul>
+  <p>In all of these cases, a quitclaim deed is typically the fastest legally valid instrument available to you.</p>
+
+  <h2>What Can Still Slow a Transfer Down</h2>
+  <p>Using a quitclaim deed doesn't mean the transfer is instant. A few things can add friction:</p>
+
+  <Callout type="warning" title="An existing mortgage changes the picture">
+    <p>The mortgage is a separate contract from the deed. Signing a quitclaim deed transfers title, but it doesn't move the loan. If there's a mortgage on the property, the departing person is still legally on the hook for it until the remaining owner refinances. Some lenders also have a "due-on-sale" clause that lets them call the loan if ownership changes — though in practice this is rarely triggered in family transfers. It's worth a quick call to the lender before you file.</p>
+  </Callout>
+
+  <ul>
+    <li><strong>Recording delays.</strong> After the deed is signed and notarized, it needs to be recorded with the county recorder. Most counties process filings within a few days to two weeks. Some rural counties run slower.</li>
+    <li><strong>Missing information.</strong> A deed with a legal description error, the wrong spelling of a name, or a missing parcel number can be rejected at recording. Getting it right the first time is what avoids delays.</li>
+    <li><strong>Transfer taxes.</strong> Some states and counties charge a transfer tax on deed recordings. Certain family transfers are exempt — but you may need to file an exemption form alongside the deed.</li>
+  </ul>
+
+  <div class="cta-block">
+    <h2 class="cta-block__heading">Generate Your Quitclaim Deed in Minutes</h2>
+    <p class="cta-block__body">Our free generator produces a state-specific, properly formatted quitclaim deed that's ready to print, sign, and record. You'll enter the grantor and grantee names, the property's legal description, and your county — and get a completed deed in minutes. No account required.</p>
+    <a href="/quitclaim-deed-form/" class="btn btn--primary">Create Your Quitclaim Deed Now &rarr;</a>
+  </div>
+
+  <FAQ items={faqItems} />
+
+  <h2>Related Pages</h2>
+  <ul>
+    <li><a href="/quitclaim-deed/">Quitclaim Deed — Complete Guide</a></li>
+    <li><a href="/quit-claim-deed/">Quit Claim Deed — Spelling Explained</a></li>
+    <li><a href="/what-is-a-quitclaim-deed/">What Is a Quitclaim Deed?</a></li>
+    <li><a href="/quitclaim-deed-form/">Free Quitclaim Deed Form Generator</a></li>
+  </ul>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-4);
+  }
+
+  .lede {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+  }
+
+  .lede-sub {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-6);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li { margin-bottom: var(--space-2); }
+
+  a { color: var(--color-teal); text-decoration: underline; }
+  a:hover { color: var(--color-teal-hover); }
+
+  .cta-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+    margin: var(--space-10) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    margin-top: 0;
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+  .btn {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-base);
+    padding: var(--space-3) var(--space-7);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--duration-micro) var(--ease-standard);
+  }
+  .btn--primary {
+    background: var(--color-teal);
+    color: #ffffff;
+  }
+  .btn--primary:hover {
+    background: var(--color-teal-hover);
+    color: #ffffff;
+  }
+</style>

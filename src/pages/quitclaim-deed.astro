@@ -1,0 +1,345 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FAQ from '../components/FAQ.astro';
+import Disclaimer from '../components/Disclaimer.astro';
+import Callout from '../components/ui/Callout.astro';
+import ComparisonTable from '../components/ui/ComparisonTable.astro';
+
+const title = 'Quitclaim Deed: What It Is, When to Use One, and How to File It';
+const description =
+  'A quitclaim deed transfers your property interest to another person — no title guarantee. Learn when it\'s the right choice, how it differs from a warranty deed, and what state law requires before you sign.';
+
+const faqItems = [
+  {
+    question: 'What is a quitclaim deed used for?',
+    answer:
+      'A quitclaim deed transfers whatever ownership interest the grantor currently holds to the grantee, with no warranty of clear title. It is used between parties who already know each other\'s ownership situation: spouses dividing property in a divorce, parents gifting a home to a child, individuals transferring property into a trust or LLC, and owners correcting title errors. It is not used for arm\'s-length sales to unrelated buyers.',
+  },
+  {
+    question: 'Does a quitclaim deed remove me from the mortgage?',
+    answer:
+      'No. A quitclaim deed is a title document, not a mortgage document. It transfers ownership — it does not change the loan. The grantor remains personally liable on any mortgage secured by the property until the lender refinances the loan in the remaining party\'s name or formally releases the departing borrower.',
+  },
+  {
+    question: 'Is a quitclaim deed legal in my state?',
+    answer:
+      'Yes. Quitclaim deeds are recognized in all 50 states. The requirements — signature blocks, witnesses, accompanying documents, transfer taxes — differ by state, but the deed type is valid everywhere.',
+  },
+  {
+    question: 'Do I need an attorney to prepare a quitclaim deed?',
+    answer:
+      'Not in most states for routine transfers. However, legal advice is strongly recommended when the transfer involves a mortgage, is part of a divorce, concerns California property subject to Prop 19, transfers into or out of a trust, or involves any dispute about ownership. A deed prepared incorrectly may not be rejected by the recorder — and that is the dangerous outcome, not rejection.',
+  },
+  {
+    question: 'What is the difference between a quitclaim deed and a warranty deed?',
+    answer:
+      'A warranty deed guarantees that the grantor holds clear title and will defend the grantee against future title claims. A quitclaim deed makes no such promise. Use a warranty deed when a buyer is paying market value and needs to rely on the grantor\'s title representations. Use a quitclaim deed when the parties know each other\'s ownership situation and a title guarantee is not needed.',
+  },
+  {
+    question: 'How much does it cost to record a quitclaim deed?',
+    answer:
+      'Recording fees run $10–$30 for the first page, plus $5–$15 per additional page in most counties. Many states also impose a documentary transfer tax based on the stated consideration or the property\'s value. Total out-of-pocket cost for a simple family transfer in most states: $15–$75 for recording and the deed itself, not counting attorney fees if used.',
+  },
+  {
+    question: 'What happens if I make a mistake on a quitclaim deed?',
+    answer:
+      'Minor errors can typically be corrected with a new corrective quitclaim deed referencing the original. Significant errors — a wrong legal description, reversed grantor and grantee, missing required signatures — require a new deed from the original grantor. If the original grantor is unavailable, correcting the title may require a quiet title action in court.',
+  },
+];
+
+const whenToUseHeaders = ['Use a Quitclaim Deed?'];
+const whenToUseRows = [
+  { label: 'Divorce: one spouse transfers their interest to the other', values: ['Yes'] },
+  { label: 'Adding a spouse or partner to an existing title', values: ['Yes'] },
+  { label: 'Removing a name after divorce or separation', values: ['Yes'] },
+  { label: 'Parent transferring property to a child as a gift', values: ['Yes'] },
+  { label: 'Transferring property into a revocable living trust', values: ['Yes'] },
+  { label: 'Moving property from an individual name into an LLC', values: ['Yes'] },
+  { label: 'Correcting a title error (wrong name, misspelling, old name)', values: ['Yes'] },
+  { label: 'Selling a home to an unrelated buyer paying market value', values: ['No — use a warranty deed'] },
+  { label: 'Purchase transaction with a mortgage lender involved', values: ['No — lenders require a warranty deed'] },
+  { label: 'Transfer where the title history is uncertain or disputed', values: ['No — resolve the title issue first'] },
+];
+
+const deedComparisonHeaders = ['Quitclaim Deed', 'General Warranty Deed', 'Special Warranty Deed'];
+const deedComparisonRows = [
+  {
+    label: 'What the grantor promises',
+    values: [
+      'Nothing — transfers only whatever interest the grantor holds',
+      'Clear title, back through the entire chain of ownership',
+      'Clear title only during the grantor\'s period of ownership',
+    ],
+  },
+  {
+    label: 'Who uses it',
+    values: [
+      'Transfers between known parties: family, divorce, trust/LLC',
+      'Standard arm\'s-length real estate sales',
+      'Commercial real estate, bank-owned properties',
+    ],
+  },
+  {
+    label: 'Lender acceptance',
+    values: [
+      'Typically rejected for purchase transactions',
+      'Required by most mortgage lenders',
+      'Acceptable for many commercial loans',
+    ],
+  },
+];
+
+const stateTableHeaders = ['Witnesses', 'Transfer Tax', 'Notable Requirement'];
+const stateTableRows = [
+  { label: 'California', values: ['None', '$0.55 per $500 (county-level)', 'PCOR required at recording; Prop 19 rules apply to parent-to-child transfers'] },
+  { label: 'Florida', values: ['2', '$0.70 per $100', 'Homestead property: non-titled spouse must also sign (Fla. Const. art. X, § 4)'] },
+  { label: 'Texas', values: ['None', 'None', 'Both spouses must sign on community property (Tex. Fam. Code § 3.102)'] },
+  { label: 'Michigan', values: ['None', '$3.75 per $500 (state) + county levy', 'Michigan requires a state equalization form on most transfers'] },
+  { label: 'New York', values: ['None', '$0.50 per $500 (state) + NYC additional taxes', 'NYC mansion tax on transfers of $1M+'] },
+  { label: 'Georgia', values: ['1', '$0.10 per $100', 'Transfer-on-Death Deed now available (O.C.G.A. § 44-17-1, effective 2024)'] },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://whatisaquitclaimdeed.com/quitclaim-deed/',
+    datePublished: '2026-07-01',
+    dateModified: '2026-07-29',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://whatisaquitclaimdeed.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://whatisaquitclaimdeed.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://whatisaquitclaimdeed.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Quitclaim Deed', item: 'https://whatisaquitclaimdeed.com/quitclaim-deed/' },
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} canonical="/quitclaim-deed/">
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Quitclaim Deed</span>
+  </nav>
+
+  <h1 class="page-h1">Quitclaim Deed</h1>
+
+  <div class="answer-block">
+    <p><strong>A quitclaim deed is a legal document that transfers whatever property interest the grantor currently holds to the grantee — with no warranty that the title is clear or that the grantor owns the property free and clear.</strong> It is the standard instrument for transferring property between people who already trust each other: spouses dividing assets in a divorce, parents deeding a home to a child, an owner moving property into an LLC or revocable trust.</p>
+    <p><em>If you already know you need a quitclaim deed, <a href="/quitclaim-deed-form/">go straight to the free generator →</a></em></p>
+  </div>
+
+  <Disclaimer />
+
+  <h2>What a Quitclaim Deed Does (and What It Doesn't)</h2>
+  <p>A quitclaim deed does one thing: it transfers title. The grantor — the person currently on the deed — signs over whatever ownership interest they hold. The grantee receives exactly that interest. No more, no less.</p>
+  <p>What a quitclaim deed does <strong>not</strong> do:</p>
+  <ul>
+    <li>It does not clear a mortgage. If there is a loan on the property, the grantor remains on that loan after signing. The lender is not a party to the deed.</li>
+    <li>It does not guarantee the title is clean. If someone else has a competing claim to the property, the grantee inherits that problem along with the deed.</li>
+    <li>It does not transfer tax obligations, HOA responsibilities, or easements — those run with the land and are unaffected by a change in title.</li>
+  </ul>
+  <p>The absence of a title guarantee is the feature, not a flaw. Between people who already know the ownership situation — a married couple, a parent and child, a business owner and their LLC — there is no need for the grantor to make formal title promises. The quitclaim structure is deliberately lightweight because the parties already trust each other's claim.</p>
+
+  <h2>When to Use a Quitclaim Deed</h2>
+  <p>Quitclaim deeds are the right instrument in specific situations. Outside those situations, a warranty deed or another instrument is usually more appropriate.</p>
+  <ComparisonTable headers={whenToUseHeaders} rows={whenToUseRows} />
+
+  <h3>The Divorce Case</h3>
+  <p>The most common real-world use of a quitclaim deed is property division in a divorce. One spouse signs their interest over to the other. That deed handles the title.</p>
+  <p>The mortgage is a separate matter entirely. If both names are on the loan — or if the departing spouse's name is on it — the deed does not change that. The bank was not a party to the deed. The departing spouse remains legally obligated on the mortgage until the remaining spouse refinances in their name alone, the property is sold, or the lender formally releases them. A divorce decree does not override this.</p>
+  <p><a href="/quitclaim-deed/for-divorce/">Full explanation of quitclaim deeds in divorce →</a></p>
+
+  <Callout type="info" title="California Parent-to-Child Transfers: Prop 19 Applies">
+    <p>California operates under different rules for parent-to-child property transfers following Proposition 19 (effective February 16, 2021). Under the old law, parents could transfer a primary residence to a child with no reassessment for property tax purposes. Under Prop 19, the exclusion only applies if the child occupies the transferred property as their primary residence within one year — and the exclusion is capped. Using a quitclaim deed template that predates 2021 can result in a full property tax reassessment to current market value.</p>
+    <p><a href="/quitclaim-deed/california/parents-to-children/">California parent-to-child quitclaim deed — Prop 19 requirements →</a></p>
+  </Callout>
+
+  <h2>Quitclaim Deed vs. Warranty Deed</h2>
+  <p>The most important comparison in real estate deed types:</p>
+  <ComparisonTable headers={deedComparisonHeaders} rows={deedComparisonRows} />
+  <p>The difference in a sentence: a warranty deed is a promise about the property's ownership history; a quitclaim deed is a release of whatever interest the grantor currently holds.</p>
+  <p><a href="/quitclaim-deed-vs-warranty-deed/">Detailed comparison: quitclaim deed vs. warranty deed →</a></p>
+
+  <h2>What a Quitclaim Deed Must Include</h2>
+  <p>Every state has its own property code, and every state has its own requirements for deed execution. But the core elements are consistent across all 50 states:</p>
+  <ol>
+    <li><strong>Grantor's full legal name.</strong> The name must match exactly how it appears on the current title.</li>
+    <li><strong>Grantee's full legal name and mailing address.</strong> This becomes the grantee's name on the public record.</li>
+    <li><strong>Property legal description.</strong> Not the street address — the formal recorded description from the existing deed or county property records.</li>
+    <li><strong>Consideration.</strong> The stated value exchanged. For family transfers, "$1 and other valuable consideration" is legally sufficient in most states.</li>
+    <li><strong>Vesting.</strong> How the grantee will hold title: sole ownership, joint tenancy with right of survivorship, tenancy in common, or tenancy by the entireties (where available).</li>
+    <li><strong>Grantor's notarized signature.</strong> Required in all 50 states. Some states also require witnesses (Florida: 2 witnesses; Tennessee: 2 witnesses; Georgia: 1 witness).</li>
+  </ol>
+
+  <h2>The Recording Process</h2>
+  <p>Signing the deed is step one. The transfer is not legally effective against third parties until the deed is recorded.</p>
+  <ol>
+    <li><strong>Sign before a notary.</strong> The grantor signs the deed in the notary's presence. Do not pre-sign — the notary must witness the signing.</li>
+    <li><strong>Record with the county recorder.</strong> File the original deed with the recorder's office in the county where the property is located.</li>
+    <li><strong>Pay the recording fee.</strong> Typically $10–$30 for the first page, plus $5–$15 per additional page.</li>
+    <li><strong>File any required accompanying documents.</strong> California requires a Preliminary Change of Ownership Report (PCOR) at recording.</li>
+    <li><strong>Notify relevant parties.</strong> Inform your homeowner's insurance company and your mortgage lender.</li>
+  </ol>
+  <p><strong>Typical timeline:</strong> 30 minutes to generate the deed, 15–30 minutes at the notary, under one hour at the county recorder's office.</p>
+
+  <h2>State-by-State Requirements at a Glance</h2>
+  <p>There is no federal standard for quitclaim deeds. Each state sets its own rules for execution, recording, and transfer taxes.</p>
+  <ComparisonTable headers={stateTableHeaders} rows={stateTableRows} />
+
+  <div class="cta-block">
+    <h2 class="cta-block__heading">Create Your Quitclaim Deed</h2>
+    <p class="cta-block__body">The generator applies the correct statutory language, signature blocks, and state-specific instructions for the state where your property is located.</p>
+    <a href="/quitclaim-deed-form/" class="btn btn--primary">Create a Free Quitclaim Deed &rarr;</a>
+  </div>
+
+  <FAQ items={faqItems} />
+
+  <h2>Related Pages</h2>
+  <ul>
+    <li><a href="/what-is-a-quitclaim-deed/">What Is a Quitclaim Deed? — Full Definition and FAQ</a></li>
+    <li><a href="/quitclaim-deed-vs-warranty-deed/">Quitclaim Deed vs. Warranty Deed — Detailed Comparison</a></li>
+    <li><a href="/quitclaim-deed/for-divorce/">Quitclaim Deed for Divorce</a></li>
+    <li><a href="/quitclaim-deed/california/parents-to-children/">California Quitclaim Deed — Parents to Children (Prop 19)</a></li>
+    <li><a href="/quitclaim-deed-form/">Quitclaim Deed Form — Free Generator</a></li>
+  </ul>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-6);
+  }
+
+  .answer-block {
+    background: var(--color-surface-subtle);
+    border-left: 4px solid var(--color-teal);
+    border-radius: var(--radius-md);
+    padding: var(--space-5) var(--space-6);
+    margin-bottom: var(--space-6);
+  }
+  .answer-block p {
+    margin-bottom: var(--space-3);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+  }
+  .answer-block p:last-child { margin-bottom: 0; }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+    line-height: 1.3;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li { margin-bottom: var(--space-2); }
+
+  a { color: var(--color-teal); text-decoration: underline; }
+  a:hover { color: var(--color-teal-hover); }
+
+  .cta-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+    margin: var(--space-10) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+    margin-top: 0;
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+  .btn {
+    display: inline-block;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: var(--text-base);
+    padding: var(--space-3) var(--space-7);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--duration-micro) var(--ease-standard);
+  }
+  .btn--primary {
+    background: var(--color-teal);
+    color: #ffffff;
+  }
+  .btn--primary:hover {
+    background: var(--color-teal-hover);
+    color: #ffffff;
+  }
+</style>
