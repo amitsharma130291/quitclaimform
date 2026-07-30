@@ -38,7 +38,6 @@ export const POST: APIRoute = async ({ request }) => {
       ],
       customer: {
         email: email.trim().toLowerCase(),
-        name: '',
       },
       return_url: `${SITE_URL}/payment/success`,
       cancel_url: `${SITE_URL}/payment/failed`,
