@@ -1,0 +1,171 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Payment Cancelled — WhatIsAQuitclaimDeed.com';
+const description = 'Your payment was cancelled or did not go through. Return to pricing to try again.';
+---
+
+<BaseLayout title={title} description={description} canonical="/payment/failed/">
+  <div class="page-content">
+    <div class="failed-card">
+      <div class="failed-icon" aria-hidden="true">✕</div>
+      <h1 class="failed-h1">Payment was cancelled</h1>
+
+      <p class="failed-lead">
+        No charge was made to your card. If you ran into a problem or changed your mind, that's
+        completely fine — you can try again any time.
+      </p>
+
+      <a href="/pricing" class="try-again-btn">
+        Try Again — Back to Pricing
+      </a>
+
+      <div class="help-box">
+        <h2>Common reasons a payment doesn't go through</h2>
+        <ul>
+          <li>The card was declined by your bank — try a different payment method</li>
+          <li>The session timed out — start a fresh checkout</li>
+          <li>You clicked "Cancel" or navigated away — no problem, just try again</li>
+        </ul>
+        <p class="help-cta">
+          Still having trouble? <a href="/contact">Contact us</a> and we'll help you complete your purchase.
+        </p>
+      </div>
+
+      <div class="back-links">
+        <a href="/" class="back-link">← Back to Home</a>
+        <a href="/contact" class="contact-link">Get help</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .failed-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+
+  .failed-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--space-5);
+  }
+
+  .failed-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-4) 0;
+    line-height: 1.2;
+  }
+
+  .failed-lead {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0 auto var(--space-6) auto;
+    max-width: 500px;
+  }
+
+  .try-again-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #d97706;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background var(--duration-fast) var(--ease-standard);
+    margin-bottom: var(--space-7);
+  }
+  .try-again-btn:hover {
+    background: #b45309;
+  }
+
+  .help-box {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+    text-align: left;
+    margin-bottom: var(--space-7);
+  }
+  .help-box h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-3) 0;
+  }
+  .help-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .help-box li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+  .help-box li::before {
+    content: '→';
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    margin-top: 0.1em;
+  }
+  .help-cta {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .help-cta a {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .back-links {
+    display: flex;
+    gap: var(--space-5);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .back-link, .contact-link {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .back-link:hover, .contact-link:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+</style>

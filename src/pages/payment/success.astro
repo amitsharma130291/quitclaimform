@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Payment Successful — WhatIsAQuitclaimDeed.com';
+const description = 'Your Complete Filing Bundle purchase is confirmed. Download your bundle now.';
+
+// Capture the session/payment ID from the redirect URL if Dodo passes it back
+const url = new URL(Astro.request.url);
+const sessionId = url.searchParams.get('session_id') ?? url.searchParams.get('payment_id') ?? '';
+const downloadUrl = sessionId
+  ? `/api/download-bundle?payment_id=${encodeURIComponent(sessionId)}`
+  : null;
+---
+
+<BaseLayout title={title} description={description} canonical="/payment/success/">
+  <div class="page-content">
+    <div class="success-card">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h1 class="success-h1">Thank you for your purchase!</h1>
+
+      <p class="success-lead">
+        Your Complete Filing Bundle is ready. You should also receive a confirmation email with
+        a download link within a few minutes — check your spam folder if it doesn't arrive.
+      </p>
+
+      {downloadUrl ? (
+        <a href={downloadUrl} class="download-btn" download>
+          Download Your Filing Bundle
+        </a>
+      ) : (
+        <p class="no-id-note">
+          Check your email for your download link. If you don't receive it within a few
+          minutes, <a href="/contact">contact us</a> with your payment confirmation and
+          we'll send it right away.
+        </p>
+      )}
+
+      <div class="receipt-note">
+        <p>
+          <strong>A receipt has been sent to your email.</strong> Keep it for your records —
+          it includes your 90-day re-download reference number.
+        </p>
+      </div>
+
+      <div class="what-next">
+        <h2>What's in your bundle</h2>
+        <ul>
+          <li>County-specific recording checklist with exact requirements for your county</li>
+          <li>Legal description guide — where to find it and what to copy word for word</li>
+          <li>Post-signing step-by-step guide (notarise, witnesses, transfer tax, filing order)</li>
+          <li>Transfer tax calculator for your county</li>
+          <li>90-day re-download access — update and reprint any time</li>
+        </ul>
+      </div>
+
+      <div class="back-links">
+        <a href="/" class="back-link">← Back to Home</a>
+        <a href="/contact" class="contact-link">Questions? Contact us</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-content {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  .success-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+  }
+
+  .success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    background: #d1fae5;
+    color: #065f46;
+    border-radius: 50%;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--space-5);
+  }
+
+  .success-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-4) 0;
+    line-height: 1.2;
+  }
+
+  .success-lead {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0 0 var(--space-6) 0;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #d97706;
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background var(--duration-fast) var(--ease-standard);
+    margin-bottom: var(--space-6);
+  }
+  .download-btn::before {
+    content: '↓';
+    font-size: 1.1em;
+  }
+  .download-btn:hover {
+    background: #b45309;
+  }
+
+  .no-id-note {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-6) 0;
+    line-height: 1.6;
+  }
+  .no-id-note a {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .receipt-note {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-6);
+    font-size: var(--text-sm);
+    color: #065f46;
+    line-height: 1.6;
+    text-align: left;
+  }
+  .receipt-note p {
+    margin: 0;
+  }
+
+  .what-next {
+    text-align: left;
+    margin-bottom: var(--space-7);
+  }
+  .what-next h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--space-3) 0;
+  }
+  .what-next ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .what-next li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+  .what-next li::before {
+    content: '✓';
+    color: #059669;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.1em;
+  }
+
+  .back-links {
+    display: flex;
+    gap: var(--space-5);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .back-link, .contact-link {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .back-link:hover, .contact-link:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+</style>
