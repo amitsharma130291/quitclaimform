@@ -26,6 +26,11 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
       margins: { top: 72, bottom: 72, left: 72, right: 72 },
     });
 
+    const now = new Date();
+    const day = now.getDate();
+    const month = now.toLocaleString('en-US', { month: 'long' });
+    const year = now.getFullYear();
+
     const chunks: Buffer[] = [];
     doc.on('data', (chunk: Buffer) => chunks.push(chunk));
     doc.on('end', () => resolve(Buffer.concat(chunks)));
@@ -57,7 +62,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     // Body
     doc.fontSize(11).font('Times-Roman');
     doc.text(
-      `THIS QUITCLAIM DEED, executed this _____ day of _____________, 20___, by ${data.grantorName} (Grantor), ` +
+      `THIS QUITCLAIM DEED, executed this ${day} day of ${month}, ${year}, by ${data.grantorName} (Grantor), ` +
       `to ${data.granteeName} (Grantee).`,
       { align: 'justify' }
     );
@@ -165,7 +170,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
       doc.text(`${jurisdictionTerm.toUpperCase()} OF ${boroughOrDistrict}`);
       doc.moveDown();
       doc.text(
-        'The foregoing instrument was acknowledged before me this ___ day of ___________, 20___, by _______________, as Grantor.',
+        `The foregoing instrument was acknowledged before me this ${day} day of ${month}, ${year}, by _______________, as Grantor.`,
         { align: 'left' }
       );
       doc.moveDown(2);
@@ -179,7 +184,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
       doc.text(`County of ${data.county ? data.county : '_______________'}`);
       doc.moveDown();
       doc.text(
-        'The foregoing instrument was acknowledged before me this ___ day of ___________, 20___, by _______________.',
+        `The foregoing instrument was acknowledged before me this ${day} day of ${month}, ${year}, by _______________.`,
         { align: 'left' }
       );
       doc.moveDown(2);
@@ -192,7 +197,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
       doc.text('STATE OF FLORIDA');
       doc.text(`County of ${data.county ? data.county : '_______________'}`);
       doc.moveDown();
-      doc.text('The foregoing instrument was acknowledged before me this ___ day of ___________, 20___, by _______________,');
+      doc.text(`The foregoing instrument was acknowledged before me this ${day} day of ${month}, ${year}, by _______________,`);
       doc.text('who is personally known to me or who has produced __________________ as identification.');
       doc.moveDown(2);
       doc.text('Witness #1 Signature: _________________________________');
@@ -211,7 +216,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
       doc.text(`County of ${data.county ? data.county : '_______________'}`);
       doc.moveDown();
       doc.text(
-        'This instrument was acknowledged before me on ___________, 20___, by _______________.',
+        `This instrument was acknowledged before me on ${month} ${day}, ${year}, by _______________.`,
         { align: 'left' }
       );
       doc.moveDown(2);
@@ -225,7 +230,7 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
       doc.text(`${jurisdictionTerm} OF ${data.county ? data.county.toUpperCase() : '______________'}`);
       doc.moveDown();
       doc.text(
-        `The foregoing instrument was acknowledged before me this _____ day of _____________, 20___, ` +
+        `The foregoing instrument was acknowledged before me this ${day} day of ${month}, ${year}, ` +
         `by ${data.grantorName}, who is personally known to me or who has produced __________________ as identification.`
       );
       doc.moveDown(2);
