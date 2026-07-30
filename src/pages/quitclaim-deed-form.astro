@@ -14,8 +14,8 @@ import TrustStrip from '../components/ui/TrustStrip.astro';
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Free Quitclaim Deed Form Generator",
-  "description": "Generate a state-specific quitclaim deed form in minutes. Enter your property and party details and download a ready-to-sign PDF for free. The generator applies the correct statutory language, signature blocks, and state-specific instructions for all 50 states.",
+  "name": "Quitclaim Deed Form Generator — $19.97",
+  "description": "Generate a state-specific quitclaim deed form in minutes. Enter your property and party details and download a ready-to-sign PDF instantly. The generator applies the correct statutory language, signature blocks, and state-specific instructions for all 50 states.",
   "serviceType": "Legal Document Generator",
   "provider": {
     "@type": "Organization",
@@ -25,9 +25,9 @@ const serviceSchema = {
   "areaServed": { "@type": "Country", "name": "United States" },
   "offers": {
     "@type": "Offer",
-    "price": "0",
+    "price": "19.97",
     "priceCurrency": "USD",
-    "description": "Free PDF download — no payment required"
+    "description": "$19.97 one-time payment — instant PDF download, taxes included"
   }
 };
 
@@ -35,7 +35,7 @@ const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "How to Create a Quitclaim Deed Form Online",
-  "description": "Use this free generator to create a state-specific, legally formatted quitclaim deed form. Select your state, enter party and property information, and download a ready-to-sign PDF for free.",
+  "description": "Use this generator to create a state-specific, legally formatted quitclaim deed form. Select your state, enter party and property information, and download a ready-to-sign PDF instantly.",
   "totalTime": "PT10M",
   "tool": [
     { "@type": "HowToTool", "name": "Quitclaim Deed Form Generator" },
@@ -65,7 +65,7 @@ const howToSchema = {
     {
       "@type": "HowToStep", "position": 5,
       "name": "Preview and download",
-      "text": "Download the completed PDF for free, then sign before a notary and record with your county recorder's office."
+      "text": "Complete the $19.97 checkout and download the PDF instantly, then sign before a notary and record with your county recorder's office."
     }
   ]
 };
@@ -73,7 +73,7 @@ const howToSchema = {
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Quitclaim Deed Form: Free Generator + PDF Download",
+  "name": "Quitclaim Deed Form: Generator + PDF Download — $19.97",
   "url": "https://whatisaquitclaimdeed.com/quitclaim-deed-form/",
   "datePublished": "2024-01-01",
   "dateModified": "2026-07-01",
@@ -124,7 +124,7 @@ const comparisonRows = [
   { label: "Documentary transfer tax guidance", values: ["None", "State-specific transfer tax information"], highlight: false },
   { label: "Post-execution instructions", values: ["None", "Notarisation, recording, and required accompanying forms"], highlight: false },
   { label: "California Prop 19 guidance", values: ["Absent or outdated", "Current (reflects post-Feb 2021 rules)"], highlight: false },
-  { label: "Free PDF included", values: ["No", "Yes — free download, no payment required"], highlight: true },
+  { label: "Instant PDF download", values: ["No", "Yes — $19.97, instant download after checkout"], highlight: true },
 ];
 
 // ── Witness requirement table data ─────────────────────────────────────────────
@@ -187,8 +187,8 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="Quitclaim Deed Form: Free Generator + PDF Download"
-  description="Generate a state-specific quitclaim deed form in minutes. Enter your property details, download a ready-to-sign PDF for free — the right language for your state, every time."
+  title="Quitclaim Deed Form: Generator + Instant PDF Download — $19.97"
+  description="Generate a state-specific quitclaim deed form in minutes. Enter your property details and download a ready-to-sign PDF for $19.97 — the right language for your state, every time."
   canonical="/quitclaim-deed-form/"
 >
   <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
@@ -210,7 +210,7 @@ const faqItems = [
     <h1 class="qdf-hero__h1">Quitclaim Deed Form</h1>
     <p class="qdf-hero__lede">
       A state-specific, legally formatted quitclaim deed — generated from your information, ready to sign
-      and record. Download the completed PDF for free.
+      and record. Download the completed PDF instantly after checkout.
     </p>
   </header>
 
@@ -403,7 +403,7 @@ const faqItems = [
   <section class="qdf-content" aria-labelledby="comparison-heading">
     <h2 id="comparison-heading">Generic PDF vs. This Generator — What's the Difference?</h2>
     <p>
-      Most free quitclaim deed PDFs you find online are state-neutral forms that happen to use the word
+      Most generic quitclaim deed PDFs you find online are state-neutral forms that happen to use the word
       "quitclaim." They may technically transfer property in some states. They will fail in others.
     </p>
 
@@ -413,7 +413,7 @@ const faqItems = [
       <p>
         Florida's two-witness requirement (Fla. Stat. § 689.01) is one of the most commonly missed rules
         in online deed templates. A deed executed with only a notary and no witnesses is defective under
-        Florida law and potentially voidable. Most free PDF templates include no witness lines at all.
+        Florida law and potentially voidable. Most generic PDF templates include no witness lines at all.
         This generator includes the correct two-witness blocks, automatically, whenever you select Florida.
       </p>
     </Callout>
@@ -632,7 +632,7 @@ const faqItems = [
   <section class="qdf-bottom-cta" aria-labelledby="bottom-cta-heading">
     <h2 id="bottom-cta-heading">Ready to Generate Your Quitclaim Deed?</h2>
     <p>
-      Free. Download the state-specific, ready-to-sign PDF instantly.
+      $19.97 — one-time payment, taxes included. Download the state-specific, ready-to-sign PDF instantly.
       The correct language, signature blocks, and filing instructions for your state — automatically.
     </p>
     <a href="#generator" class="btn-primary qdf-cta-btn">Start My Deed</a>

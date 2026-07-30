@@ -53,10 +53,14 @@ const states = [
 ];
 ---
 <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-  <div class="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-t-lg -mx-6 -mt-6 mb-6">
-    Free Quitclaim Deed Generator — Instant PDF Download
+  <div class="form-header">
+    Quitclaim Deed Generator — $19.97
   </div>
   <form id="deed-form" class="space-y-5">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1">Your Email <span class="text-red-500">*</span></label>
+      <input type="email" name="email" required placeholder="Enter your email to receive your deed" class="w-full border border-gray-300 rounded px-3 py-2" />
+    </div>
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-1">State <span class="text-red-500">*</span></label>
       <select name="state" required class="w-full border border-gray-300 rounded px-3 py-2">
@@ -100,16 +104,11 @@ const states = [
     <div class="pt-2">
       <p class="text-xs text-gray-500 mb-3">This document is for informational purposes only. Consult an attorney before using.</p>
       <button type="submit" id="deed-submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
-        Generate My Free Quitclaim Deed
+        Get My Quitclaim Deed — $19.97
       </button>
-      <p id="deed-status" class="text-sm text-gray-500 mt-2 text-center hidden">Generating your deed...</p>
+      <p id="deed-status" class="text-sm text-gray-500 mt-2 text-center hidden">Redirecting to secure checkout…</p>
       <p id="deed-error" class="text-sm text-red-600 mt-2 text-center hidden"></p>
-      <div class="upsell-nudge">
-        <p class="upsell-nudge__headline">Want it to actually get recorded?</p>
-        <p class="upsell-nudge__body">Your deed is free. The Complete Filing Bundle ($19.97, taxes included) adds the county-specific recording checklist, legal description guide, and post-signing steps — so it doesn't get rejected at the counter.</p>
-        <a href="/pricing/" class="upsell-nudge__cta">Get the Complete Filing Bundle — $19.97</a>
-        <p class="upsell-nudge__sub">One-time payment. Instant access. No subscription.</p>
-      </div>
+      <p class="text-xs text-gray-400 mt-2 text-center">One-time payment. Taxes included. Instant download after checkout.</p>
     </div>
   </form>
 </div>
@@ -123,14 +122,14 @@ const states = [
     const errorEl = document.getElementById('deed-error') as HTMLElement;
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Generating…';
+    submitBtn.textContent = 'Preparing checkout…';
     statusEl.classList.remove('hidden');
     errorEl.classList.add('hidden');
 
     const data = Object.fromEntries(new FormData(form));
 
     try {
-      const res = await fetch('/api/generate-pdf', {
+      const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -141,72 +140,27 @@ const states = [
         throw new Error(body.error || `Error ${res.status}`);
       }
 
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `quitclaim-deed-${String(data.state).toLowerCase()}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
-
-      statusEl.textContent = 'Your deed is downloading.';
+      const { checkoutUrl } = await res.json();
+      window.location.href = checkoutUrl;
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
       errorEl.textContent = message;
       errorEl.classList.remove('hidden');
       statusEl.classList.add('hidden');
-    } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Generate My Free Quitclaim Deed';
+      submitBtn.textContent = 'Get My Quitclaim Deed — $19.97';
     }
   });
 </script>
 
 <style>
-  .upsell-nudge {
-    margin-top: 1.25rem;
-    padding: 1rem 1.125rem;
-    border: 2px solid #d97706;
-    border-radius: 0.5rem;
-    background: #fffbeb;
-  }
-
-  .upsell-nudge__headline {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    color: #92400e;
-    margin-bottom: 0.375rem;
-  }
-
-  .upsell-nudge__body {
-    font-size: 0.8125rem;
-    color: #78350f;
-    line-height: 1.55;
-    margin-bottom: 0.75rem;
-  }
-
-  .upsell-nudge__cta {
-    display: block;
-    text-align: center;
-    background: #d97706;
+  .form-header {
+    background: #1d4ed8;
     color: #fff;
-    font-weight: 700;
     font-size: 0.875rem;
-    padding: 0.625rem 1rem;
-    border-radius: 0.375rem;
-    text-decoration: none;
-    margin-bottom: 0.5rem;
-    transition: background 0.15s;
-  }
-
-  .upsell-nudge__cta:hover {
-    background: #b45309;
-  }
-
-  .upsell-nudge__sub {
-    font-size: 0.75rem;
-    color: #92400e;
-    text-align: center;
-    margin: 0;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
   }
 </style>

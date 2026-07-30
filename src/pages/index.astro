@@ -13,7 +13,7 @@ const websiteSchema = {
   "@type": "WebSite",
   "name": "WhatIsAQuitclaimDeed.com",
   "url": siteUrl,
-  "description": "Free quitclaim deed generator — state-specific, ready-to-sign PDF for all 50 states. 100% free, no payment required.",
+  "description": "Quitclaim deed generator — state-specific, ready-to-sign PDF for all 50 states. $19.97 one-time payment, instant download.",
   "potentialAction": {
     "@type": "SearchAction",
     "target": { "@type": "EntryPoint", "urlTemplate": `${siteUrl}/quitclaim-deed/{state}/` },
@@ -24,8 +24,8 @@ const websiteSchema = {
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  "name": "Free Quitclaim Deed Generator",
-  "description": "An online tool that generates a state-specific, legally formatted quitclaim deed PDF in minutes. Enter property and party details and download free. Covers all 50 states with the correct witness blocks, notary acknowledgment language, and state-specific instructions.",
+  "name": "Quitclaim Deed Generator — $19.97",
+  "description": "An online tool that generates a state-specific, legally formatted quitclaim deed PDF in minutes. Enter property and party details and download instantly. Covers all 50 states with the correct witness blocks, notary acknowledgment language, and state-specific instructions.",
   "serviceType": "Legal Document Generator",
   "provider": {
     "@type": "Organization",
@@ -35,9 +35,9 @@ const serviceSchema = {
   "areaServed": { "@type": "Country", "name": "United States" },
   "offers": {
     "@type": "Offer",
-    "price": "0",
+    "price": "19.97",
     "priceCurrency": "USD",
-    "description": "Free deed generator — free PDF download, no payment required"
+    "description": "Quitclaim deed generator — $19.97 one-time payment, instant PDF download, taxes included"
   }
 };
 
@@ -45,7 +45,7 @@ const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "How to Create a Quitclaim Deed Online",
-  "description": "Use WhatIsAQuitclaimDeed.com to create a state-specific quitclaim deed in under 10 minutes. Select your state, enter party and property details, and download a ready-to-sign PDF for free.",
+  "description": "Use WhatIsAQuitclaimDeed.com to create a state-specific quitclaim deed in under 10 minutes. Select your state, enter party and property details, and download a ready-to-sign PDF instantly.",
   "totalTime": "PT10M",
   "tool": [
     { "@type": "HowToTool", "name": "Quitclaim Deed Form Generator" },
@@ -74,8 +74,8 @@ const howToSchema = {
     },
     {
       "@type": "HowToStep", "position": 5,
-      "name": "Download your free PDF",
-      "text": "Download the ready-to-sign PDF for free. Sign in front of a notary — and witnesses if your state requires them — then record with your county recorder."
+      "name": "Download your deed instantly",
+      "text": "Complete checkout and download the ready-to-sign PDF instantly. Sign in front of a notary — and witnesses if your state requires them — then record with your county recorder."
     }
   ]
 };
@@ -186,8 +186,8 @@ const faqItems = [
 ---
 
 <BaseLayout
-  title="Free Quitclaim Deed Generator — All 50 States | WhatIsAQuitclaimDeed.com"
-  description="Generate a state-specific quitclaim deed in minutes. Free PDF download. Correct witness blocks, notary language, and recording instructions for all 50 states."
+  title="Quitclaim Deed Generator — $19.97 | All 50 States | WhatIsAQuitclaimDeed.com"
+  description="Generate a state-specific quitclaim deed in minutes — $19.97, instant download. Correct witness blocks, notary language, and recording instructions for all 50 states."
   canonical="/"
 >
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
@@ -202,39 +202,38 @@ const faqItems = [
       <div class="hero__text">
         <div class="hero__eyebrow-wrap">
           <span class="hero__eyebrow-dot" aria-hidden="true"></span>
-          <p class="hero__eyebrow">Free Deed + $19.97 Complete Filing Bundle</p>
+          <p class="hero__eyebrow">$19.97 (taxes included) — Instant Download</p>
         </div>
         <h1 class="hero__heading" id="hero-heading">
-          Create a <span class="hero__gradient">State-Specific</span><br />Quitclaim Deed in Minutes
+          Create a <span class="hero__gradient">State-Specific</span><br />Quitclaim Deed in Minutes — $19.97
         </h1>
         <p class="hero__subheading">
-          Enter your property and party details and download
-          a ready-to-sign PDF for free. The correct witness blocks, notary language,
-          and recording instructions for all 50 states — automatically applied.
+          Enter your details, choose your state, and download a legally correct
+          quitclaim deed instantly. Covers all 50 states, with correct witness,
+          notary, and recording instructions.
         </p>
         <ul class="hero__trust" aria-label="Key features">
           <li>
             <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            All 50 states
+            All 50 states with state-specific notary language
           </li>
           <li>
             <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            3&quot; recording margin on page 1
+            Correct witness blocks (FL, GA, SC, TN and more)
           </li>
           <li>
             <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            State-specific witness requirements
+            County recording instructions included
           </li>
           <li>
             <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Instant PDF download
+            $19.97 — one-time payment, instant download
+          </li>
+          <li>
+            <svg class="hero__check" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Taxes included. No subscription.
           </li>
         </ul>
-        <ul class="hero__trust hero__trust--bundle" aria-label="Filing bundle features">
-          <li class="hero__bundle-item">&#10022; Complete Filing Bundle &mdash; $19.97 (taxes included)</li>
-          <li class="hero__bundle-item">&#10022; County checklist, recording guide + 90-day re-download</li>
-        </ul>
-        <p class="hero__urgency"><em>Most deeds get rejected the first time. The bundle tells you exactly what your county requires.</em></p>
       </div>
 
       <div class="hero__form-wrap" id="generator">
@@ -279,9 +278,9 @@ const faqItems = [
       </li>
       <li class="step-card">
         <span class="step-card__num" aria-hidden="true">03</span>
-        <h3 class="step-card__title">Download your free PDF</h3>
+        <h3 class="step-card__title">Download your deed instantly</h3>
         <p class="step-card__desc">
-          Download the ready-to-sign PDF for free. Includes a one-page instruction sheet covering notarisation, witness requirements, and recording instructions for your state.
+          Complete the $19.97 checkout and download your ready-to-sign PDF immediately. Includes a one-page instruction sheet covering notarisation, witness requirements, and recording instructions for your state.
         </p>
       </li>
       <li class="step-card">
@@ -293,7 +292,7 @@ const faqItems = [
       </li>
     </ol>
     <div class="how-it-works__cta">
-      <a href="#generator" class="btn-primary">Generate My Free Deed</a>
+      <a href="#generator" class="btn-primary">Get My Deed — $19.97</a>
     </div>
   </section>
 
@@ -418,9 +417,9 @@ const faqItems = [
       <p class="cta-band__label">State-specific • Notary-ready • Instant PDF</p>
       <h2 class="cta-band__heading" id="cta-band-heading">Ready to create your quitclaim deed?</h2>
       <p class="cta-band__sub">
-        100% free. Download the ready-to-sign PDF instantly. Correct witness blocks, notary language, and recording instructions included.
+        $19.97 — one-time payment, taxes included. Download the ready-to-sign PDF instantly. Correct witness blocks, notary language, and recording instructions included.
       </p>
-      <a href="#generator" class="btn-primary cta-band__btn">Generate My Free Deed</a>
+      <a href="#generator" class="btn-primary cta-band__btn">Get My Deed — $19.97</a>
       <p class="cta-band__disclaimer">Not a law firm. Not legal advice. For informational purposes only.</p>
     </div>
   </section>
