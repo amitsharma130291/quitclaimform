@@ -172,6 +172,52 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
       doc.text('_________________________________');
       doc.text('Notary Public in and for the State of Alaska');
       doc.text('My Commission Expires: _______________');
+    } else if (data.state === 'AZ') {
+      // Arizona statutory notary acknowledgment (A.R.S. § 33-501)
+      doc.font('Times-Roman').fontSize(11);
+      doc.text('STATE OF ARIZONA');
+      doc.text(`County of ${data.county ? data.county : '_______________'}`);
+      doc.moveDown();
+      doc.text(
+        'The foregoing instrument was acknowledged before me this ___ day of ___________, 20___, by _______________.',
+        { align: 'left' }
+      );
+      doc.moveDown(2);
+      doc.text('_________________________________');
+      doc.text('Notary Public');
+      doc.text('My Commission Expires: _______________');
+    } else if (data.state === 'FL') {
+      // Florida — two witnesses required (Fla. Stat. § 689.01)
+      doc.font('Times-Roman').fontSize(11);
+      doc.text('STATE OF FLORIDA');
+      doc.text(`County of ${data.county ? data.county : '_______________'}`);
+      doc.moveDown();
+      doc.text('The foregoing instrument was acknowledged before me this ___ day of ___________, 20___, by _______________,');
+      doc.text('who is personally known to me or who has produced __________________ as identification.');
+      doc.moveDown(2);
+      doc.text('Witness #1 Signature: _________________________________');
+      doc.text('Witness #1 Printed Name: _____________________________');
+      doc.moveDown();
+      doc.text('Witness #2 Signature: _________________________________');
+      doc.text('Witness #2 Printed Name: _____________________________');
+      doc.moveDown();
+      doc.text('_________________________________');
+      doc.text('Notary Public, State of Florida');
+      doc.text('My Commission Expires: _______________');
+    } else if (data.state === 'TX') {
+      // Texas standard county acknowledgment
+      doc.font('Times-Roman').fontSize(11);
+      doc.text('STATE OF TEXAS');
+      doc.text(`County of ${data.county ? data.county : '_______________'}`);
+      doc.moveDown();
+      doc.text(
+        'This instrument was acknowledged before me on ___________, 20___, by _______________.',
+        { align: 'left' }
+      );
+      doc.moveDown(2);
+      doc.text('_________________________________');
+      doc.text('Notary Public, State of Texas');
+      doc.text('My Commission Expires: _______________');
     } else {
       // Generic notary block for all other states
       doc.font('Times-Roman').fontSize(11);
