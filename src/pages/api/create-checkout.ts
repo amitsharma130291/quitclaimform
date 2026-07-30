@@ -25,22 +25,21 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    // Create a Dodo Payments checkout session
-    const dodoPaylod = {
+    // /checkouts expects CustomerRequest = NewCustomer | AttachExistingCustomer.
+    // NewCustomer shape is FLAT: { email, name? }
+    // The old nested shape { create_new_customer: { email, name } } is a /payments
+    // endpoint pattern and is rejected by the live /checkouts API.
+    const dodoPayload = {
       product_cart: [
         {
           product_id: PRODUCT_ID,
           quantity: 1,
         },
       ],
-      // Pass email so Dodo can pre-fill it on the checkout page
       customer: {
-        create_new_customer: {
-          email: email.trim().toLowerCase(),
-          name: '',
-        },
+        email: email.trim().toLowerCase(),
+        name: '',
       },
-      // return_url is where Dodo redirects after payment (success or failure)
       return_url: `${SITE_URL}/payment/success`,
       cancel_url: `${SITE_URL}/payment/failed`,
       metadata: {
@@ -50,28 +49,28 @@ export const POST: APIRoute = async ({ request }) => {
       },
     };
 
-    const resp = await fetch(`${DODO_API_BASE}/checkouts`, {
+    const dodoRes = await fetch(`${DODO_API_BASE}/checkouts`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${DODO_API_KEY}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(dodoPaylod),
+      body: JSON.stringify(dodoPayload),
     });
 
-    if (!resp.ok) {
-      const errText = await resp.text();
-      console.error('[create-checkout] Dodo API error:', resp.status, errText);
+    if (!dodoRes.ok) {
+      const errBody = await dodoRes.text();
+      console.error('[create-checkout] Dodo API error:', dodoRes.status, errBody);
       return new Response(
-        JSON.stringify({ error: 'Failed to create checkout session. Please try again.' }),
-        { status: 502, headers: { 'Content-Type': 'application/json' } }
+        JSON.stringify({ error: 'Checkout creation failed', detail: errBody }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const data = await resp.json();
+    const data = await dodoRes.json();
 
     if (!data.checkout_url) {
-      console.error('[create-checkout] No checkout_url in Dodo response:', data);
+      console.error('[create-checkout] No checkout_url in Dodo response:', JSON.stringify(data));
       return new Response(
         JSON.stringify({ error: 'Payment provider returned an invalid response.' }),
         { status: 502, headers: { 'Content-Type': 'application/json' } }
