@@ -1,14 +1,53 @@
 ---
+export const prerender = false; // SSR required — server-side payment verification before rendering
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const DODO_API_KEY = import.meta.env.DODO_API_KEY;
+const DODO_API_BASE = 'https://test.dodopayments.com';
 
 const title = 'Payment Successful — WhatIsAQuitclaimDeed.com';
 const description = 'Your Complete Filing Bundle purchase is confirmed. Download your bundle now.';
 
-// Capture the session/payment ID from the redirect URL if Dodo passes it back
+// Dodo appends payment_id (and sometimes session_id) to the return_url after checkout
 const url = new URL(Astro.request.url);
-const sessionId = url.searchParams.get('session_id') ?? url.searchParams.get('payment_id') ?? '';
-const downloadUrl = sessionId
-  ? `/api/download-bundle?payment_id=${encodeURIComponent(sessionId)}`
+const paymentId = url.searchParams.get('payment_id') ?? url.searchParams.get('session_id') ?? '';
+
+// Server-side payment verification: redirect BEFORE rendering any success content.
+// This eliminates the flash-of-success-page that occurred when a failed payment
+// was routed here (Dodo sends all post-payment redirects to return_url).
+if (paymentId && DODO_API_KEY) {
+  try {
+    const resp = await fetch(`${DODO_API_BASE}/payments/${encodeURIComponent(paymentId)}`, {
+      headers: { 'Authorization': `Bearer ${DODO_API_KEY}` },
+    });
+    if (resp.ok) {
+      const payment = await resp.json();
+      // Dodo payment status field: "succeeded" | "failed" | "processing" | "cancelled"
+      const status: string = (payment.status ?? payment.payment_status ?? '') as string;
+      console.log(`[payment/success] payment_id=${paymentId} status=${status}`);
+      if (status && status !== 'succeeded' && status !== 'processing') {
+        // Payment didn't succeed — redirect away before rendering anything
+        return Astro.redirect('/payment/failed', 302);
+      }
+    } else {
+      console.error('[payment/success] Dodo API error:', resp.status, await resp.text());
+      // On API error, fall through and render the success page to avoid blocking
+      // legitimate purchases due to a transient API issue.
+    }
+  } catch (err) {
+    console.error('[payment/success] verification fetch error:', err);
+    // Network error — allow render rather than blocking a legitimate purchase
+  }
+} else if (!paymentId) {
+  // Direct visit with no payment_id — likely a bot or manual URL visit
+  console.warn('[payment/success] No payment_id in URL — rendering page without verification');
+} else if (!DODO_API_KEY) {
+  console.error('[payment/success] DODO_API_KEY not set — cannot verify payment status');
+}
+
+const downloadUrl = paymentId
+  ? `/api/download-bundle?payment_id=${encodeURIComponent(paymentId)}`
   : null;
 ---
 
