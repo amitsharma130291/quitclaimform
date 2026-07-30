@@ -6,10 +6,74 @@ const description = 'Your Complete Filing Bundle purchase is confirmed. Download
 
 // Capture the session/payment ID from the redirect URL if Dodo passes it back
 const url = new URL(Astro.request.url);
-const sessionId = url.searchParams.get('session_id') ?? url.searchParams.get('payment_id') ?? '';
-const downloadUrl = sessionId
-  ? `/api/download-bundle?payment_id=${encodeURIComponent(sessionId)}`
+const paymentId = url.searchParams.get('payment_id') ?? url.searchParams.get('session_id') ?? '';
+const status = url.searchParams.get('status');
+const rawEmail = url.searchParams.get('email');
+const customerEmail = rawEmail ? decodeURIComponent(rawEmail) : null;
+const downloadUrl = paymentId
+  ? `/api/download-bundle?payment_id=${encodeURIComponent(paymentId)}`
   : null;
+
+// Deduplication: only send email once per payment (cookie guard)
+const sentCookie = paymentId ? Astro.cookies.get(`email_sent_${paymentId}`) : null;
+
+if (!sentCookie?.value && status === 'succeeded' && paymentId) {
+  try {
+    const nodemailer = await import('nodemailer');
+    const transporter = nodemailer.default.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: import.meta.env.GMAIL_USER,
+        pass: import.meta.env.GMAIL_APP_PASSWORD,
+      },
+    });
+
+    // Operator notification email
+    await transporter.sendMail({
+      from: import.meta.env.GMAIL_USER,
+      to: 'amitsharma00261@gmail.com',
+      subject: `New sale: Quitclaim Deed — ${customerEmail || 'unknown'}`,
+      html: `
+        <h2>New Payment Received</h2>
+        <p><strong>Payment ID:</strong> ${paymentId}</p>
+        <p><strong>Customer email:</strong> ${customerEmail || 'not provided'}</p>
+        <p><strong>Amount:</strong> $19.97</p>
+        <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+        <p><strong>Status:</strong> ${status}</p>
+      `,
+    });
+
+    // Customer confirmation email (if we have their address)
+    if (customerEmail) {
+      await transporter.sendMail({
+        from: import.meta.env.GMAIL_USER,
+        to: customerEmail,
+        subject: 'Your Quitclaim Deed — WhatIsAQuitclaimDeed.com',
+        html: `
+          <h2>Thank you for your purchase!</h2>
+          <p>Your quitclaim deed is ready. Click the button below to download it:</p>
+          <p><a href="https://whatisaquitclaimdeed.com/api/download-bundle?payment_id=${paymentId}" style="background:#d97706;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block">Download Your Deed</a></p>
+          <p>This link is valid for 90 days.</p>
+          <p>Payment ID: ${paymentId}</p>
+          <br>
+          <p>WhatIsAQuitclaimDeed.com</p>
+        `,
+      });
+    }
+
+    // Set cookie to prevent re-send on refresh (24 h)
+    Astro.cookies.set(`email_sent_${paymentId}`, '1', {
+      maxAge: 86400,
+      httpOnly: true,
+      path: '/',
+    });
+  } catch (e) {
+    // Don't crash the page if email fails
+    console.error('Email send failed:', e);
+  }
+}
 ---
 
 <BaseLayout title={title} description={description} canonical="/payment/success/">
@@ -24,7 +88,7 @@ const downloadUrl = sessionId
       </p>
 
       {downloadUrl ? (
-        <a href={downloadUrl} class="download-btn" download>
+        <a href={downloadUrl} class="download-btn" id="download-btn" download>
           Download Your Filing Bundle
         </a>
       ) : (
@@ -60,6 +124,18 @@ const downloadUrl = sessionId
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  // Auto-trigger download 1.5 seconds after page load (gives the page time to render first)
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      const downloadBtn = document.getElementById('download-btn') as HTMLAnchorElement | null;
+      if (downloadBtn) {
+        window.location.href = downloadBtn.href;
+      }
+    }, 1500);
+  });
+</script>
 
 <style>
   .page-content {
