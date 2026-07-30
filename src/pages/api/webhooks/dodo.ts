@@ -112,7 +112,8 @@ async function sendOwnerNotificationEmail(
 ) {
   const transporter = createTransporter();
   if (!transporter) {
-    console.warn('[dodo-webhook] GMAIL_APP_PASSWORD not set — skipping owner notification');
+    // Log as error so it surfaces in Vercel logs
+    console.error('[dodo-webhook] GMAIL_APP_PASSWORD not set — owner notification NOT sent. Subject:', subject);
     return;
   }
   await transporter.sendMail({
@@ -203,7 +204,9 @@ export const POST: APIRoute = async ({ request }) => {
       const customerEmail = (data.customer as Record<string, string> | undefined)?.email
         ?? metadata.customer_email
         ?? '(unknown)';
-      const reason = data.error_code ?? data.failure_reason ?? 'unknown';
+      const reason = (data.error_code ?? data.failure_reason ?? 'unknown') as string;
+
+      console.log(`[dodo-webhook] payment.failed -- payment_id=${paymentId} customer=${customerEmail} reason=${reason}`);
 
       // Only notify owner on failure — NOT the customer
       await sendOwnerNotificationEmail(
@@ -225,9 +228,9 @@ export const POST: APIRoute = async ({ request }) => {
       console.log(`[dodo-webhook] Unhandled event type: ${eventType}`);
     }
   } catch (err) {
-    console.error('[dodo-webhook] error processing event:', err);
+    console.error('[dodo-webhook] error processing event type:', eventType, err);
     // Still return 200 so Dodo does not retry indefinitely for email failures
-    return new Response(JSON.stringify({ received: true, warning: 'Email send failed' }), {
+    return new Response(JSON.stringify({ received: true, warning: 'Email send failed', eventType }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });

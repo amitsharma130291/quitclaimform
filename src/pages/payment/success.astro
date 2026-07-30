@@ -1,110 +1,54 @@
 ---
+export const prerender = false; // SSR required — server-side payment verification before rendering
+
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { generateQuitclaimDeed, generateReceiptPDF } from '../../lib/pdf';
+
+const DODO_API_KEY = import.meta.env.DODO_API_KEY;
+const DODO_API_BASE = 'https://test.dodopayments.com';
 
 const title = 'Payment Successful — WhatIsAQuitclaimDeed.com';
 const description = 'Your Complete Filing Bundle purchase is confirmed. Download your bundle now.';
 
-// Capture the session/payment ID from the redirect URL if Dodo passes it back
+// Dodo appends payment_id (and sometimes session_id) to the return_url after checkout
 const url = new URL(Astro.request.url);
 const paymentId = url.searchParams.get('payment_id') ?? url.searchParams.get('session_id') ?? '';
-const status = url.searchParams.get('status');
-const rawEmail = url.searchParams.get('email');
-const customerEmail = rawEmail ? decodeURIComponent(rawEmail) : null;
+
+// Server-side payment verification: redirect BEFORE rendering any success content.
+// This eliminates the flash-of-success-page that occurred when a failed payment
+// was routed here (Dodo sends all post-payment redirects to return_url).
+if (paymentId && DODO_API_KEY) {
+  try {
+    const resp = await fetch(`${DODO_API_BASE}/payments/${encodeURIComponent(paymentId)}`, {
+      headers: { 'Authorization': `Bearer ${DODO_API_KEY}` },
+    });
+    if (resp.ok) {
+      const payment = await resp.json();
+      // Dodo payment status field: "succeeded" | "failed" | "processing" | "cancelled"
+      const status: string = (payment.status ?? payment.payment_status ?? '') as string;
+      console.log(`[payment/success] payment_id=${paymentId} status=${status}`);
+      if (status && status !== 'succeeded' && status !== 'processing') {
+        // Payment didn't succeed — redirect away before rendering anything
+        return Astro.redirect('/payment/failed', 302);
+      }
+    } else {
+      console.error('[payment/success] Dodo API error:', resp.status, await resp.text());
+      // On API error, fall through and render the success page to avoid blocking
+      // legitimate purchases due to a transient API issue.
+    }
+  } catch (err) {
+    console.error('[payment/success] verification fetch error:', err);
+    // Network error — allow render rather than blocking a legitimate purchase
+  }
+} else if (!paymentId) {
+  // Direct visit with no payment_id — likely a bot or manual URL visit
+  console.warn('[payment/success] No payment_id in URL — rendering page without verification');
+} else if (!DODO_API_KEY) {
+  console.error('[payment/success] DODO_API_KEY not set — cannot verify payment status');
+}
+
 const downloadUrl = paymentId
   ? `/api/download-bundle?payment_id=${encodeURIComponent(paymentId)}`
   : null;
-
-// Deduplication: only send email once per payment (cookie guard)
-const sentCookie = paymentId ? Astro.cookies.get(`email_sent_${paymentId}`) : null;
-
-if (!sentCookie?.value && status === 'succeeded' && paymentId) {
-  try {
-    const nodemailer = await import('nodemailer');
-    const transporter = nodemailer.default.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: import.meta.env.GMAIL_USER,
-        pass: import.meta.env.GMAIL_APP_PASSWORD,
-      },
-    });
-
-    // Operator notification email
-    await transporter.sendMail({
-      from: import.meta.env.GMAIL_USER,
-      to: 'amitsharma00261@gmail.com',
-      subject: `New sale: Quitclaim Deed — ${customerEmail || 'unknown'}`,
-      html: `
-        <h2>New Payment Received</h2>
-        <p><strong>Payment ID:</strong> ${paymentId}</p>
-        <p><strong>Customer email:</strong> ${customerEmail || 'not provided'}</p>
-        <p><strong>Amount:</strong> $19.97</p>
-        <p><strong>Time:</strong> ${new Date().toISOString()}</p>
-        <p><strong>Status:</strong> ${status}</p>
-      `,
-    });
-
-    // Customer confirmation email with PDF attached (if we have their address)
-    if (customerEmail) {
-      // Attempt to generate the populated deed from the stored cookie
-      const deedDataCookie = Astro.cookies.get('deed_data');
-      let pdfBuffer: Buffer;
-      try {
-        if (deedDataCookie?.value) {
-          const raw = JSON.parse(deedDataCookie.value) as Record<string, string>;
-          pdfBuffer = await generateQuitclaimDeed({
-            grantorName:      raw.grantorName?.trim()      || '____________________________',
-            granteeName:      raw.granteeName?.trim()       || '____________________________',
-            propertyAddress:  raw.propertyAddress?.trim()   || '____________________________',
-            legalDescription: raw.legalDescription?.trim()  || '[Copy from your existing deed]',
-            consideration:    raw.consideration?.trim()      || 'Ten Dollars ($10.00) and other good and valuable consideration',
-            state:            raw.state?.trim()              || 'YOUR STATE',
-            county:           raw.county?.trim()             || undefined,
-            grantorAddress:   raw.grantorAddress?.trim()     || undefined,
-            granteeAddress:   raw.granteeAddress?.trim()     || undefined,
-          });
-        } else {
-          pdfBuffer = await generateReceiptPDF(paymentId);
-        }
-      } catch (_err) {
-        pdfBuffer = await generateReceiptPDF(paymentId);
-      }
-
-      await transporter.sendMail({
-        from: import.meta.env.GMAIL_USER,
-        to: customerEmail,
-        subject: 'Your Quitclaim Deed — WhatIsAQuitclaimDeed.com',
-        html: `
-          <h2>Thank you for your purchase!</h2>
-          <p>Your completed quitclaim deed is attached to this email as a PDF.</p>
-          <p>You can also re-download it any time using the link below (valid 90 days):</p>
-          <p><a href="https://whatisaquitclaimdeed.com/api/download-bundle?payment_id=${paymentId}" style="background:#d97706;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block">Re-download Your Deed</a></p>
-          <p>Payment ID: ${paymentId}</p>
-          <br>
-          <p>If you have any questions, reply to this email or contact us at support@whatisaquitclaimdeed.com</p>
-          <p>WhatIsAQuitclaimDeed.com</p>
-        `,
-        attachments: [{
-          filename: 'quitclaim-deed.pdf',
-          content: pdfBuffer,
-          contentType: 'application/pdf',
-        }],
-      });
-    }
-
-    // Set cookie to prevent re-send on refresh (24 h)
-    Astro.cookies.set(`email_sent_${paymentId}`, '1', {
-      maxAge: 86400,
-      httpOnly: true,
-      path: '/',
-    });
-  } catch (e) {
-    // Don't crash the page if email fails
-    console.error('Email send failed:', e);
-  }
-}
 ---
 
 <BaseLayout title={title} description={description} canonical="/payment/success/">
@@ -119,7 +63,7 @@ if (!sentCookie?.value && status === 'succeeded' && paymentId) {
       </p>
 
       {downloadUrl ? (
-        <a href={downloadUrl} class="download-btn" id="download-btn" download>
+        <a href={downloadUrl} class="download-btn" download>
           Download Your Filing Bundle
         </a>
       ) : (
@@ -155,18 +99,6 @@ if (!sentCookie?.value && status === 'succeeded' && paymentId) {
     </div>
   </div>
 </BaseLayout>
-
-<script>
-  // Auto-trigger download 1.5 seconds after page load (gives the page time to render first)
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-      const downloadBtn = document.getElementById('download-btn') as HTMLAnchorElement | null;
-      if (downloadBtn) {
-        window.location.href = downloadBtn.href;
-      }
-    }, 1500);
-  });
-</script>
 
 <style>
   .page-content {

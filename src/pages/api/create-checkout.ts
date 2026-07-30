@@ -1,35 +1,96 @@
 import type { APIRoute } from 'astro';
 
-const DODO_CHECKOUT_URL =
-  'https://test.checkout.dodopayments.com/buy/pdt_0NkKQblWGog04bAoEmerv';
-const SUCCESS_URL = 'https://whatisaquitclaimdeed.com/payment/success';
+const DODO_API_KEY = import.meta.env.DODO_API_KEY;
+const DODO_API_BASE = 'https://test.dodopayments.com';
+const PRODUCT_ID = 'pdt_0NkKQblWGog04bAoEmerv';
+const SITE_URL = 'https://whatisaquitclaimdeed.com';
 
-export const POST: APIRoute = async ({ request, cookies }) => {
-  let body: Record<string, string> = {};
+export const POST: APIRoute = async ({ request }) => {
+  try {
+    const body = await request.json();
+    const { email, state, county } = body ?? {};
 
-  const contentType = request.headers.get('content-type') ?? '';
-  if (contentType.includes('application/json')) {
-    body = await request.json().catch(() => ({}));
-  } else {
-    const formData = await request.formData().catch(() => new FormData());
-    formData.forEach((value, key) => {
-      body[key] = String(value);
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      return new Response(
+        JSON.stringify({ error: 'A valid email address is required.' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!DODO_API_KEY) {
+      console.error('[create-checkout] DODO_API_KEY is not set');
+      return new Response(
+        JSON.stringify({ error: 'Payment provider is not configured.' }),
+        { status: 500, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Create a Dodo Payments checkout session
+    const dodoPaylod = {
+      product_cart: [
+        {
+          product_id: PRODUCT_ID,
+          quantity: 1,
+        },
+      ],
+      // Pass email so Dodo can pre-fill it on the checkout page
+      customer: {
+        create_new_customer: {
+          email: email.trim().toLowerCase(),
+          name: '',
+        },
+      },
+      // return_url is where Dodo redirects after payment (success or failure)
+      return_url: `${SITE_URL}/payment/success`,
+      cancel_url: `${SITE_URL}/payment/failed`,
+      metadata: {
+        customer_email: email.trim().toLowerCase(),
+        state: state ?? '',
+        county: county ?? '',
+      },
+    };
+
+    const resp = await fetch(`${DODO_API_BASE}/checkouts`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${DODO_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(dodoPaylod),
     });
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      console.error('[create-checkout] Dodo API error:', resp.status, errText);
+      return new Response(
+        JSON.stringify({ error: 'Failed to create checkout session. Please try again.' }),
+        { status: 502, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const data = await resp.json();
+
+    if (!data.checkout_url) {
+      console.error('[create-checkout] No checkout_url in Dodo response:', data);
+      return new Response(
+        JSON.stringify({ error: 'Payment provider returned an invalid response.' }),
+        { status: 502, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    return new Response(
+      JSON.stringify({
+        checkoutUrl: data.checkout_url,
+        sessionId: data.session_id ?? null,
+      }),
+      { status: 200, headers: { 'Content-Type': 'application/json' } }
+    );
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('[create-checkout] unexpected error:', err);
+    return new Response(
+      JSON.stringify({ error: `Unexpected error: ${msg}` }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
-
-  // Persist deed data in a short-lived cookie so /payment/success can retrieve it
-  cookies.set('deed_data', JSON.stringify(body), {
-    path: '/',
-    maxAge: 60 * 60, // 1 hour — long enough to complete checkout
-    httpOnly: true,
-    sameSite: 'lax',
-  });
-
-  const referenceId = `deed_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
-  const checkoutUrl = `${DODO_CHECKOUT_URL}?quantity=1&connector_response_reference_id=${referenceId}&billing_currency=USD&redirect_url=${encodeURIComponent(SUCCESS_URL)}`;
-
-  return new Response(JSON.stringify({ checkoutUrl }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
 };
