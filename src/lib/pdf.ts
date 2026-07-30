@@ -8,6 +8,8 @@ interface DeedData {
   consideration: string;
   state: string;
   county?: string;
+  grantorAddress?: string;  // Fix B
+  granteeAddress?: string;  // Fix B
 }
 
 // Fix 1: State-specific jurisdiction terminology
@@ -32,7 +34,6 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     const jurisdictionTerm = getJurisdictionTerm(data.state);
 
     // ── Fix 2: Recording header block — VERY FIRST content ──────────────────
-    // Position at top of page (standard 72pt margin)
     doc.y = 72;
     doc.fontSize(9).font('Times-Roman');
     doc.text(`Recording Requested By: ${data.granteeName}`);
@@ -64,17 +65,47 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
 
     // Fix 3: Party identification label after grantor name
     doc.fontSize(9).font('Times-Italic').text('(Full legal name as it appears on current title)');
-    doc.moveDown(0.5);
-    doc.fontSize(11).font('Times-Roman');
+    doc.moveDown(0.25);
 
+    // Fix B: Grantor address line
+    doc.fontSize(10).font('Times-Roman');
+    const grantorAddr = (data.grantorAddress && data.grantorAddress.trim())
+      ? data.grantorAddress.trim()
+      : '_______________________________';
+    doc.text(`Address: ${grantorAddr}`);
+    doc.moveDown(0.25);
+
+    // Fix D: Marital status hint under grantor
+    doc.fontSize(9).font('Times-Italic').text(
+      '(Include marital status where required, e.g., \'an unmarried person\' or \'husband and wife\')'
+    );
+    doc.moveDown(0.75);
+
+    doc.fontSize(11).font('Times-Roman');
     doc.text(
       `Grantee: ${data.granteeName}`,
       { align: 'left' }
     );
     doc.moveDown(0.25);
+
     // Fix 3: Party identification label after grantee name
     doc.fontSize(9).font('Times-Italic').text('(Full legal name as it appears on current title)');
+    doc.moveDown(0.25);
+
+    // Fix B: Grantee address line
+    doc.fontSize(10).font('Times-Roman');
+    const granteeAddr = (data.granteeAddress && data.granteeAddress.trim())
+      ? data.granteeAddress.trim()
+      : '_______________________________';
+    doc.text(`Address: ${granteeAddr}`);
+    doc.moveDown(0.25);
+
+    // Fix D: Marital status hint under grantee
+    doc.fontSize(9).font('Times-Italic').text(
+      '(Include marital status where required, e.g., \'an unmarried person\' or \'husband and wife\')'
+    );
     doc.moveDown(0.75);
+
     doc.fontSize(11).font('Times-Roman');
 
     // Fix 6: Consideration clause wording
@@ -95,7 +126,14 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     // Legal description in Courier
     doc.font('Courier').fontSize(10);
     doc.text(data.legalDescription, { align: 'left' });
-    doc.moveDown(2);
+    doc.moveDown(1);
+
+    // Fix C: APN / Parcel Number field
+    doc.font('Times-Roman').fontSize(11);
+    doc.text('Assessor\'s Parcel Number (APN): _______________');
+    doc.moveDown(0.25);
+    doc.fontSize(9).font('Times-Italic').text('(if required by the county recorder)');
+    doc.moveDown(1.5);
 
     // Signature block
     doc.font('Times-Roman').fontSize(11);
@@ -113,24 +151,42 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     doc.moveDown();
 
     // Notary block — keep together
-    const notaryBlockHeight = 160;
+    const notaryBlockHeight = 180;
     const pageBottom = (doc.page.height as number) - (doc.page.margins.bottom as number);
     if (doc.y + notaryBlockHeight > pageBottom) {
       doc.addPage();
     }
 
-    // Fix 1: Use jurisdictionTerm in both deed body AND notary block
-    doc.text(`STATE OF ${data.state}`);
-    doc.text(`${jurisdictionTerm} OF ${data.county ? data.county.toUpperCase() : '______________'}`);
-    doc.moveDown();
-    doc.text(
-      `The foregoing instrument was acknowledged before me this _____ day of _____________, 20___, ` +
-      `by ${data.grantorName}, who is personally known to me or who has produced __________________ as identification.`
-    );
-    doc.moveDown(2);
-    doc.text('Notary Public Signature: _____________________________');
-    doc.text(`Notary Public, State of ${data.state}`);
-    doc.text('My Commission Expires: ___________________');
+    // Fix A: Alaska statutory notary acknowledgment language (AS 09.63.010)
+    if (data.state === 'AK') {
+      const boroughOrDistrict = data.county ? data.county.toUpperCase() : '_______________';
+      doc.font('Times-Roman').fontSize(11);
+      doc.text('STATE OF ALASKA');
+      doc.text(`${jurisdictionTerm.toUpperCase()} OF ${boroughOrDistrict}`);
+      doc.moveDown();
+      doc.text(
+        'The foregoing instrument was acknowledged before me this ___ day of ___________, 20___, by _______________, as Grantor.',
+        { align: 'left' }
+      );
+      doc.moveDown(2);
+      doc.text('_________________________________');
+      doc.text('Notary Public in and for the State of Alaska');
+      doc.text('My Commission Expires: _______________');
+    } else {
+      // Generic notary block for all other states
+      doc.font('Times-Roman').fontSize(11);
+      doc.text(`STATE OF ${data.state}`);
+      doc.text(`${jurisdictionTerm} OF ${data.county ? data.county.toUpperCase() : '______________'}`);
+      doc.moveDown();
+      doc.text(
+        `The foregoing instrument was acknowledged before me this _____ day of _____________, 20___, ` +
+        `by ${data.grantorName}, who is personally known to me or who has produced __________________ as identification.`
+      );
+      doc.moveDown(2);
+      doc.text('Notary Public Signature: _____________________________');
+      doc.text(`Notary Public, State of ${data.state}`);
+      doc.text('My Commission Expires: ___________________');
+    }
 
     // Fix 4: Preparer information block at very bottom
     doc.moveDown(2);

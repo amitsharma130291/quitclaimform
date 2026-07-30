@@ -104,6 +104,9 @@ export const POST: APIRoute = async ({ request }) => {
     legalDescription: data.legalDescription,
     consideration: formatConsideration(data.consideration),
     state: data.state,
+    county: data.county,
+    grantorAddress: data.grantorAddress,
+    granteeAddress: data.granteeAddress,
   });
 
   return new Response(pdf, {
