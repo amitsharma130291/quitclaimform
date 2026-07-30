@@ -25,7 +25,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     sameSite: 'lax',
   });
 
-  const checkoutUrl = `${DODO_CHECKOUT_URL}?quantity=1&redirect_url=${encodeURIComponent(SUCCESS_URL)}`;
+  const referenceId = `deed_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+  const checkoutUrl = `${DODO_CHECKOUT_URL}?quantity=1&connector_response_reference_id=${referenceId}&billing_currency=USD&redirect_url=${encodeURIComponent(SUCCESS_URL)}`;
 
   return new Response(JSON.stringify({ checkoutUrl }), {
     status: 200,
