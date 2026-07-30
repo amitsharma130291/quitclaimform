@@ -202,7 +202,7 @@ const faqItems = [
       <div class="hero__text">
         <div class="hero__eyebrow-wrap">
           <span class="hero__eyebrow-dot" aria-hidden="true"></span>
-          <p class="hero__eyebrow">Free Quitclaim Deed Generator</p>
+          <p class="hero__eyebrow">Free Deed + $19.97 Complete Filing Bundle</p>
         </div>
         <h1 class="hero__heading" id="hero-heading">
           Create a <span class="hero__gradient">State-Specific</span><br />Quitclaim Deed in Minutes
@@ -230,6 +230,11 @@ const faqItems = [
             Instant PDF download
           </li>
         </ul>
+        <ul class="hero__trust hero__trust--bundle" aria-label="Filing bundle features">
+          <li class="hero__bundle-item">&#10022; Complete Filing Bundle &mdash; $19.97 (taxes included)</li>
+          <li class="hero__bundle-item">&#10022; County checklist, recording guide + 90-day re-download</li>
+        </ul>
+        <p class="hero__urgency"><em>Most deeds get rejected the first time. The bundle tells you exactly what your county requires.</em></p>
       </div>
 
       <div class="hero__form-wrap" id="generator">
@@ -562,7 +567,27 @@ const faqItems = [
     color: var(--color-teal);
   }
 
-  .hero__form-wrap {
+  .hero__trust--bundle {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #d97706;
+  }
+
+  .hero__bundle-item {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #b45309;
+    list-style: none;
+  }
+
+  .hero__urgency {
+    margin-top: 0.625rem;
+    font-size: 0.825rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+    .hero__form-wrap {
     background: var(--color-surface);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
