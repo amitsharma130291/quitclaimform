@@ -250,3 +250,40 @@ export function generateQuitclaimDeed(data: DeedData): Promise<Buffer> {
     doc.end();
   });
 }
+
+// Fallback PDF when deed_data cookie is missing (link opened days later, different device, etc.)
+export function generateReceiptPDF(paymentId: string): Promise<Buffer> {
+  return new Promise<Buffer>((resolve, reject) => {
+    const doc = new PDFDocument({
+      size: 'LETTER',
+      margins: { top: 72, bottom: 72, left: 72, right: 72 },
+    });
+    const chunks: Buffer[] = [];
+    doc.on('data', (chunk: Buffer) => chunks.push(chunk));
+    doc.on('end', () => resolve(Buffer.concat(chunks)));
+    doc.on('error', reject);
+
+    doc.fontSize(16).font('Times-Bold').text('WhatIsAQuitclaimDeed.com', { align: 'center' });
+    doc.moveDown();
+    doc.fontSize(13).font('Times-Roman').text('Purchase Receipt', { align: 'center' });
+    doc.moveDown(2);
+    doc.fontSize(11).font('Times-Roman');
+    doc.text('Payment ID: ' + paymentId);
+    doc.moveDown();
+    doc.text(
+      'Your deed data could not be retrieved (the session may have expired or the link was opened on a different device).',
+      { align: 'justify' }
+    );
+    doc.moveDown();
+    doc.text(
+      'Please contact us at support@whatisaquitclaimdeed.com with the Payment ID above and we will generate your completed deed and send it to you promptly.',
+      { align: 'justify' }
+    );
+    doc.moveDown(2);
+    doc.fontSize(9).font('Times-Italic').text(
+      'Generated: ' + new Date().toUTCString(),
+      { align: 'center' }
+    );
+    doc.end();
+  });
+}

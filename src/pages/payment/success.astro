@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { generateQuitclaimDeed, generateReceiptPDF } from '../../lib/pdf';
 
 const title = 'Payment Successful — WhatIsAQuitclaimDeed.com';
 const description = 'Your Complete Filing Bundle purchase is confirmed. Download your bundle now.';
@@ -45,21 +46,51 @@ if (!sentCookie?.value && status === 'succeeded' && paymentId) {
       `,
     });
 
-    // Customer confirmation email (if we have their address)
+    // Customer confirmation email with PDF attached (if we have their address)
     if (customerEmail) {
+      // Attempt to generate the populated deed from the stored cookie
+      const deedDataCookie = Astro.cookies.get('deed_data');
+      let pdfBuffer: Buffer;
+      try {
+        if (deedDataCookie?.value) {
+          const raw = JSON.parse(deedDataCookie.value) as Record<string, string>;
+          pdfBuffer = await generateQuitclaimDeed({
+            grantorName:      raw.grantorName?.trim()      || '____________________________',
+            granteeName:      raw.granteeName?.trim()       || '____________________________',
+            propertyAddress:  raw.propertyAddress?.trim()   || '____________________________',
+            legalDescription: raw.legalDescription?.trim()  || '[Copy from your existing deed]',
+            consideration:    raw.consideration?.trim()      || 'Ten Dollars ($10.00) and other good and valuable consideration',
+            state:            raw.state?.trim()              || 'YOUR STATE',
+            county:           raw.county?.trim()             || undefined,
+            grantorAddress:   raw.grantorAddress?.trim()     || undefined,
+            granteeAddress:   raw.granteeAddress?.trim()     || undefined,
+          });
+        } else {
+          pdfBuffer = await generateReceiptPDF(paymentId);
+        }
+      } catch (_err) {
+        pdfBuffer = await generateReceiptPDF(paymentId);
+      }
+
       await transporter.sendMail({
         from: import.meta.env.GMAIL_USER,
         to: customerEmail,
         subject: 'Your Quitclaim Deed — WhatIsAQuitclaimDeed.com',
         html: `
           <h2>Thank you for your purchase!</h2>
-          <p>Your quitclaim deed is ready. Click the button below to download it:</p>
-          <p><a href="https://whatisaquitclaimdeed.com/api/download-bundle?payment_id=${paymentId}" style="background:#d97706;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block">Download Your Deed</a></p>
-          <p>This link is valid for 90 days.</p>
+          <p>Your completed quitclaim deed is attached to this email as a PDF.</p>
+          <p>You can also re-download it any time using the link below (valid 90 days):</p>
+          <p><a href="https://whatisaquitclaimdeed.com/api/download-bundle?payment_id=${paymentId}" style="background:#d97706;color:white;padding:12px 24px;text-decoration:none;border-radius:6px;display:inline-block">Re-download Your Deed</a></p>
           <p>Payment ID: ${paymentId}</p>
           <br>
+          <p>If you have any questions, reply to this email or contact us at support@whatisaquitclaimdeed.com</p>
           <p>WhatIsAQuitclaimDeed.com</p>
         `,
+        attachments: [{
+          filename: 'quitclaim-deed.pdf',
+          content: pdfBuffer,
+          contentType: 'application/pdf',
+        }],
       });
     }
 
