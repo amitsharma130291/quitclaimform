@@ -73,7 +73,7 @@ const faqItems = [
       </p>
     </section>
 
-    <!-- Two-column tier grid — paid card is DOM-first so it appears at top on mobile -->
+    <!-- Single paid tier -->
     <div class="tiers-grid">
 
       <!-- Paid card (right on desktop, top on mobile) -->
@@ -153,37 +153,6 @@ const faqItems = [
         <p class="paid-muted">The deed is free. The part where the county actually accepts it is $19.97.</p>
         <p class="paid-trust">$19.97 total — taxes included. One-time payment. Instant access. No subscription.</p>
         <p class="paid-guarantee">If it doesn't cover your county, email us for a full refund.</p>
-      </div>
-
-      <!-- Free card (left on desktop, bottom on mobile) -->
-      <div class="tier-card tier-card--free">
-        <div class="tier-header">
-          <p class="free-label">Free Deed</p>
-          <p class="free-price">$0</p>
-        </div>
-
-        <ul class="tier-features tier-features--free">
-          <li>
-            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
-            State-specific deed for all 50 states
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
-            Correct witness blocks and notary language built in
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
-            Instant PDF download
-          </li>
-          <li>
-            <span class="feature-icon feature-icon--free" aria-hidden="true">✓</span>
-            No account required — no credit card
-          </li>
-        </ul>
-
-        <a href="/quitclaim-deed-form/" class="tier-cta tier-cta--free">
-          Get your free deed
-        </a>
       </div>
 
     </div>
@@ -336,21 +305,15 @@ const faqItems = [
     color: var(--color-text-primary);
   }
 
-  /* Tier grid */
+  /* Tier grid — single centered card */
   .tiers-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-5);
+    display: flex;
+    justify-content: center;
     margin-bottom: var(--space-8);
-    align-items: start;
   }
-  .tier-card--free  { order: 1; }
-  .tier-card--paid  { order: 2; }
-
-  @media (max-width: 640px) {
-    .tiers-grid { grid-template-columns: 1fr; }
-    .tier-card--paid { order: 1; }
-    .tier-card--free { order: 2; }
+  .tier-card--paid {
+    max-width: 36rem;
+    width: 100%;
   }
 
   /* Card base */
@@ -361,36 +324,11 @@ const faqItems = [
     flex-direction: column;
   }
 
-  /* Free card */
-  .tier-card--free {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-sm);
-  }
-
   /* Paid card */
   .tier-card--paid {
     background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 50%, #fff8e7 100%);
     border: 2px solid #d97706;
     box-shadow: 0 4px 24px rgba(217, 119, 6, 0.18);
-  }
-
-  /* Free card header */
-  .free-label {
-    font-size: var(--text-sm);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-text-muted);
-    margin: 0 0 var(--space-2) 0;
-  }
-  .free-price {
-    font-family: var(--font-heading);
-    font-size: 3rem;
-    font-weight: 800;
-    color: var(--color-text-primary);
-    line-height: 1;
-    margin: 0 0 var(--space-5) 0;
   }
 
   /* Paid card header */
@@ -520,17 +458,6 @@ const faqItems = [
       background var(--duration-fast) var(--ease-standard),
       transform var(--duration-fast) var(--ease-standard);
     margin-top: 0.25rem;
-  }
-
-  /* Free */
-  .tier-cta--free {
-    background: transparent;
-    color: var(--color-teal);
-    border: 2px solid var(--color-teal);
-    margin-top: auto;
-  }
-  .tier-cta--free:hover {
-    background: var(--color-teal-light);
   }
 
   /* Paid */
