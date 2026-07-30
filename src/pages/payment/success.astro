@@ -9,9 +9,19 @@ const DODO_API_BASE = 'https://api.dodopayments.com';
 const title = 'Payment Successful — WhatIsAQuitclaimDeed.com';
 const description = 'Your Complete Filing Bundle purchase is confirmed. Download your bundle now.';
 
-// Dodo appends payment_id (and sometimes session_id) to the return_url after checkout
+// Check URL params first — Dodo passes status=failed|succeeded on the return_url
 const url = new URL(Astro.request.url);
+const statusParam = url.searchParams.get('status');
 const paymentId = url.searchParams.get('payment_id') ?? url.searchParams.get('session_id') ?? '';
+
+// Fast-path: if the status URL param is present and not succeeded/paid, redirect immediately
+// before any API call. This catches the case where the SSR API check fails silently.
+if (!statusParam || (statusParam !== 'succeeded' && statusParam !== 'paid')) {
+  return Astro.redirect('/payment/failed', 302);
+}
+if (!paymentId) {
+  return Astro.redirect('/payment/failed', 302);
+}
 
 // Server-side payment verification: redirect BEFORE rendering any success content.
 // This eliminates the flash-of-success-page that occurred when a failed payment
@@ -36,8 +46,8 @@ if (paymentId && DODO_API_KEY) {
       // legitimate purchases due to a transient API issue.
     }
   } catch (err) {
-    console.error('[payment/success] verification fetch error:', err);
-    // Network error — allow render rather than blocking a legitimate purchase
+    console.error('[payment/success] Payment verification error:', err);
+    return Astro.redirect('/payment/failed', 302);
   }
 } else if (!paymentId) {
   // Direct visit with no payment_id — likely a bot or manual URL visit
