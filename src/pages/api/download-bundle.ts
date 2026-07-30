@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { generateQuitclaimDeed } from '../../lib/pdf';
 
 const DODO_API_KEY = import.meta.env.DODO_API_KEY;
-const DODO_API_BASE = 'https://test.dodopayments.com';
+const DODO_API_BASE = 'https://api.dodopayments.com';
 
 // Verify payment is actually paid by checking it with Dodo API
 async function verifyPayment(paymentId: string): Promise<{
