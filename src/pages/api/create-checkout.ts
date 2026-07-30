@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 const DODO_API_KEY = import.meta.env.DODO_API_KEY;
-const DODO_API_BASE = 'https://api.dodopayments.com';
+const DODO_API_BASE = 'https://live.dodopayments.com';
 const PRODUCT_ID = 'pdt_0NkKuPP0nyEim72rbfblJ';
 const SITE_URL = 'https://whatisaquitclaimdeed.com';
 
