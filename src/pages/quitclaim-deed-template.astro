@@ -1,15 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import CitableAnswerBlock from '../components/CitableAnswerBlock.astro';
-import DeedForm from '../components/DeedForm.astro';
 import FAQ from '../components/FAQ.astro';
 import Disclaimer from '../components/Disclaimer.astro';
-import Callout from '../components/ui/Callout.astro';
-import ComparisonTable from '../components/ui/ComparisonTable.astro';
-import ProcessStep from '../components/ui/ProcessStep.astro';
-import StickyTOC from '../components/ui/StickyTOC.astro';
 
-const title = 'Quitclaim Deed Template — Free, State-Specific Form | WhatIsAQuitclaimDeed.com';
+const title = 'Quitclaim Deed Template: What Goes in It and How to Fill It Out';
 const description =
   'Get a free quitclaim deed template or generate a state-specific form instantly. Covers every required field, common mistakes, and what to do after signing.';
 
@@ -20,14 +14,14 @@ const faqItems = [
       'You can, but verify that the template matches your state\'s requirements before using it. Check that it uses state-specific acknowledgment certificate language, includes any required witness blocks, and has space for any transfer tax disclosures your state mandates. When in doubt, use the state-specific generator at /quitclaim-deed-form/.',
   },
   {
-    question: "Is it 'quit claim deed' or 'quitclaim deed'?",
+    question: 'Is it "quit claim deed" or "quitclaim deed"?',
     answer:
-      'Both spellings refer to the same document. "Quitclaim deed" (one word) is the modern legal standard; "quit claim deed" (two words) appears in older deeds and some state statutes. Either spelling is generally valid on the document — the legal elements are what matter.',
+      'Both spellings refer to the same document. "Quitclaim deed" (one word) is the modern legal standard; "quit claim deed" (two words) appears in older deeds and some state statutes. Either spelling is generally valid on the document -- the legal elements are what matter.',
   },
   {
-    question: "What's the difference between a quitclaim deed template PDF and a Word version?",
+    question: 'What is the difference between a quitclaim deed template PDF and a Word version?',
     answer:
-      'Both are fill-in-the-blank forms; the format just differs. A PDF with form fields is often easier to fill out neatly. A Word file is easier to edit if you need to modify the legal description formatting. Neither format affects whether the deed is legally valid — what matters is the content and proper execution.',
+      'Both are fill-in-the-blank forms; the format just differs. A PDF with form fields is often easier to fill out neatly. A Word file is easier to edit if you need to modify the legal description formatting. Neither format affects whether the deed is legally valid -- what matters is the content and proper execution.',
   },
   {
     question: 'If I want a quitclaim deed template Word version, can the generator produce one?',
@@ -37,17 +31,17 @@ const faqItems = [
   {
     question: 'Do I need a lawyer to fill out a quitclaim deed template?',
     answer:
-      'Whether legal assistance is required or advisable depends on the jurisdiction and transaction. Professional review is particularly valuable when the transfer involves a mortgage, divorce, tax planning, title problems, trusts, or unusual ownership arrangements.',
+      'Whether legal assistance is required or advisable depends on the jurisdiction and transaction. Professional review is particularly valuable when the transfer involves a mortgage, divorce, tax planning, title problems, trusts, or unusual ownership arrangements. Gift tax exclusions adjust annually for inflation; verify current figures at IRS.gov before filing.',
   },
   {
     question: 'What if I make a mistake on the form?',
     answer:
-      "Do not use correction fluid or cross things out. Reprint a clean copy and fill it in again. County recorders can reject deeds with visible alterations, and alterations after signing can raise questions about the deed's validity.",
+      'Do not use correction fluid or cross things out. Reprint a clean copy and fill it in again. County recorders can reject deeds with visible alterations, and alterations after signing can raise questions about the deed\'s validity.',
   },
   {
     question: 'Is a quitclaim deed the same as adding someone to a deed?',
     answer:
-      "Yes — one common use of a quitclaim deed is adding a co-owner. The current owner(s) convey the property to themselves and the new person together. The deed still must satisfy the applicable state's execution, acknowledgment, tax, and recording requirements.",
+      'Yes -- one common use of a quitclaim deed is adding a co-owner. The current owner or owners convey the property to themselves and the new person together. The deed still must satisfy the applicable state\'s execution, acknowledgment, tax, and recording requirements.',
   },
   {
     question: 'How long does recording take?',
@@ -56,22 +50,13 @@ const faqItems = [
   },
 ];
 
-const stateRequirementsHeaders = ['State', 'Key issues to verify'];
-const stateRequirementsRows = [
-  { label: 'Florida', values: ['Two subscribing witnesses; documentary stamp tax; Miami-Dade special rules'] },
-  { label: 'California', values: ['Acknowledgment; PCOR; county and city transfer-tax requirements'] },
-  { label: 'Texas', values: ['Acknowledgment; county recording; marital-property issues'] },
-  { label: 'New York', values: ['Acknowledgment; state and local transfer-tax filings'] },
-  { label: 'Tennessee', values: ['Execution and recording requirements; transfer-tax requirements'] },
-  { label: 'Louisiana', values: ['Civil-law conveyance formalities; parish recording requirements'] },
-];
-
 const schema = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: title,
     url: 'https://whatisaquitclaimdeed.com/quitclaim-deed-template/',
+    datePublished: '2026-08-07',
     dateModified: '2026-08-07',
     author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://whatisaquitclaimdeed.com' },
     publisher: {
@@ -79,15 +64,6 @@ const schema = [
       name: 'QuitclaimForm',
       logo: { '@type': 'ImageObject', url: 'https://whatisaquitclaimdeed.com/logo.svg' },
     },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqItems.map(item => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: { '@type': 'Answer', text: item.answer },
-    })),
   },
 ];
 ---
@@ -105,122 +81,163 @@ const schema = [
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="/">Home</a>
     <span aria-hidden="true">/</span>
-    <a href="/what-is-a-quitclaim-deed/">Quitclaim Deed</a>
-    <span aria-hidden="true">/</span>
-    <span aria-current="page">Template</span>
+    <span aria-current="page">Quitclaim Deed Template</span>
   </nav>
 
   <!-- H1 -->
   <h1 class="page-h1">Quitclaim Deed Template: What Goes in It and How to Fill It Out</h1>
 
-  <p class="last-updated">Updated August 7, 2026 using the primary authorities cited below.</p>
+  <p class="page-updated">Updated August 7, 2026 using the primary authorities cited below.</p>
 
-  <Callout type="info" title="General information only &mdash; not legal advice">
-    <p>
-      Requirements vary by state. Consult a real estate attorney for transactions involving disputes,
-      title issues, or complex ownership arrangements.
-    </p>
-  </Callout>
-
-  <!-- Intro -->
   <p>
-    A quitclaim deed template is a starting point, not a finished document. The blank form you download
-    from a Google search may look official, but filling it in incorrectly — or using one built for the
-    wrong state — can delay recording, trigger rejection at the county recorder's office, or in the
-    worst case, cloud the title. This guide covers every field in a standard template, the information
-    you need to gather before you start, common mistakes people make, and what to do once you've signed.
+    <a href="/downloads/quitclaim-deed-template.pdf"><strong>Download Blank Template (PDF)</strong></a>
+    &mdash; generic, printable, fill by hand
   </p>
-  <p>
-    Requirements shown reflect current state law as of August 2026; verify with your county recorder
-    before filing.
-  </p>
-
-  <!-- Primary CTA: DeedForm above the fold -->
-  <div class="cta-block" id="generator">
-    <h2 class="cta-block__heading">Get Your Free State-Specific Template</h2>
-    <p class="cta-block__body">
-      The fastest way to get a state-specific quitclaim deed template is to use the free generator
-      — it produces a completed, state-specific PDF you can print, sign, and record. Unlike a generic
-      Word or PDF download, the generated form automatically includes state-specific witness,
-      acknowledgment and recording sections.
-    </p>
-    <DeedForm />
-  </div>
 
   <Disclaimer />
 
-  <!-- What's Inside -->
-  <h2>What's Actually Inside a Quitclaim Deed Template</h2>
   <p>
-    Every quitclaim deed — regardless of state — contains the same core sections. Here's what each
-    one means and why it matters.
+    A quitclaim deed template is a starting point, not a finished document. The blank form you download from
+    a Google search may look official, but filling it in incorrectly &mdash; or using one built for the wrong
+    state &mdash; can delay recording, trigger rejection at the county recorder's office, or in the worst case,
+    cloud the title. This guide covers every field in a standard template, the information you need to gather
+    before you start, common mistakes people make, and what to do once you've signed. Requirements shown
+    reflect current state law as of August 2026; verify with your county recorder before filing.
   </p>
 
-  <h3>Recording Header</h3>
   <p>
-    The recording header commonly contains return-address, preparer, tax, or recorder information,
-    depending on the jurisdiction. Fill in the <strong>"Return to" name and address</strong> (where
-    the deed gets mailed back after recording — typically the grantee or their attorney) and the
-    <strong>Assessor's Parcel Number (APN)</strong> if your county requires it.
+    If you'd rather skip the research and get a form built for your specific state and county, use the{' '}
+    <a href="/quitclaim-deed-form/">free quitclaim deed generator</a>.
   </p>
+
+  <!-- Get Your Free State-Specific Template -->
+  <h2>Get Your Free State-Specific Template</h2>
+  <p>
+    The fastest way to get a state-specific quitclaim deed template is to use the free generator &mdash; it
+    produces a completed, state-specific PDF you can print, sign, and record.
+  </p>
+  <div class="cta-inline">
+    <p><a href="/quitclaim-deed-form/">Generate Your Free Quitclaim Deed Template &rarr;</a></p>
+  </div>
+  <p>
+    Unlike a generic Word or PDF download, the generated form automatically includes state-specific witness,
+    acknowledgment and recording sections supported by the generator. Verify the completed deed and current
+    county recording requirements before signing or filing.
+  </p>
+
+  <!-- What's Inside a Quitclaim Deed Template -->
+  <h2>What's Actually Inside a Quitclaim Deed Template</h2>
+  <p>
+    Every quitclaim deed &mdash; regardless of state &mdash; contains the same core sections. Here's what
+    each one means and why it matters.
+  </p>
+
+  <h3>Recording Header (Top of the Document)</h3>
+  <p>
+    The recording header commonly contains return-address, preparer, tax, or recorder information, depending
+    on the jurisdiction. What you are responsible for:
+  </p>
+  <ul>
+    <li>
+      <strong>"Return to" name and address</strong>: Where the deed gets mailed back after recording. This
+      is typically the grantee or their attorney.
+    </li>
+    <li>
+      <strong>Assessor's parcel number (APN)</strong>: Some counties require this before they'll accept the
+      document. Find it on the current property tax bill or the county assessor's website.
+    </li>
+    <li>
+      Some states also require a documentary transfer tax declaration here &mdash; California transfers, for
+      example, commonly require a Preliminary Change of Ownership Report or other applicable ownership-change
+      filing; verify the county's current requirements.
+    </li>
+  </ul>
 
   <h3>Grantor</h3>
   <p>
-    The grantor is the person (or entity) transferring the property. Use the full legal name exactly
-    as it appears on the existing deed. If the property is held jointly, all owners must be listed as
-    grantors and all must sign. Common mistake: using a nickname or a name that differs from the vesting
-    shown in county records — even a middle initial discrepancy can prompt a rejection.
+    The grantor is the person or entity transferring the property. Use the full legal name exactly as it
+    appears on the existing deed. If the property is held jointly, all owners must be listed as grantors and
+    all must sign. Common mistake: using a nickname or a name that differs from the vesting shown in county
+    records. Even a middle initial discrepancy can prompt a rejection.
   </p>
 
   <h3>Grantee</h3>
   <p>
-    The grantee is the person receiving the property interest. Use their full legal name — the name
-    that should appear on future tax bills and any eventual resale. If transferring to a trust, use the
-    trust's legal name in full: "John T. Smith, Trustee of the Smith Family Living Trust dated March 12, 2018."
+    The grantee is the person receiving the property interest. Use their full legal name &mdash; the name
+    that should appear on future tax bills and any eventual resale. If you're transferring to a trust, use
+    the trust's legal name in full: "John T. Smith, Trustee of the Smith Family Living Trust dated
+    March 12, 2018."
   </p>
 
   <h3>Consideration</h3>
   <p>
-    State the actual consideration or the legally appropriate consideration/exemption language required
-    for the transaction and jurisdiction. Do not assume that a nominal amount eliminates transfer tax —
-    whether transfer tax applies depends on state law and the specific facts of the transfer. Do not
-    leave this blank; some states treat a missing consideration clause as grounds for rejection.
+    This is the stated value exchanged for the property. State the actual consideration or the legally
+    appropriate consideration or exemption language required for the transaction and jurisdiction. Do not
+    assume that a nominal amount eliminates transfer tax &mdash; whether transfer tax applies depends on state
+    law and the specific facts of the transfer. Do not leave this blank; some states treat a missing
+    consideration clause as grounds for rejection, and in a few states it affects documentary transfer tax
+    calculations.
   </p>
 
   <h3>Legal Description</h3>
   <p>
-    This is the most important field in the entire document, and it's also where most people make the
-    biggest mistake: they copy the street address instead of the legal description.
+    This is the most important field in the entire document, and it's also where most people make the biggest
+    mistake: they copy the street address instead of the legal description.
   </p>
   <p>
-    <strong>A street address is not a legal description.</strong> The legal description is a formal
-    parcel identifier drawn from the county's recorded maps. It typically takes one of two forms:
+    <strong>A street address is not a legal description.</strong> The legal description is a formal parcel
+    identifier drawn from the county's recorded maps. It typically takes one of two forms:
   </p>
   <ul>
-    <li><strong>Lot and block:</strong> "Lot 14, Block 3, Sunset Terrace Subdivision, recorded in Plat Book 12, Page 47, [County] County, [State]."</li>
-    <li><strong>Metes and bounds:</strong> A narrative that defines the parcel's boundaries using directions and distances.</li>
+    <li>
+      <strong>Lot and block</strong>: "Lot 14, Block 3, Sunset Terrace Subdivision, recorded in Plat Book 12,
+      Page 47, [County] County, [State]."
+    </li>
+    <li>
+      <strong>Metes and bounds</strong>: A narrative that defines the parcel's boundaries using directions
+      and distances ("commencing at the northwest corner of Section 4...").
+    </li>
   </ul>
   <p>
-    <strong>Where to find it:</strong> Open the deed you received when you bought the property. The
-    legal description is in the body of that deed, usually after the consideration clause. Copy it
-    verbatim — do not use Zillow, Google Maps, or any online listing.
+    <strong>Where to find it</strong>: Open the deed you received when you bought the property. The legal
+    description is in the body of that deed, usually after the consideration clause. Do not use Zillow,
+    Google Maps, or any online listing &mdash; those sources show addresses, not legal descriptions, and they
+    occasionally contain errors. Copy the description verbatim from the existing deed.
   </p>
 
   <h3>Habendum Clause</h3>
   <p>
-    Quitclaim deeds include a short clause that defines what interest is being transferred. On a
-    quitclaim deed, this language typically reads: "To have and to hold, all of grantor's right, title,
-    and interest, if any, to the grantee." The "if any" is what distinguishes a quitclaim from a
-    warranty deed — the grantor makes no guarantee they actually own anything. Most templates have this
-    clause pre-written; don't remove or alter it.
+    Quitclaim deeds include a short clause that defines what interest is being transferred. On a quitclaim
+    deed, this language typically reads: "To have and to hold, all of grantor's right, title, and interest,
+    if any, to the grantee." The "if any" is what distinguishes a quitclaim from a warranty deed &mdash; the
+    grantor makes no guarantee they actually own anything. Most templates have this clause pre-written; don't
+    remove or alter it.
   </p>
 
   <h3>Witness and Notary Blocks</h3>
-  <p>Many states require an acknowledgment or other notarization procedure before a deed can be recorded. Some go further:</p>
+  <p>
+    Many states require an acknowledgment or other notarization procedure before a deed can be recorded. Some
+    jurisdictions also impose witness requirements. Some states go further:
+  </p>
   <ul>
-    <li><strong>Florida:</strong> generally requires two subscribing witnesses for execution and acknowledgment for recording. Confirm that any multi-role signing arrangement complies with current Florida notarial and recording requirements.</li>
-    <li><strong>Louisiana:</strong> requires a notary and two witnesses, and the deed must be in authentic form.</li>
+    <li>
+      <strong>Florida</strong>: Florida generally requires two subscribing witnesses for execution and also
+      requires acknowledgment or other legally permitted proof for recording. Confirm that any multi-role
+      signing arrangement complies with current Florida notarial and recording requirements.
+    </li>
+    <li>
+      <strong>Louisiana</strong>: Requires a notary and two witnesses, and the deed must be in authentic form.
+    </li>
+    <li>
+      Other states have their own acknowledgment and execution requirements &mdash; verify with your county
+      recorder before signing.
+    </li>
   </ul>
+  <p>
+    If your template includes a witness block and your state doesn't require witnesses, leaving it blank is
+    generally fine. If applicable execution requirements are not satisfied, the instrument may be rejected for
+    recording or create later validity or title issues.
+  </p>
 
   <!-- Why Generic Templates Are Risky -->
   <h2>Why a Generic Word or PDF Template Is Risky</h2>
@@ -228,274 +245,333 @@ const schema = [
     A generic quitclaim deed template free of any state-specific customization can cause real problems.
     Here's what varies by state and why it matters:
   </p>
-  <ul>
-    <li>
-      <strong>Documentary transfer tax disclosures:</strong> California, New York, Pennsylvania, and
-      other states require a disclosure or exemption statement on the deed itself. A generic template
-      won't have this.
-    </li>
-    <li>
-      <strong>Legal description format:</strong> Some counties in Texas require a specific disclaimer
-      when a deed references a prior unrecorded instrument. Virginia has different acknowledgment
-      certificate language than Georgia. A recorder's clerk who sees the wrong form language can refuse
-      the filing.
-    </li>
-    <li>
-      <strong>Homestead declarations:</strong> Certain states (Texas, Florida, Iowa) have homestead
-      laws that affect whether a single spouse can unilaterally transfer property or require both spouses
-      to sign regardless of how title is held.
-    </li>
-    <li>
-      <strong>Stamp taxes:</strong> Several states impose a grantor's tax or excise tax on deed
-      transfers, even when the consideration is nominal. The rate and disclosure required on the deed
-      vary by state and sometimes by county.
-    </li>
-  </ul>
+
+  <h3>Documentary transfer tax disclosures</h3>
+  <p>
+    California, New York, Pennsylvania, and other states require a disclosure or exemption statement on the
+    deed itself when real property is transferred. A generic template won't have this.
+  </p>
+
+  <h3>Legal description format</h3>
+  <p>
+    Some counties in Texas require a specific disclaimer when a deed references a prior unrecorded instrument.
+    Virginia has different acknowledgment certificate language than Georgia. These aren't cosmetic differences
+    &mdash; a recorder's clerk who sees the wrong form language can refuse the filing.
+  </p>
+
+  <h3>Homestead declarations</h3>
+  <p>
+    Certain states (Texas, Florida, Iowa) have homestead laws that affect whether a single spouse can
+    unilaterally transfer property or require both spouses to sign regardless of how title is held.
+  </p>
+
+  <h3>Stamp taxes</h3>
+  <p>
+    Several states impose a grantor's tax or excise tax on deed transfers, even when the consideration is
+    nominal. The rate and the disclosure required on the deed face vary by state and sometimes by county.
+  </p>
+  <p>
+    The safest approach is a <a href="/quitclaim-deed-form/">state-specific generated form</a>, which
+    generates state-specific fields and execution sections supported by our tool. Verify current county
+    recording requirements before signing or filing. If you do use a generic template, verify the specific
+    requirements for your county's recorder before you sign anything.
+  </p>
 
   <!-- Key Requirements by State -->
   <h2>Key Requirements by State</h2>
-  <ComparisonTable headers={stateRequirementsHeaders} rows={stateRequirementsRows} />
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>State</th>
+        <th>Key issues to verify</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Florida</td>
+        <td>Two subscribing witnesses; documentary stamp tax; Miami-Dade special rules</td>
+      </tr>
+      <tr>
+        <td>California</td>
+        <td>Acknowledgment; PCOR; county and city transfer-tax requirements</td>
+      </tr>
+      <tr>
+        <td>Texas</td>
+        <td>Acknowledgment; county recording; marital-property issues</td>
+      </tr>
+      <tr>
+        <td>New York</td>
+        <td>Acknowledgment; state and local transfer-tax filings</td>
+      </tr>
+      <tr>
+        <td>Tennessee</td>
+        <td>Execution and recording requirements; transfer-tax requirements</td>
+      </tr>
+      <tr>
+        <td>Louisiana</td>
+        <td>Civil-law conveyance formalities; parish recording requirements</td>
+      </tr>
+    </tbody>
+  </table>
 
-  <!-- What to Gather -->
-  <h2>What to Gather Before You Start</h2>
+  <!-- What to Gather Before You Start -->
+  <h2>What to Gather Before You Start Filling Out the Template</h2>
   <p>Have these ready before you open any quitclaim deed template PDF or Word file:</p>
   <ol>
-    <li><strong>The existing deed</strong> — your current deed is the source for the legal description, the current vesting (exact names as titleholders), and the APN. If you don't have a copy, the county recorder's office can provide one for a small fee.</li>
-    <li><strong>Full legal names of all parties</strong> — grantor(s) and grantee(s) exactly as they should appear on the new deed.</li>
-    <li><strong>How the grantee will hold title</strong> — if there are multiple grantees, you must decide on the vesting: joint tenancy, tenancy in common, or community property (in community property states).</li>
-    <li><strong>County and state</strong> — the recording requirements, transfer tax rates, and required form language all depend on which county the property sits in.</li>
-    <li><strong>Return address</strong> — where the recorded deed gets mailed back.</li>
+    <li>
+      <strong>The existing deed</strong>: Your current deed is the source for the legal description, the
+      current vesting (exact names as titleholders), and the APN. If you don't have a copy, the county
+      recorder's office can provide one for a small fee, or you can request it through the county assessor's
+      website.
+    </li>
+    <li>
+      <strong>Full legal names of all parties</strong>: Grantor(s) and grantee(s) exactly as they should
+      appear on the new deed. For a person, this typically means first, middle, and last name. For an entity,
+      the full registered name.
+    </li>
+    <li>
+      <strong>How the grantee will hold title</strong>: If there are multiple grantees, you must decide on
+      the vesting &mdash; joint tenancy, tenancy in common, or community property (in community property
+      states). This affects inheritance rights and what happens when one owner dies.
+    </li>
+    <li>
+      <strong>County and state</strong>: The recording requirements, transfer tax rates, and required form
+      language all depend on which county the property sits in, not just the state.
+    </li>
+    <li>
+      <strong>Return address</strong>: Where the recorded deed gets mailed back.
+    </li>
   </ol>
 
-  <!-- How to Fill Out -->
+  <!-- How to Fill Out Each Field -->
   <h2>How to Fill Out Each Field Correctly</h2>
-  <div class="process-steps">
-    <ProcessStep
-      number={1}
-      title="Recording Header"
-      description='Leave the recorder-use-only boxes blank. Fill in the "return to" name and address. Add the APN if your county requires it (check the recorder\'s website or call ahead).'
-    />
-    <ProcessStep
-      number={2}
-      title="Grantor"
-      description='Type the full legal name(s) exactly matching the existing deed. If you see "John A. Smith and Mary B. Smith, husband and wife" on the current deed, that\'s how the grantor line must read.'
-    />
-    <ProcessStep
-      number={3}
-      title="Grantee and Vesting"
-      description='State the grantee\'s full name and the manner in which they\'ll hold title. Example: "John A. Smith and Mary B. Smith, as joint tenants with right of survivorship."'
-    />
-    <ProcessStep
-      number={4}
-      title="Consideration"
-      description="State the actual consideration or the legally appropriate consideration/exemption language required for the transaction and jurisdiction. Confirm the applicable treatment for your state and transaction type."
-    />
-    <ProcessStep
-      number={5}
-      title="Legal Description"
-      description="Paste the full legal description verbatim from the existing deed. Do not abbreviate. If it runs onto a second page, that's fine &mdash; length is not a problem."
-    />
-    <ProcessStep
-      number={6}
-      title="Execution"
-      description="Leave the signature lines blank until you are ready to execute. Follow the acknowledgment procedure required by your state. Do not pre-sign if the notary or applicable law requires the signature to be made in the notary's presence."
-      isLast={true}
-    />
-  </div>
+
+  <h3>Step 1: Recording Header</h3>
+  <p>
+    Leave the recorder-use-only boxes blank. Fill in the "return to" name and address. Add the APN if your
+    county requires it (check the recorder's website or call ahead).
+  </p>
+
+  <h3>Step 2: Grantor</h3>
+  <p>
+    Type the full legal name(s) exactly matching the existing deed. If you see "John A. Smith and Mary B.
+    Smith, husband and wife" on the current deed, that's how the grantor line must read.
+  </p>
+
+  <h3>Step 3: Grantee and Vesting</h3>
+  <p>
+    State the grantee's full name and the manner in which they'll hold title. Example: "John A. Smith and
+    Mary B. Smith, as joint tenants with right of survivorship."
+  </p>
+
+  <h3>Step 4: Consideration</h3>
+  <p>
+    State the actual consideration or the legally appropriate consideration or exemption language required for
+    the transaction and jurisdiction. Do not assume a nominal amount eliminates transfer tax &mdash; confirm
+    the applicable treatment for your state and transaction type.
+  </p>
+
+  <h3>Step 5: Legal Description</h3>
+  <p>
+    Paste the full legal description verbatim from the existing deed. Do not abbreviate. If it runs onto a
+    second page, that's fine &mdash; length is not a problem.
+  </p>
+
+  <h3>Step 6: Execution</h3>
+  <p>
+    Leave the signature lines blank until you are ready to execute. Follow the acknowledgment procedure
+    required by your state. Do not pre-sign if the notary or applicable law requires the signature to be made
+    in the notary's presence.
+  </p>
 
   <!-- After You Download -->
   <h2>After You Download: Sign, Notarize, and Record</h2>
-  <p>Getting the form is step one. After proper execution, record the deed promptly in the land records for the county where the property is located.</p>
-  <ul>
-    <li><strong>Follow your state's execution and acknowledgment requirements.</strong> Where acknowledgment before a notary is required, bring appropriate identification and complete the acknowledgment as required. Some states also require subscribing witnesses.</li>
-    <li><strong>Record the deed.</strong> Take the original signed and notarized deed to the county recorder's (or register of deeds') office in the county where the property is located. Recording fees vary by jurisdiction and document length.</li>
-    <li><strong>Pay any applicable transfer tax.</strong> Even if consideration is nominal, some states charge a minimum transfer tax. Ask the recorder's office what's owed before you submit.</li>
-    <li><strong>Retain a copy.</strong> After recording, obtain and retain the recorded instrument or certified copy according to the recorder's procedures. Keep it somewhere safe — it's your evidence the transfer was completed.</li>
-  </ul>
+  <p>
+    Getting the form is step one. After proper execution, record the deed promptly in the land records for
+    the county where the property is located. Recording provides public notice and affects the deed's priority
+    and effectiveness against third parties under applicable state law.
+  </p>
+  <p>
+    <strong>Follow your state's execution and acknowledgment requirements.</strong> Where acknowledgment
+    before a notary is required, bring appropriate identification and complete the acknowledgment as required.
+    Some states also require subscribing witnesses.
+  </p>
+  <p>
+    <strong>Record the deed.</strong> Take the original signed and notarized deed to the county recorder's
+    or register of deeds' office in the county where the property is located. Recording offices may accept
+    in-person, mail, or electronic submissions depending on the jurisdiction. Recording fees vary by
+    jurisdiction and document length. Check the recorder's current fee schedule before filing.
+  </p>
+  <p>
+    <strong>Pay any applicable transfer tax.</strong> Even if consideration is nominal, some states charge a
+    minimum transfer tax. Ask the recorder's office what's owed before you submit.
+  </p>
+  <p>
+    <strong>Retain a copy.</strong> After recording, obtain and retain the recorded instrument or
+    certified or electronic copy according to the recorder's procedures. Keep it somewhere safe &mdash; it's
+    your evidence the transfer was completed.
+  </p>
 
-  <CitableAnswerBlock
-    question="What is a quitclaim deed template?"
-    answer="A quitclaim deed template is a fill-in-the-blank form containing the standard sections of a quitclaim deed: grantor, grantee, consideration, legal description, habendum clause, and execution blocks (witness lines and notary acknowledgment). Unlike a warranty deed template, a quitclaim deed includes an 'if any' clause in the habendum because the grantor makes no guarantee of title. State requirements for witnesses, notarization, and transfer tax disclosures vary &mdash; a generic template may be defective for a specific state."
-    source="State real property statutes; county recording requirements (Last Verified: August 2026)"
-  />
+  <!-- Ready to Fill Out -->
+  <div class="cta-block">
+    <h2 class="cta-block__heading">Ready to Fill Out Your Form?</h2>
+    <p class="cta-block__body">
+      The free quitclaim deed generator produces a printable quitclaim deed template tailored to your
+      state's requirements. Select your state, enter the party names and legal description, and download a
+      print-ready PDF in minutes. Verify the completed deed and current county recording requirements before
+      signing or filing.
+    </p>
+    <a href="/quitclaim-deed-form/" class="btn btn--primary">Generate Your Free Deed &rarr;</a>
+  </div>
 
+  <p>
+    For more involved situations &mdash; adding or removing a spouse, transferring into a trust, or any
+    transfer with potential tax consequences &mdash; consult a real estate attorney in your state before
+    signing.
+  </p>
+  <p>
+    Want to save time and skip the research? The{' '}
+    <a href="/quitclaim-deed-form/">Complete Filing Bundle ($19.97)</a> includes a state-specific generated
+    deed plus recording instructions, recording preparation materials and a filing checklist. Verify the
+    completed deed and current county recording requirements before signing or filing.
+  </p>
+
+  <!-- FAQ -->
   <FAQ items={faqItems} />
 
-  <!-- Florida-specific guides -->
-  <div class="related-guides">
-    <h2>Florida Quitclaim Deed Guides</h2>
-    <ul>
-      <li><a href="/quitclaim-deed/florida/">Florida Quitclaim Deed Overview</a></li>
-      <li><a href="/quitclaim-deed/florida/form/">Florida Quitclaim Deed Form Requirements</a></li>
-      <li><a href="/quitclaim-deed/florida/between-family-members/">Florida Quitclaim Deed Between Family Members</a></li>
-      <li><a href="/quitclaim-deed/florida/add-spouse/">Adding a Spouse to a Deed in Florida</a></li>
-      <li><a href="/quitclaim-deed/florida/divorce/">Florida Quitclaim Deed for Divorce</a></li>
-      <li><a href="/quitclaim-deed/for-divorce/">Quitclaim Deed for Divorce (General Guide)</a></li>
-    </ul>
-  </div>
-
   <!-- Primary Sources -->
-  <div class="statute-block">
-    <p class="statute-block__label">Primary Sources</p>
-    <ul class="statute-block__list">
-      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0689%2FSections%2F0689.01.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.01</strong></a> — execution and witness requirements</li>
-      <li><a href="https://leg.state.fl.us/Statutes/index.cfm/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0695%2FSections%2F0695.03.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §695.03</strong></a> — acknowledgment for recording</li>
-      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0200-0299%2F0201%2FSections%2F0201.02.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §201.02</strong></a> — documentary stamp tax</li>
-      <li><a href="https://floridarevenue.com/taxes/taxesfees/Pages/doc_stamp.aspx" target="_blank" rel="noopener noreferrer">Florida Department of Revenue — Documentary Stamp Tax</a></li>
-      <li><a href="https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax" target="_blank" rel="noopener noreferrer">IRS — Estate and Gift Tax</a></li>
-    </ul>
-    <p class="statute-block__note">Last Verified: August 2026. Laws change. Verify current requirements before recording.</p>
-  </div>
+  <h2>Primary Sources</h2>
+  <ul>
+    <li>
+      <a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0689%2FSections%2F0689.01.html">
+        Florida Statutes &sect;689.01
+      </a>
+      &mdash; execution and witness requirements
+    </li>
+    <li>
+      <a href="https://leg.state.fl.us/Statutes/index.cfm/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0695%2FSections%2F0695.03.html">
+        Florida Statutes &sect;695.03
+      </a>
+      &mdash; acknowledgment for recording
+    </li>
+    <li>
+      <a href="https://www.leg.state.fl.us/Statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0695%2FSections%2F0695.01.html">
+        Florida Statutes &sect;695.01
+      </a>
+      &mdash; recording's effect against creditors and subsequent purchasers
+    </li>
+    <li>
+      <a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0695%2FSections%2F0695.26.html">
+        Florida Statutes &sect;695.26
+      </a>
+      &mdash; recording format requirements
+    </li>
+    <li>
+      <a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0200-0299%2F0201%2FSections%2F0201.02.html">
+        Florida Statutes &sect;201.02
+      </a>
+      &mdash; documentary stamp tax
+    </li>
+    <li>
+      <a href="https://floridarevenue.com/taxes/taxesfees/Pages/doc_stamp.aspx">
+        Florida Department of Revenue &mdash; Documentary Stamp Tax
+      </a>
+    </li>
+    <li>
+      <a href="https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax">
+        IRS &mdash; Estate and Gift Tax
+      </a>
+    </li>
+  </ul>
 
-  <p class="disclaimer-note"><em>This article provides general educational information, not legal, tax, or financial advice. Consult an appropriate professional for advice about a specific transfer.</em></p>
+  <p class="disclaimer-footer">
+    <em>
+      This article provides general educational information, not legal, tax, or financial advice. Deed,
+      homestead, tax, mortgage, Medicaid, and estate-planning consequences depend on the facts. Consult an
+      appropriate professional for advice about a specific transfer.
+    </em>
+  </p>
 </BaseLayout>
 
 <style>
-  .breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-5);
-  }
-  .breadcrumb a {
-    color: var(--color-text-muted);
-    text-decoration: none;
-  }
-  .breadcrumb a:hover {
-    color: var(--color-teal);
-    text-decoration: underline;
-  }
-
-  .page-h1 {
-    font-family: var(--font-heading);
-    font-size: var(--text-h1);
-    font-weight: 800;
-    color: var(--color-text-primary);
-    line-height: 1.15;
-    margin-bottom: var(--space-4);
-  }
-
-  .last-updated {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    margin-top: 0;
-    margin-bottom: var(--space-6);
-  }
-
-  h2, h3 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    line-height: 1.2;
-  }
-
-  h2 {
-    font-size: var(--text-h2);
-    margin-top: var(--space-10);
-    margin-bottom: var(--space-4);
-  }
-
-  h3 {
-    font-size: var(--text-h3);
-    margin-top: var(--space-8);
-    margin-bottom: var(--space-3);
-  }
-
-  p {
-    font-family: var(--font-body);
-    font-size: var(--text-base);
+  .page-updated {
     color: var(--color-text-secondary);
-    line-height: 1.75;
+    font-size: var(--text-sm);
     margin-bottom: var(--space-4);
   }
 
-  ol, ul {
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    color: var(--color-text-secondary);
-    line-height: 1.75;
-    padding-left: var(--space-6);
-    margin-bottom: var(--space-5);
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-6) 0;
+  }
+  .comparison-table th,
+  .comparison-table td {
+    border: 1px solid var(--color-border);
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    vertical-align: top;
+  }
+  .comparison-table th {
+    background: var(--color-surface-subtle);
+    font-weight: 600;
+    color: var(--color-text-primary);
   }
 
-  li {
-    margin-bottom: var(--space-2);
+  .cta-inline {
+    border-left: 3px solid var(--color-teal);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-5);
+    margin: var(--space-6) 0;
   }
-
-  a {
-    color: var(--color-teal);
-    text-decoration: underline;
-  }
-  a:hover {
-    color: var(--color-teal-hover);
+  .cta-inline p {
+    margin: 0;
+    color: var(--color-teal-active);
+    font-weight: 500;
   }
 
   .cta-block {
-    background: var(--color-teal-light);
-    border: 1px solid var(--color-teal-border);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--space-8);
-    margin: var(--space-8) 0;
+    text-align: center;
+    margin: var(--space-10) 0;
   }
   .cta-block__heading {
     font-family: var(--font-heading);
     font-size: var(--text-h3);
     font-weight: 700;
     color: var(--color-text-primary);
-    margin-top: 0;
     margin-bottom: var(--space-3);
+    margin-top: 0;
   }
   .cta-block__body {
     color: var(--color-text-secondary);
     margin-bottom: var(--space-5);
   }
-
-  .process-steps {
-    margin: var(--space-6) 0;
-  }
-
-  .statute-block {
-    background: var(--color-surface-subtle);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-5);
-    margin: var(--space-6) 0;
-    font-size: var(--text-sm);
-  }
-  .statute-block__label {
+  .btn {
+    display: inline-block;
     font-family: var(--font-heading);
-    font-weight: 700;
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-3);
+    font-weight: 600;
+    font-size: var(--text-base);
+    padding: var(--space-3) var(--space-7);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--duration-micro) var(--ease-standard);
   }
-  .statute-block__list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 var(--space-3);
+  .btn--primary {
+    background: var(--color-teal);
+    color: #ffffff;
   }
-  .statute-block__list li {
+  .btn--primary:hover {
+    background: var(--color-teal-hover);
+    color: #ffffff;
+  }
+
+  .disclaimer-footer {
     color: var(--color-text-secondary);
-    margin-bottom: var(--space-2);
-  }
-  .statute-block__note {
-    color: var(--color-text-muted);
-    font-size: var(--text-xs);
-    margin: 0;
-  }
-
-  .related-guides {
-    margin-top: var(--space-10);
-  }
-  .related-guides ul {
-    list-style: disc;
-    padding-left: var(--space-6);
-  }
-
-  .disclaimer-note {
-    color: var(--color-text-muted);
     font-size: var(--text-sm);
-    margin-top: var(--space-8);
+    margin-top: var(--space-10);
   }
 </style>
