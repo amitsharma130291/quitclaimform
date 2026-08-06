@@ -28,7 +28,7 @@ const faqItems = [
   {
     question: 'What happens to the property if we divorce?',
     answer:
-      'Tenants by the entireties ownership terminates automatically upon divorce. The property converts by operation of law to a tenancy in common, meaning each former spouse holds an equal, independent share. A new deed is not required for this conversion to occur &mdash; it happens when the marriage ends.',
+      'Tenants by the entireties ownership terminates automatically upon divorce. The property converts by operation of law to a tenancy in common, meaning each former spouse holds an equal, independent share. A new deed is not required for this conversion to occur — it happens when the marriage ends.',
   },
   {
     question: 'What if the deed is silent about the type of tenancy?',
@@ -52,7 +52,7 @@ const ownershipRows = [
   {
     label: 'Tenants by the Entireties',
     values: [
-      'Yes &mdash; property passes to surviving spouse without probate',
+      'Yes — property passes to surviving spouse without probate',
       'Protects against individual debts of either spouse (subject to exceptions)',
       'Married couples only',
     ],
@@ -60,7 +60,7 @@ const ownershipRows = [
   {
     label: 'Joint Tenancy with Right of Survivorship (JTWROS)',
     values: [
-      'Yes &mdash; property passes to surviving co-owner without probate',
+      'Yes — property passes to surviving co-owner without probate',
       'No special protection beyond regular ownership',
       'Any two or more persons; explicit JTWROS language required',
     ],
@@ -68,7 +68,7 @@ const ownershipRows = [
   {
     label: 'Tenancy in Common',
     values: [
-      'No &mdash; each share passes through the owner\'s estate',
+      'No — each share passes through the owner\'s estate',
       'No special protection',
       'Any two or more persons; default when deed is silent',
     ],
@@ -79,7 +79,7 @@ const checklistItems = [
   { label: 'Prepare Florida-specific quitclaim deed with grantor\'s name, both grantees\' names, and vesting language' },
   { label: 'Include the full legal description (not the street address) from the existing deed or county records' },
   { label: 'Review mortgage and loan documents for any lender notification requirements' },
-  { label: 'Arrange two subscribing witnesses &mdash; both must be present when the grantor signs' },
+  { label: 'Arrange two subscribing witnesses — both must be present when the grantor signs' },
   { label: 'Notary completes acknowledgment block with statutory language, commission number, and expiration date' },
   { label: 'Confirm documentary stamp tax treatment for your specific property type (homestead vs. non-homestead)' },
   { label: 'Record the executed deed with the Clerk of Court in the county where the property is located' },
@@ -138,7 +138,7 @@ const schema = [
   <!-- Intro -->
   <p>
     Adding your spouse to your home's deed is one of the most common real estate moves Florida homeowners
-    make &mdash; and one of the easiest to get subtly wrong. The mechanics are straightforward: you prepare a
+    make — and one of the easiest to get subtly wrong. The mechanics are straightforward: you prepare a
     Florida quitclaim deed, sign it in front of two witnesses and a notary, and record it with the county
     clerk. But the line in the deed that describes <em>how</em> you and your spouse will hold title is
     where important ownership, survivorship and creditor-rights consequences can arise.
@@ -150,7 +150,7 @@ const schema = [
   <ul>
     <li>
       <strong>Survivorship rights.</strong> If only one spouse owns the home and that spouse dies, the
-      property passes through their estate &mdash; potentially through probate. Adding the other spouse with
+      property passes through their estate — potentially through probate. Adding the other spouse with
       the right survivorship language keeps the home out of the probate process entirely.
     </li>
     <li>
@@ -180,7 +180,7 @@ const schema = [
   </ul>
   <p>
     The grantor is essentially conveying the property to themselves jointly with their spouse. Florida
-    law permits this &mdash; a person can deed property to themselves and another party in a single instrument.
+    law permits this — a person can deed property to themselves and another party in a single instrument.
   </p>
   <p>
     The critical piece is the vesting language. Simply naming two people as grantees without any tenancy
@@ -201,7 +201,7 @@ const schema = [
   <Disclaimer />
 
   <!-- Three Ownership Forms -->
-  <h2>The Three Ownership Forms &mdash; and Which One to Choose</h2>
+  <h2>The Three Ownership Forms — and Which One to Choose</h2>
   <ComparisonTable headers={ownershipHeaders} rows={ownershipRows} />
 
   <h3>Tenants by the Entireties</h3>
@@ -211,7 +211,7 @@ const schema = [
   </p>
   <p>
     <strong>Right of survivorship.</strong> When one spouse dies, the entire property passes automatically
-    to the surviving spouse &mdash; no probate, no court order required. The deed language should specify
+    to the surviving spouse — no probate, no court order required. The deed language should specify
     "as tenants by the entireties" to invoke this form.
   </p>
   <p>
@@ -221,13 +221,13 @@ const schema = [
     entirety by conveying the property to both spouses. See Fla. Stat. §689.11.
   </p>
   <p>
-    This protection ends automatically if the marriage is legally dissolved &mdash; after divorce, the tenancy
+    This protection ends automatically if the marriage is legally dissolved — after divorce, the tenancy
     converts to a tenancy in common.
   </p>
 
   <h3>Joint Tenancy with Right of Survivorship (JTWROS)</h3>
   <p>
-    JTWROS achieves the survivorship goal &mdash; property passes to the surviving co-owner without probate &mdash;
+    JTWROS achieves the survivorship goal — property passes to the surviving co-owner without probate —
     but it lacks the creditor-protection dimension of entireties ownership. To create a valid JTWROS in
     Florida, the deed should contain the phrase "as joint tenants with right of survivorship" or the
     abbreviation JTWROS. Without explicit language, a conveyance to two or more persons defaults to
@@ -238,7 +238,7 @@ const schema = [
   <p>
     In a tenancy in common, each co-owner holds a defined, severable share of the property with no right
     of survivorship. When one co-owner dies, their share passes through their estate according to a will
-    or intestacy law &mdash; not automatically to the other co-owner. This is usually not what a married couple
+    or intestacy law — not automatically to the other co-owner. This is usually not what a married couple
     adding a spouse to the deed is trying to accomplish, and it is what you get by default if the deed
     is silent on the matter.
   </p>
@@ -272,11 +272,11 @@ const schema = [
     must include:
   </p>
   <ul>
-    <li><strong>Two witnesses</strong> &mdash; the grantor signs in the presence of two subscribing witnesses, who then sign the deed themselves</li>
-    <li><strong>Acknowledgment for recording</strong> &mdash; a notary public executes a formal acknowledgment block</li>
-    <li><strong>Grantor's signature</strong> &mdash; the current owner signs the deed</li>
-    <li><strong>Legal description</strong> &mdash; the full legal description of the property (not just the street address)</li>
-    <li><strong>Grantee's name and address</strong> &mdash; required for recording</li>
+    <li><strong>Two witnesses</strong> — the grantor signs in the presence of two subscribing witnesses, who then sign the deed themselves</li>
+    <li><strong>Acknowledgment for recording</strong> — a notary public executes a formal acknowledgment block</li>
+    <li><strong>Grantor's signature</strong> — the current owner signs the deed</li>
+    <li><strong>Legal description</strong> — the full legal description of the property (not just the street address)</li>
+    <li><strong>Grantee's name and address</strong> — required for recording</li>
   </ul>
 
   <!-- Homestead Law -->
@@ -361,11 +361,11 @@ const schema = [
   <div class="statute-block">
     <p class="statute-block__label">Primary Sources</p>
     <ul class="statute-block__list">
-      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0689%2FSections%2F0689.01.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.01</strong></a> &mdash; deed execution and witness requirements</li>
-      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0689%2FSections%2F0689.11.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.11</strong></a> &mdash; spouse-to-spouse conveyances and tenancy by the entireties</li>
-      <li><a href="https://leg.state.fl.us/Statutes/index.cfm/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0695%2FSections%2F0695.03.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §695.03</strong></a> &mdash; acknowledgment and proof of deeds for recording</li>
-      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0200-0299%2F0201%2FSections%2F0201.02.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §201.02</strong></a> &mdash; documentary stamp tax on deeds</li>
-      <li><a href="https://floridarevenue.com/taxes/taxesfees/Pages/doc_stamp.aspx" target="_blank" rel="noopener noreferrer">Florida Department of Revenue &mdash; Documentary Stamp Tax</a></li>
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0689%2FSections%2F0689.01.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.01</strong></a> — deed execution and witness requirements</li>
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0689%2FSections%2F0689.11.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.11</strong></a> — spouse-to-spouse conveyances and tenancy by the entireties</li>
+      <li><a href="https://leg.state.fl.us/Statutes/index.cfm/index.cfm?App_mode=Display_Statute&amp;URL=0600-0699%2F0695%2FSections%2F0695.03.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §695.03</strong></a> — acknowledgment and proof of deeds for recording</li>
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&amp;URL=0200-0299%2F0201%2FSections%2F0201.02.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §201.02</strong></a> — documentary stamp tax on deeds</li>
+      <li><a href="https://floridarevenue.com/taxes/taxesfees/Pages/doc_stamp.aspx" target="_blank" rel="noopener noreferrer">Florida Department of Revenue — Documentary Stamp Tax</a></li>
     </ul>
     <p class="statute-block__note">Last Verified: August 2026. Laws change. Verify current requirements before recording.</p>
   </div>
