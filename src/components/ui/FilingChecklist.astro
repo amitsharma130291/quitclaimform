@@ -6,11 +6,13 @@ interface ChecklistItem {
 
 interface Props {
   items: ChecklistItem[];
+  title?: string;
 }
 
-const { items } = Astro.props;
+const { items, title } = Astro.props;
 ---
 
+{title && <h3 class="filing-checklist__title">{title}</h3>}
 <ul class="filing-checklist" role="list">
   {items.map(item => (
     <li class="filing-checklist__item">
