@@ -1,0 +1,524 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CitableAnswerBlock from '../../../components/CitableAnswerBlock.astro';
+import DeedForm from '../../../components/DeedForm.astro';
+import FAQ from '../../../components/FAQ.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import Callout from '../../../components/ui/Callout.astro';
+import ComparisonTable from '../../../components/ui/ComparisonTable.astro';
+import ProcessStep from '../../../components/ui/ProcessStep.astro';
+import FilingChecklist from '../../../components/ui/FilingChecklist.astro';
+import StickyTOC from '../../../components/ui/StickyTOC.astro';
+
+const title = 'Adding a Spouse to a Deed in Florida: Quitclaim Deed Guide';
+const description =
+  'How to add your spouse to a house deed in Florida using a quitclaim deed. Covers tenants by the entireties, doc stamp tax, witnesses, and homestead exemption.';
+
+const faqItems = [
+  {
+    question: 'Do I need an attorney to add my spouse to the deed?',
+    answer:
+      'Florida does not require an attorney to prepare or record a quitclaim deed. Many homeowners handle this themselves using a properly drafted form. If your property has a mortgage, if there are title complications, or if the doc stamp tax analysis is unclear, a brief consultation with a Florida real estate attorney is worth the cost.',
+  },
+  {
+    question: 'Does adding my spouse affect our homestead protection from creditors?',
+    answer:
+      "It can add a distinct form of protection if the property is validly held as tenants by the entireties. Florida's homestead is already protected from most forced sales under Article X, Section 4 of the Florida Constitution. Tenancy by the entireties can provide additional protection against the individual debts of either spouse, subject to applicable requirements and exceptions. The extent of protection in a specific situation depends on the facts and applicable law.",
+  },
+  {
+    question: 'What happens to the property if we divorce?',
+    answer:
+      'Tenants by the entireties ownership terminates automatically upon divorce. The property converts by operation of law to a tenancy in common, meaning each former spouse holds an equal, independent share. A new deed is not required for this conversion to occur — it happens when the marriage ends.',
+  },
+  {
+    question: 'What if the deed is silent about the type of tenancy?',
+    answer:
+      'Florida presumes tenancy in common when a deed conveys to multiple grantees without survivorship language. For a married couple, some Florida courts have applied a presumption of entireties, but relying on that presumption is risky. Always specify the tenancy form explicitly in the deed.',
+  },
+  {
+    question: 'Can I use a quitclaim deed if the property was purchased before the marriage?',
+    answer:
+      'Yes. A quitclaim deed can be used to add a spouse to property acquired before the marriage. The deed conveys the grantor\'s current interest and the vesting language creates the new co-ownership form. Pre-marital acquisition of the property does not affect the validity of the transfer.',
+  },
+  {
+    question: 'Does adding my spouse trigger the mortgage due-on-sale clause?',
+    answer:
+      "Federal law generally prevents enforcement of a due-on-sale clause for specified transfers in which the borrower's spouse or children become owners of the property (Garn-St. Germain Depository Institutions Act, 12 U.S.C. § 1701j-3), subject to the statute's scope and exceptions. Review the loan documents and applicable federal protections before changing title. Contact the lender if notification is appropriate.",
+  },
+];
+
+const ownershipHeaders = ['Ownership Form', 'Right of Survivorship', 'Creditor Protection', 'Who Can Use It'];
+const ownershipRows = [
+  {
+    label: 'Tenants by the Entireties',
+    values: [
+      'Yes — property passes to surviving spouse without probate',
+      'Protects against individual debts of either spouse (subject to exceptions)',
+      'Married couples only',
+    ],
+  },
+  {
+    label: 'Joint Tenancy with Right of Survivorship (JTWROS)',
+    values: [
+      'Yes — property passes to surviving co-owner without probate',
+      'No special protection beyond regular ownership',
+      'Any two or more persons; explicit JTWROS language required',
+    ],
+  },
+  {
+    label: 'Tenancy in Common',
+    values: [
+      'No — each share passes through the owner\'s estate',
+      'No special protection',
+      'Any two or more persons; default when deed is silent',
+    ],
+  },
+];
+
+const checklistItems = [
+  'Prepare Florida-specific quitclaim deed with grantor\'s name, both grantees\' names, and vesting language',
+  'Include the full legal description (not the street address) from the existing deed or county records',
+  'Review mortgage and loan documents for any lender notification requirements',
+  'Arrange two subscribing witnesses — both must be present when the grantor signs',
+  'Notary completes acknowledgment block with statutory language, commission number, and expiration date',
+  'Confirm documentary stamp tax treatment for your specific property type (homestead vs. non-homestead)',
+  'Record the executed deed with the Clerk of Court in the county where the property is located',
+  'Contact county property appraiser\'s office to confirm whether an updated homestead exemption application is needed',
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://whatisaquitclaimdeed.com/quitclaim-deed/florida/add-spouse/',
+    dateModified: '2026-08-07',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://whatisaquitclaimdeed.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://whatisaquitclaimdeed.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/quitclaim-deed/florida/add-spouse/"
+>
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/quitclaim-deed/florida/">Florida</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Add Spouse</span>
+  </nav>
+
+  <!-- H1 -->
+  <h1 class="page-h1">How to Add a Spouse to a Deed in Florida (and Why the Tenancy Form Matters)</h1>
+
+  <p class="last-updated">Updated August 7, 2026 using the primary authorities cited below.</p>
+
+  <!-- Intro -->
+  <p>
+    Adding your spouse to your home's deed is one of the most common real estate moves Florida homeowners
+    make — and one of the easiest to get subtly wrong. The mechanics are straightforward: you prepare a
+    Florida quitclaim deed, sign it in front of two witnesses and a notary, and record it with the county
+    clerk. But the line in the deed that describes <em>how</em> you and your spouse will hold title is
+    where important ownership, survivorship and creditor-rights consequences can arise.
+  </p>
+
+  <!-- Why Add Spouse -->
+  <h2>Why Homeowners Add a Spouse to the Deed</h2>
+  <p>There are several practical reasons you might want both names on title:</p>
+  <ul>
+    <li>
+      <strong>Survivorship rights.</strong> If only one spouse owns the home and that spouse dies, the
+      property passes through their estate — potentially through probate. Adding the other spouse with
+      the right survivorship language keeps the home out of the probate process entirely.
+    </li>
+    <li>
+      <strong>Estate planning.</strong> Joint ownership with survivorship is one of the simplest
+      estate-planning tools available. It eliminates the need for a separate transfer after death and
+      reduces the paperwork a surviving spouse faces during an already difficult time.
+    </li>
+    <li>
+      <strong>Refinancing requirements.</strong> Some lenders require both spouses to appear on title
+      before they will approve a refinance or new loan.
+    </li>
+    <li>
+      <strong>Equitable interest.</strong> If both spouses contribute financially to a home, having only
+      one name on title can create complications in matters of tax filing, insurance, or any future sale.
+    </li>
+  </ul>
+
+  <!-- How It Works -->
+  <h2>How a Quitclaim Deed Works for This Transfer</h2>
+  <p>
+    A quitclaim deed conveys whatever interest the grantor currently has, without warranties about title
+    history. For adding a spouse, the structure is:
+  </p>
+  <ul>
+    <li><strong>Grantor:</strong> the current sole owner (the spouse already on title)</li>
+    <li><strong>Grantee:</strong> the current owner AND the new spouse together</li>
+  </ul>
+  <p>
+    The grantor is essentially conveying the property to themselves jointly with their spouse. Florida
+    law permits this — a person can deed property to themselves and another party in a single instrument.
+  </p>
+  <p>
+    The critical piece is the vesting language. Simply naming two people as grantees without any tenancy
+    language creates a tenancy in common by default in Florida, which may not match the couple's intended
+    survivorship or ownership arrangement.
+  </p>
+
+  <!-- Primary CTA -->
+  <div class="cta-block" id="generator">
+    <h2 class="cta-block__heading">Generate Your Florida Quitclaim Deed</h2>
+    <p class="cta-block__body">
+      Florida-specific form with the correct two-witness blocks, notary acknowledgment, and vesting
+      language for adding a spouse. Instant download.
+    </p>
+    <DeedForm />
+  </div>
+
+  <Disclaimer />
+
+  <!-- Three Ownership Forms -->
+  <h2>The Three Ownership Forms — and Which One to Choose</h2>
+  <ComparisonTable headers={ownershipHeaders} rows={ownershipRows} />
+
+  <h3>Tenants by the Entireties</h3>
+  <p>
+    This is the form of ownership available exclusively to married couples, and it carries two significant
+    advantages that most online guides overlook or understate.
+  </p>
+  <p>
+    <strong>Right of survivorship.</strong> When one spouse dies, the entire property passes automatically
+    to the surviving spouse — no probate, no court order required. The deed language should specify
+    "as tenants by the entireties" to invoke this form.
+  </p>
+  <p>
+    <strong>Creditor protection.</strong> Florida tenancy by the entireties can protect entireties property
+    from claims against only one spouse, although jointly owed debts and other exceptions require separate
+    analysis. Florida law expressly permits a spouse who owns real estate to create an estate by the
+    entirety by conveying the property to both spouses. See Fla. Stat. §689.11.
+  </p>
+  <p>
+    This protection ends automatically if the marriage is legally dissolved — after divorce, the tenancy
+    converts to a tenancy in common.
+  </p>
+
+  <h3>Joint Tenancy with Right of Survivorship (JTWROS)</h3>
+  <p>
+    JTWROS achieves the survivorship goal — property passes to the surviving co-owner without probate —
+    but it lacks the creditor-protection dimension of entireties ownership. To create a valid JTWROS in
+    Florida, the deed should contain the phrase "as joint tenants with right of survivorship" or the
+    abbreviation JTWROS. Without explicit language, a conveyance to two or more persons defaults to
+    tenancy in common.
+  </p>
+
+  <h3>Tenancy in Common</h3>
+  <p>
+    In a tenancy in common, each co-owner holds a defined, severable share of the property with no right
+    of survivorship. When one co-owner dies, their share passes through their estate according to a will
+    or intestacy law — not automatically to the other co-owner. This is usually not what a married couple
+    adding a spouse to the deed is trying to accomplish, and it is what you get by default if the deed
+    is silent on the matter.
+  </p>
+
+  <!-- Doc Stamp Tax -->
+  <h2>Documentary Stamp Tax When Adding a Spouse</h2>
+  <p>
+    Florida imposes a documentary stamp tax on deeds recorded in the state under Florida Statute § 201.02.
+    How this applies when a spouse is added to title depends on the specific facts of the transfer.
+  </p>
+  <p>
+    <strong>Transfer of the marital home (homestead property):</strong> Florida Department of Revenue
+    guidance addresses the treatment of transfers adding a spouse to homestead property. Where the
+    transfer qualifies as a spousal transfer of a homestead, no documentary stamp tax may be due.
+    However, this result depends on the specific facts and applicable DOR rules. Consult the Florida
+    Department of Revenue or a Florida tax professional before recording.
+  </p>
+  <p>
+    <strong>Non-homestead property or transfers involving debt:</strong> For non-homestead transfers, or
+    where debt is involved, the documentary stamp tax analysis is more complex. A mortgage, lien, or
+    other encumbrance on the transferred property constitutes consideration for documentary-stamp purposes
+    whether assumed or not. The rate is $0.70 per $100 (or fraction thereof) of consideration.
+  </p>
+
+  <!-- Execution Requirements -->
+  <h2>Florida Deed Execution Requirements</h2>
+  <p>
+    Florida Statute §689.01 generally requires a deed conveying real estate to be signed by the grantor
+    in the presence of two subscribing witnesses. To record the deed, its execution generally must also
+    be acknowledged or proved as provided in Fla. Stat. §695.03. In practice, a Florida quitclaim deed
+    must include:
+  </p>
+  <ul>
+    <li><strong>Two witnesses</strong> — the grantor signs in the presence of two subscribing witnesses, who then sign the deed themselves</li>
+    <li><strong>Acknowledgment for recording</strong> — a notary public executes a formal acknowledgment block</li>
+    <li><strong>Grantor's signature</strong> — the current owner signs the deed</li>
+    <li><strong>Legal description</strong> — the full legal description of the property (not just the street address)</li>
+    <li><strong>Grantee's name and address</strong> — required for recording</li>
+  </ul>
+
+  <!-- Homestead Law -->
+  <h2>Florida Homestead Law: What This Transfer Is Not</h2>
+  <p>
+    Adding a spouse as an additional owner is analytically different from conveying the homestead away
+    to a third party. The constitutional restriction on alienation applies when the homeowner is trying
+    to transfer the property or encumber it with a lien; this deed moves in the opposite direction.
+    No constitutional joinder issue arises when the effect of the instrument is to bring a spouse onto
+    title. Future conveyances or encumbrances will generally require appropriate joinder by both spouses,
+    subject to the property's ownership and homestead status.
+  </p>
+
+  <!-- Due-on-Sale Clause -->
+  <h2>The Due-on-Sale Clause: Federal Law Protects You</h2>
+  <p>
+    The Garn-St. Germain Depository Institutions Act (12 U.S.C. § 1701j-3) generally prevents enforcement
+    of a due-on-sale clause for specified transfers in which the borrower's spouse or children become
+    owners of the property, subject to the statute's scope and exceptions. Review the loan documents and
+    applicable federal protections before changing title. Contact the lender if the loan documents,
+    refinance plans, insurance arrangements or lender procedures make notification appropriate.
+  </p>
+
+  <!-- Step-by-Step -->
+  <h2>Step-by-Step: How to Add Your Spouse to the Deed</h2>
+  <div class="process-steps">
+    <ProcessStep
+      number={1}
+      title="Prepare the quitclaim deed"
+      description="Use a Florida-specific form that includes your name as grantor, both names as grantees with the vesting language appropriate to the intended ownership arrangement, the full legal description, and the parcel identification number."
+    />
+    <ProcessStep
+      number={2}
+      title="Review the mortgage and loan documents"
+      description="If there is an outstanding loan, review the mortgage and loan documents before recording. Consider any doc stamp tax implications. Contact the lender if the loan terms, refinance plans, or lender procedures make notification appropriate."
+    />
+    <ProcessStep
+      number={3}
+      title="Sign in the presence of two subscribing witnesses and arrange the acknowledgment"
+      description="The grantor signs in the presence of two subscribing witnesses as required by §689.01. The witnesses then sign the deed. A notary completes the acknowledgment block required for recording under §695.03."
+    />
+    <ProcessStep
+      number={4}
+      title="Record the deed with the county clerk"
+      description="Take the executed original to the clerk of court in the county where the property is located. Pay any applicable documentary stamp tax and recording fees."
+    />
+    <ProcessStep
+      number={5}
+      title="Update your homestead exemption"
+      description="Bring a copy of the recorded deed to the county property appraiser's office and confirm whether an updated exemption application is required."
+      isLast={true}
+    />
+  </div>
+
+  <!-- Filing Checklist -->
+  <FilingChecklist
+    title="Florida Add-Spouse Deed Checklist"
+    items={checklistItems}
+  />
+
+  <CitableAnswerBlock
+    question="How do I add my spouse to a deed in Florida?"
+    answer="To add a spouse to a Florida deed, the current sole owner (grantor) prepares a quitclaim deed conveying their interest to both themselves and their spouse as grantees. The deed must specify the tenancy form — tenants by the entireties is the most common choice for married couples because it provides both survivorship rights and creditor protection. The grantor must sign in the presence of two subscribing witnesses (Fla. Stat. §689.01) and a notary, then record the deed with the Clerk of Court in the county where the property is located."
+    source="Fla. Stat. §689.01; Fla. Stat. §689.11; Fla. Stat. §695.03 (Last Verified: August 2026)"
+  />
+
+  <FAQ items={faqItems} />
+
+  <!-- Related Florida Guides -->
+  <div class="related-guides">
+    <h2>Related Florida Guides</h2>
+    <ul>
+      <li><a href="/quitclaim-deed/florida/">Florida Quitclaim Deed Overview</a></li>
+      <li><a href="/quitclaim-deed/florida/form/">Florida Quitclaim Deed Form Requirements</a></li>
+      <li><a href="/quitclaim-deed/florida/between-family-members/">Florida Quitclaim Deed Between Family Members</a></li>
+      <li><a href="/quitclaim-deed/florida/divorce/">Florida Quitclaim Deed for Divorce</a></li>
+      <li><a href="/quitclaim-deed-form/">Free Deed Generator</a></li>
+    </ul>
+  </div>
+
+  <!-- Primary Sources -->
+  <div class="statute-block">
+    <p class="statute-block__label">Primary Sources</p>
+    <ul class="statute-block__list">
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699%2F0689%2FSections%2F0689.01.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.01</strong></a> — deed execution and witness requirements</li>
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699%2F0689%2FSections%2F0689.11.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.11</strong></a> — spouse-to-spouse conveyances and tenancy by the entireties</li>
+      <li><a href="https://leg.state.fl.us/Statutes/index.cfm/index.cfm?App_mode=Display_Statute&URL=0600-0699%2F0695%2FSections%2F0695.03.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §695.03</strong></a> — acknowledgment and proof of deeds for recording</li>
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0200-0299%2F0201%2FSections%2F0201.02.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §201.02</strong></a> — documentary stamp tax on deeds</li>
+      <li><a href="https://floridarevenue.com/taxes/taxesfees/Pages/doc_stamp.aspx" target="_blank" rel="noopener noreferrer">Florida Department of Revenue — Documentary Stamp Tax</a></li>
+    </ul>
+    <p class="statute-block__note">Last Verified: August 2026. Laws change. Verify current requirements before recording.</p>
+  </div>
+
+  <p class="disclaimer-note"><em>This article provides general educational information, not legal, tax, or financial advice. Consult an appropriate Florida professional for advice about a specific transfer.</em></p>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-4);
+  }
+
+  .last-updated {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: 0;
+    margin-bottom: var(--space-6);
+  }
+
+  h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: var(--text-h2);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+  }
+
+  h3 {
+    font-size: var(--text-h3);
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-3);
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li {
+    margin-bottom: var(--space-2);
+  }
+
+  a {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+  a:hover {
+    color: var(--color-teal-hover);
+  }
+
+  .cta-block {
+    background: var(--color-teal-light);
+    border: 1px solid var(--color-teal-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin: var(--space-8) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+
+  .process-steps {
+    margin: var(--space-6) 0;
+  }
+
+  .statute-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    margin: var(--space-6) 0;
+    font-size: var(--text-sm);
+  }
+  .statute-block__label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+  .statute-block__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+  }
+  .statute-block__list li {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+  }
+  .statute-block__note {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    margin: 0;
+  }
+
+  .related-guides {
+    margin-top: var(--space-10);
+  }
+  .related-guides ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+  }
+
+  .disclaimer-note {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin-top: var(--space-8);
+  }
+</style>

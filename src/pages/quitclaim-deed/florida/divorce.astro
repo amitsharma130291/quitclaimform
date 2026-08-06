@@ -1,0 +1,459 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CitableAnswerBlock from '../../../components/CitableAnswerBlock.astro';
+import DeedForm from '../../../components/DeedForm.astro';
+import FAQ from '../../../components/FAQ.astro';
+import Disclaimer from '../../../components/Disclaimer.astro';
+import Callout from '../../../components/ui/Callout.astro';
+import ComparisonTable from '../../../components/ui/ComparisonTable.astro';
+import ProcessStep from '../../../components/ui/ProcessStep.astro';
+import StickyTOC from '../../../components/ui/StickyTOC.astro';
+
+const title = 'Florida Quitclaim Deed for Divorce: Transferring Property After Divorce';
+const description =
+  "How to use a quitclaim deed to transfer property in a Florida divorce. Covers the decree vs deed distinction, mortgage liability, witnesses, and recording.";
+
+const faqItems = [
+  {
+    question: 'Does a divorce decree transfer property automatically in Florida?',
+    answer:
+      'No. A divorce decree orders the transfer; it does not execute it. A separate quitclaim deed must be prepared, signed, and recorded to actually change title in the public record.',
+  },
+  {
+    question: 'Can I use a quitclaim deed if there is a mortgage on the property?',
+    answer:
+      "A deed can transfer the grantor's ownership interest without removing either borrower from the loan obligation. Recording the deed does not, by itself, release a borrower from the promissory note or eliminate an existing mortgage lien. Removing a borrower from the loan requires a refinance or formal assumption with lender approval.",
+  },
+  {
+    question: 'Do both spouses need to sign the quitclaim deed?',
+    answer:
+      'Only the grantor (the spouse transferring their interest) signs. The deed must be witnessed by two subscribing witnesses and acknowledged before a notary. The grantee does not sign.',
+  },
+  {
+    question: 'Is there documentary stamp tax on a divorce property transfer in Florida?',
+    answer:
+      'Generally, no. Transfers pursuant to a dissolution of marriage may be exempt under Florida DOR Rule 12B-4.013. The application depends on circumstances. Retain documentation supporting the exemption and follow current DOR and county requirements; consult a Florida attorney or the DOR if there is any ambiguity.',
+  },
+  {
+    question: 'Where do I record the deed?',
+    answer:
+      'With the clerk of the circuit court in the county where the property is located. Each Florida county has its own recording office and fee schedule.',
+  },
+  {
+    question: "What if my ex-spouse won't sign the deed?",
+    answer:
+      "If the divorce decree requires the transfer and the other party refuses, you may need to return to court to enforce the judgment. In some cases, a court can issue an order directing that the deed be executed, or a judicial officer can sign on the non-complying party's behalf under Florida Rule of Civil Procedure 1.570.",
+  },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    url: 'https://whatisaquitclaimdeed.com/quitclaim-deed/florida/divorce/',
+    dateModified: '2026-08-07',
+    author: { '@type': 'Organization', name: 'QuitclaimForm', url: 'https://whatisaquitclaimdeed.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'QuitclaimForm',
+      logo: { '@type': 'ImageObject', url: 'https://whatisaquitclaimdeed.com/logo.svg' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical="/quitclaim-deed/florida/divorce/"
+>
+  {schema.map(s => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/quitclaim-deed/florida/">Florida</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Divorce</span>
+  </nav>
+
+  <!-- H1 -->
+  <h1 class="page-h1">Florida Quitclaim Deed for Divorce: What the Decree Doesn't Do</h1>
+
+  <p class="last-updated">Updated August 7, 2026 using the primary authorities cited below.</p>
+
+  <!-- Callout at top — key distinction -->
+  <Callout type="info" title="A deed changes title. It does not remove a borrower from the note or mortgage.">
+    <p>
+      Title: who owns the property. Note: who owes the debt. Mortgage: the lien/security instrument.
+      These are three separate legal items. A quitclaim deed addresses only the first.
+    </p>
+  </Callout>
+
+  <!-- Intro -->
+  <p>
+    When a Florida divorce ends with one spouse keeping the family home, most people assume the divorce
+    decree takes care of everything. It doesn't. The decree orders the transfer — it doesn't execute it.
+    If no deed or other legally effective instrument changes record title, the public land records may
+    continue to show both spouses as owners, regardless of what the court said.
+  </p>
+  <p>
+    This distinction causes real problems: clouds on title, refinancing roadblocks, and complications
+    when the property eventually sells. A Florida quitclaim deed is the instrument that actually moves
+    ownership from one spouse to the other, and it has to be prepared, signed, and recorded correctly
+    to do its job.
+  </p>
+
+  <!-- Why Quitclaim Not Warranty -->
+  <h2>Why a Quitclaim Deed (Not a Warranty Deed) for Divorce</h2>
+  <p>
+    A <strong>warranty deed</strong> carries title guarantees: the grantor promises the title is clean,
+    free of undisclosed encumbrances, and that they will defend the grantee against any future claims.
+    That is appropriate between strangers in a typical arm's-length sale.
+  </p>
+  <p>
+    A <strong>quitclaim deed</strong> makes no such promise. The grantor conveys whatever interest they
+    actually hold — nothing more, nothing less. The transferring spouse is not warranting the title
+    history of the home; they are simply releasing their ownership interest to their former spouse.
+    For divorce property transfers in Florida, a quitclaim deed is legally appropriate and widely used
+    in divorce-related chains of title.
+  </p>
+
+  <!-- Decree vs Deed -->
+  <h2>The Decree vs. Deed Distinction: The Most Commonly Missed Step</h2>
+  <p>
+    A <strong>divorce decree</strong> (or final judgment of dissolution) is a court order. It obligates
+    each party to carry out its terms, including transferring property. It creates a legal duty. What it
+    does not do is actually change title.
+  </p>
+  <p>
+    A <strong>quitclaim deed</strong> is a conveyance instrument used to transfer the grantor's ownership
+    interest. Recording places the conveyance in the public land records and affects third-party rights
+    and priority. This is the step that changes who owns the property in the public record.
+  </p>
+  <p>
+    Many divorcing couples treat the decree as sufficient and never get around to preparing and recording
+    the deed. Years later, when the spouse who kept the home tries to sell or refinance, the title search
+    reveals that the ex-spouse's name is still on the deed. The solution is straightforward: after the
+    divorce is final, prepare the quitclaim deed, execute it according to Florida's requirements, and
+    record it with the county clerk. Don't wait.
+  </p>
+
+  <!-- DeedForm CTA — after Decree vs Deed section -->
+  <div class="cta-block" id="generator">
+    <h2 class="cta-block__heading">Generate Your Florida Divorce Quitclaim Deed</h2>
+    <p class="cta-block__body">
+      Florida-specific form already formatted to meet Florida's statutory requirements — two-witness
+      blocks, notary acknowledgment, and correct consideration language for divorce transfers.
+    </p>
+    <DeedForm />
+  </div>
+
+  <Disclaimer />
+
+  <!-- Mortgage Warning -->
+  <h2>The Mortgage Problem: What the Deed Doesn't Fix</h2>
+  <Callout type="warning" title="Critical: the deed removes you from title — not from the mortgage">
+    <p>
+      A quitclaim deed transfers <strong>title</strong> — the ownership interest in the property. It
+      does not touch the <strong>mortgage</strong>.
+    </p>
+    <p>
+      If both spouses signed the original mortgage note, both remain liable to the lender after the deed
+      is recorded. The lender was not a party to the divorce. The divorce decree dividing the property
+      does not change the loan contract. The bank can still pursue the departing spouse for the debt if
+      the remaining spouse stops making payments, defaults, or goes through foreclosure.
+    </p>
+    <p>
+      The only ways to remove someone from a mortgage are: <strong>refinancing</strong> (the remaining
+      spouse takes out a new loan in their name alone) or <strong>loan assumption</strong> (lender formally
+      approves a change in borrowers — less common with conventional loans). Neither happens automatically.
+    </p>
+  </Callout>
+  <p>
+    If a divorce decree requires one spouse to remove the other from loan liability, a quitclaim deed
+    alone does not accomplish that. Resolution typically requires a lender-approved assumption, refinance,
+    payoff or sale, or another lender-approved arrangement.
+  </p>
+
+  <!-- Who Signs -->
+  <h2>Who Signs the Quitclaim Deed</h2>
+  <p>
+    Only the <strong>grantor</strong> — the spouse transferring their interest — needs to sign the
+    quitclaim deed. The grantee (the spouse receiving the property) does not sign, though both names
+    appear in the deed.
+  </p>
+  <p>The grantor's signature must be:</p>
+  <ul>
+    <li>Witnessed by <strong>two subscribing witnesses</strong> (Fla. Stat. §689.01)</li>
+    <li>Acknowledged before a <strong>notary public</strong> (Fla. Stat. §695.03)</li>
+  </ul>
+  <p>
+    The grantor signs in the presence of two subscribing witnesses. They sign in the designated witness
+    lines on the deed form, and the notary completes the acknowledgment block confirming that the grantor
+    appeared before them and acknowledged signing the instrument.
+  </p>
+
+  <!-- Documentary Stamp Tax -->
+  <h2>Documentary Stamp Tax</h2>
+  <p>
+    Florida's Documentary Stamp Tax (Fla. Stat. § 201.02) normally applies to deed transfers. For most
+    transfers, the rate is $0.70 per $100 of consideration.
+  </p>
+  <p>
+    <strong>Transfer of the marital home after divorce:</strong> Florida provides a documentary-stamp
+    exemption for qualifying transfers of the marital home or an interest in it between spouses or former
+    spouses following dissolution of marriage. Confirm that the specific property and transfer fall within
+    the exemption with a tax professional or the Florida DOR before claiming it. Retain documentation
+    supporting the exemption and follow current DOR and county requirements.
+  </p>
+  <p>
+    <strong>Other real estate transferred in a divorce:</strong> For real estate that was not the marital
+    home, the documentary-stamp treatment depends on the consideration involved, including mortgages,
+    liens, or other encumbrances. Do not assume the divorce exemption applies automatically.
+  </p>
+
+  <!-- What If You Don't Record -->
+  <h2>What Happens If You Don't Record the Deed</h2>
+  <p>Failing to record a deed after a Florida divorce carries risks that compound over time:</p>
+  <ul>
+    <li><strong>Title remains in both names.</strong> Future creditors, lienholders, or purchasers searching title will see the prior spouse's interest as unresolved.</li>
+    <li><strong>Cloud on title.</strong> When the property is eventually sold, title insurance will identify the missing deed as a defect. Clearing it requires locating the ex-spouse — who may have remarried, moved, or become difficult to reach.</li>
+    <li><strong>Refinancing obstacles.</strong> Most lenders require clean title in the borrower's name before approving a refinance.</li>
+    <li><strong>Probate complications.</strong> If either party dies before the deed is recorded, their interest in the property may pass through their estate, creating additional legal proceedings.</li>
+  </ul>
+
+  <!-- Step-by-Step -->
+  <h2>Step-by-Step: Transferring Property with a Quitclaim Deed in a Florida Divorce</h2>
+  <div class="process-steps">
+    <ProcessStep
+      number={1}
+      title="Draft the deed"
+      description="Use a Florida-specific quitclaim deed form that includes the full legal description of the property. The legal description comes from the county property appraiser's records — typically found on the existing deed."
+    />
+    <ProcessStep
+      number={2}
+      title="Fill in the required information"
+      description="Complete the grantor's name and address, the grantee's name and address, and the legal description. Retain documentation supporting any divorce-related documentary-stamp exemption and follow current DOR and county requirements."
+    />
+    <ProcessStep
+      number={3}
+      title="Sign with two witnesses and a notary"
+      description="Arrange for two subscribing witnesses. The grantor signs the deed in the presence of the two witnesses and the notary. The notary completes the acknowledgment block and affixes their seal."
+    />
+    <ProcessStep
+      number={4}
+      title="Record the deed with the county clerk"
+      description="Submit the original executed deed to the clerk of the circuit court in the county where the property is located, along with the recording fee. Recording fees vary by county."
+    />
+    <ProcessStep
+      number={5}
+      title="Notify the mortgage lender in writing"
+      description="Send the lender a copy of the recorded deed and a written notice of the ownership change. The deed does not affect the loan obligation, but keeping the lender informed creates a paper trail."
+    />
+    <ProcessStep
+      number={6}
+      title="Keep a certified copy"
+      description="After recording, request a certified copy of the deed from the clerk's office. Keep the recorded or certified copy with the divorce judgment and related property records."
+      isLast={true}
+    />
+  </div>
+
+  <!-- Consistency with Judgment -->
+  <h2>Consistency with the Divorce Judgment</h2>
+  <p>
+    Do not prepare vesting, consideration, or ownership percentages that conflict with the final judgment,
+    marital settlement agreement, or court order. The deed should implement what the court ordered —
+    not restate or reinterpret it.
+  </p>
+
+  <CitableAnswerBlock
+    question="Does a Florida divorce decree transfer property automatically?"
+    answer="No. A Florida divorce decree orders the transfer but does not execute it. A quitclaim deed must be separately prepared, signed before two subscribing witnesses and a notary (Fla. Stat. §689.01), and recorded with the Clerk of Circuit Court in the county where the property is located. Failure to record leaves both spouses' names on the public title record regardless of what the court ordered."
+    source="Fla. Stat. §689.01; Fla. Stat. §695.03; Fla. Stat. §695.01 (Last Verified: August 2026)"
+  />
+
+  <FAQ items={faqItems} />
+
+  <!-- Related Florida Guides -->
+  <div class="related-guides">
+    <h2>Related Florida Guides</h2>
+    <ul>
+      <li><a href="/quitclaim-deed/florida/">Florida Quitclaim Deed Overview</a></li>
+      <li><a href="/quitclaim-deed/florida/form/">Florida Quitclaim Deed Form Requirements</a></li>
+      <li><a href="/quitclaim-deed/florida/between-family-members/">Florida Quitclaim Deed Between Family Members</a></li>
+      <li><a href="/quitclaim-deed/florida/add-spouse/">Adding a Spouse to a Deed in Florida</a></li>
+      <li><a href="/quitclaim-deed/for-divorce/">Quitclaim Deed for Divorce (General Guide)</a></li>
+      <li><a href="/quitclaim-deed-form/">Free Deed Generator</a></li>
+    </ul>
+  </div>
+
+  <!-- Primary Sources -->
+  <div class="statute-block">
+    <p class="statute-block__label">Primary Sources</p>
+    <ul class="statute-block__list">
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699%2F0689%2FSections%2F0689.01.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §689.01</strong></a> — deed execution and witness requirements</li>
+      <li><a href="https://leg.state.fl.us/Statutes/index.cfm/index.cfm?App_mode=Display_Statute&URL=0600-0699%2F0695%2FSections%2F0695.03.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §695.03</strong></a> — acknowledgment and proof of deeds for recording</li>
+      <li><a href="https://www.leg.state.fl.us/Statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699%2F0695%2FSections%2F0695.01.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §695.01</strong></a> — recording's effect against creditors and subsequent purchasers</li>
+      <li><a href="https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0200-0299%2F0201%2FSections%2F0201.02.html" target="_blank" rel="noopener noreferrer"><strong>Florida Statutes §201.02</strong></a> — documentary stamp tax on deeds</li>
+      <li><a href="https://floridarevenue.com/taxes/taxesfees/Pages/doc_stamp.aspx" target="_blank" rel="noopener noreferrer">Florida Department of Revenue — Documentary Stamp Tax</a></li>
+    </ul>
+    <p class="statute-block__note">Last Verified: August 2026. Laws change. Verify current requirements before recording.</p>
+  </div>
+
+  <p class="disclaimer-note"><em>This article provides general educational information, not legal, tax, or financial advice. Consult an appropriate Florida professional for advice about a specific transfer.</em></p>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-5);
+  }
+  .breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+
+  .page-h1 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.15;
+    margin-bottom: var(--space-4);
+  }
+
+  .last-updated {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: 0;
+    margin-bottom: var(--space-6);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: var(--text-h2);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-4);
+  }
+
+  ol, ul {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-5);
+  }
+
+  li {
+    margin-bottom: var(--space-2);
+  }
+
+  a {
+    color: var(--color-teal);
+    text-decoration: underline;
+  }
+  a:hover {
+    color: var(--color-teal-hover);
+  }
+
+  .cta-block {
+    background: var(--color-teal-light);
+    border: 1px solid var(--color-teal-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin: var(--space-8) 0;
+  }
+  .cta-block__heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--space-3);
+  }
+  .cta-block__body {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+  }
+
+  .process-steps {
+    margin: var(--space-6) 0;
+  }
+
+  .statute-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    margin: var(--space-6) 0;
+    font-size: var(--text-sm);
+  }
+  .statute-block__label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+  }
+  .statute-block__list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+  }
+  .statute-block__list li {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+  }
+  .statute-block__note {
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+    margin: 0;
+  }
+
+  .related-guides {
+    margin-top: var(--space-10);
+  }
+  .related-guides ul {
+    list-style: disc;
+    padding-left: var(--space-6);
+  }
+
+  .disclaimer-note {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin-top: var(--space-8);
+  }
+</style>
